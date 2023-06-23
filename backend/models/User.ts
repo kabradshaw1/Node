@@ -1,13 +1,11 @@
 import mongoose, { Schema, Document } from 'mongoose';
 import bcrypt from 'bcrypt';
-import Order from './Order';
 
 export interface IUser extends Document {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
-  orders: typeof Order.schema[];
   isCorrectPassword: (password: string) => Promise<boolean>;
 }
 
@@ -32,7 +30,6 @@ const userSchema: Schema = new Schema({
     required: true,
     minlength: 5
   },
-  orders: [Order.schema]
 });
 
 // set up pre-save middleware to create password
