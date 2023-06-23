@@ -1,16 +1,24 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "module": "commonjs",
-    "lib": ["es6"],
-    "sourceMap": true,
     "outDir": "./dist",
     "strict": true,
-    "moduleResolution": "node",
     "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
-  }
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true
+  },
+  "include": [
+    "./*.ts",
+    "./config/*.ts",
+    "./models/*.ts",
+    "./schemas/*.ts",
+    "./utils/*.ts"
+  ],
+  "exclude": ["node_modules"]
 }

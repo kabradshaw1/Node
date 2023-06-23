@@ -4,12 +4,10 @@
   "description": "This project is to practice the MERN stack.",
   "main": "backend/server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node backend/server.ts",
-    "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
-    "install": "cd server && npm i && cd ../client && npm i",
-    "seed": "cd server && npm run seed",
-    "build": "cd client && npm run build"
+    "start": "concurrently \"cd frontend && npm start\" \"cd backend && npx nodemon --exec ts-node server.ts\"",
+    "frontend": "cd frontend && npm start",
+    "backend": "cd backend && npx nodemon --exec ts-node server.ts",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\""
   },
   "author": "Kyle Bradshaw",
   "license": "ISC",
@@ -17,6 +15,8 @@
     "url": "https://github.com/kabradshaw1/Node/issues"
   },
   "devDependencies": {
-    "concurrently": "^5.1.0"
+    "concurrently": "^5.1.0",
+    "nodemon": "^2.0.22",
+    "ts-node": "^10.9.1"
   }
 }
