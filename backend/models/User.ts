@@ -2,20 +2,14 @@ import mongoose, { Schema, Document } from 'mongoose';
 import bcrypt from 'bcrypt';
 
 export interface IUser extends Document {
-  firstName: string;
-  lastName: string;
+  userName: string;
   email: string;
   password: string;
   isCorrectPassword: (password: string) => Promise<boolean>;
 }
 
 const userSchema: Schema = new Schema({
-  firstName: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  lastName: {
+  userName: {
     type: String,
     required: true,
     trim: true
