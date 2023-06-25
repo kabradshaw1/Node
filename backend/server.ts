@@ -1,7 +1,6 @@
 import express, { Express } from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import path from 'path';
-import fs from 'fs';
 import { typeDefs, resolvers } from './schemas';
 import { authMiddleware } from './utils/auth';
 import db from './config/connection';
