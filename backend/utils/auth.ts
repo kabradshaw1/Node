@@ -2,7 +2,7 @@ import jwt, { Secret } from 'jsonwebtoken';
 import { Request, RequestHandler } from 'express';
 
 interface UserPayload {
-  userName: string;
+  username: string;
   email: string;
   _id: string;
 }
@@ -40,8 +40,8 @@ export function authMiddleware(): RequestHandler {
   };
 }
 
-export function signToken({ userName, email, _id }: UserPayload): string {
-  const payload = { userName, email, _id };
+export function signToken({ username, email, _id }: UserPayload): string {
+  const payload = { username, email, _id };
 
   return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
 }

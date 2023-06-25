@@ -1,6 +1,6 @@
 type User {
   _id: ID
-  userName: String
+  username: String
   email: String
 }
 
@@ -14,7 +14,5 @@ type Query {
 }
 
 type Mutation {
-  addUser(userName: String!, email: String!, password: String!): Auth
-  login(email: String!, password: String!): Auth
-  updateUser(userName: String, email: String, password: String): User
+  addUser(username: String!, email: String!, password: String!): Auth
 }

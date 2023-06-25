@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import { IUser } from '../utils/types';
 
 const userSchema: Schema = new Schema({
-  userName: {
+  username: {
     type: String,
     required: true,
     trim: true
