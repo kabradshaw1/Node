@@ -24,8 +24,8 @@ export const authMiddleware = function ({ req }: any) {
   return req;
 };
 
-export const signToken = function ({ firstName, email, _id }: any) {
-  const payload = { firstName, email, _id };
+export const signToken = function ({ username, email, _id }: any) {
+  const payload = { username, email, _id };
 
   return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
 };
