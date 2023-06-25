@@ -1,47 +1,31 @@
-import jwt, { Secret } from 'jsonwebtoken';
-import { Request, RequestHandler } from 'express';
+import jwt from 'jsonwebtoken';
 
-interface UserPayload {
-  username: string;
-  email: string;
-  _id: string;
-}
+const secret = 'mysecretsshhhhh';
+const expiration = '2h';
 
-// Define a new interface that extends the Request interface
-interface RequestWithUser extends Request {
-  user?: UserPayload;
-}
+export const authMiddleware = function ({ req }: any) {
+  let token = req.body.token || req.query.token || req.headers.authorization;
 
-const secret: Secret = 'mysecretsshhhhh';
-const expiration: string = '2h';
+  if (req.headers.authorization) {
+    token = token.split(' ').pop().trim();
+  }
 
-export function authMiddleware(): RequestHandler {
-  return (req: RequestWithUser, res, next) => {
-    // allows token to be sent via req.body, req.query, or headers
-    let token = req.body.token || req.query.token || req.headers.authorization;
+  if (!token) {
+    return req;
+  }
 
-    // ["Bearer", "<tokenvalue>"]
-    if (req.headers.authorization) {
-      token = token.split(' ').pop().trim();
-    }
+  try {
+    const { data } = jwt.verify(token, secret, { maxAge: expiration }) as any;
+    req.user = data;
+  } catch {
+    console.log('Invalid token');
+  }
 
-    if (!token) {
-      return next();
-    }
+  return req;
+};
 
-    try {
-      const { data } = jwt.verify(token, secret, { maxAge: expiration }) as { data: UserPayload };
-      req.user = data;
-    } catch {
-      console.log('Invalid token');
-    }
-
-    next();
-  };
-}
-
-export function signToken({ username, email, _id }: UserPayload): string {
-  const payload = { username, email, _id };
+export const signToken = function ({ firstName, email, _id }: any) {
+  const payload = { firstName, email, _id };
 
   return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
-}
+};
