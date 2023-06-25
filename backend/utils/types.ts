@@ -6,3 +6,8 @@ export interface IUser extends Document {
   password: string;
   isCorrectPassword: (password: string) => Promise<boolean>;
 }
+
+export interface Auth {
+  user: IUser;
+  token: string;
+}
