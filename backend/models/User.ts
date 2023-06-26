@@ -1,9 +1,8 @@
 import { prop, getModelForClass, pre, plugin, DocumentType } from '@typegoose/typegoose';
 import mongooseUniqueValidator from 'mongoose-unique-validator';
 import bcrypt from 'bcrypt';
-import { IUser } from '../utils/types';
 
-@pre<IUser>('save', async function(next) {
+@pre<User>('save', async function(next) {
   if (this.isNew || this.isModified('password')) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
