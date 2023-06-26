@@ -4,7 +4,8 @@ import Login from './page/Login';
 import Register from "./page/Register";
 import { Routes, Route } from 'react-router-dom';
 import Container  from 'react-bootstrap/Container';
-const App: React.FC = () => {
+
+function App() {
   return (
     <>
       <Header/>

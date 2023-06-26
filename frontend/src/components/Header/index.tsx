@@ -9,7 +9,7 @@ import Nav from 'react-bootstrap/Nav';
 import Col from 'react-bootstrap/Col'
 import authSlice from '../../store/slices/authSlice';
 
-const Header: React.FC = () => {
+export default function Header() {
 
   const isLoggedIn = useSelector((state: RootState) => state.auth._id);
 
@@ -44,7 +44,7 @@ const Header: React.FC = () => {
                   <NavDropdown title="Dropdown" id="basic-nav-dropdown">
 
                       <NavDropdown.Item>Free space 1</NavDropdown.Item>
-     
+
                     <NavDropdown.Item href="#action/3.2">
                       Free Space
                     </NavDropdown.Item>
@@ -59,10 +59,7 @@ const Header: React.FC = () => {
             </Container>
           </Navbar>
         </Col>
-
-
     </Container>
   )
 };
 
-export default Header;
