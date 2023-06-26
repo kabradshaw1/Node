@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import store, { persistor } from './store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ApolloProvider } from '@apollo/client';
-import client from './apollo/client';
+import client from './utils/client';
 import 'bootstrap/dist/css/bootstrap.css';
 
 const root = ReactDOM.createRoot(
