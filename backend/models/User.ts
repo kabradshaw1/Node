@@ -1,40 +1,30 @@
-import mongoose, { Schema } from 'mongoose';
+import { prop, getModelForClass, pre, plugin, DocumentType } from '@typegoose/typegoose';
+import mongooseUniqueValidator from 'mongoose-unique-validator';
 import bcrypt from 'bcrypt';
 import { IUser } from '../utils/types';
 
-const userSchema: Schema = new Schema({
-  username: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  password: {
-    type: String,
-    required: true,
-    minlength: 5
-  },
-});
-
-// set up pre-save middleware to create password
-userSchema.pre<IUser>('save', async function(next) {
+@pre<IUser>('save', async function(next) {
   if (this.isNew || this.isModified('password')) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
 
   next();
-});
+})
+@plugin(mongooseUniqueValidator)
+class User {
+  @prop({ required: true, trim: true })
+  public username!: string;
 
-// compare the incoming password with the hashed password
-userSchema.methods.isCorrectPassword = async function(password: string) {
-  return await bcrypt.compare(password, this.password);
-};
+  @prop({ required: true, unique: true })
+  public email!: string;
 
-const User = mongoose.model<IUser>('User', userSchema);
+  @prop({ required: true, minlength: 5 })
+  public password!: string;
 
-export default User;
+  public async isCorrectPassword(this: DocumentType<User>, password: string) {
+    return await bcrypt.compare(password, this.password);
+  }
+}
+
+export default getModelForClass(User);
