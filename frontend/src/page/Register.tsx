@@ -16,7 +16,7 @@ type FormFields = AddUserMutationVariables & {
 export default function Register() {
   const navigate = useNavigate()
   const [message, setMessage] = useState("");
-  const [AddUserMutation, { data, loading: muationLoading, error }] = useAddUserMutation();
+  const [AddUserMutation, { data, error }] = useAddUserMutation();
 
   const validationSchema = Yup.object().shape({
     username: Yup.string().required('Username is required.').min(1, 'Username must have at least 1 character.').max(15, 'Username must not exceed 40 characters.'),
@@ -34,10 +34,15 @@ export default function Register() {
       const mutationResponse = await AddUserMutation({
         variables: {email: data.email, password: data.password, username: data.username}
       });
-
+      if(error) {
+        console.log(error);
+        setMessage("Registration failed, please try again.")
+      } else {
+        navigate('/login')
+      };
     } catch (e) {
       console.log(e)
-    }
+    };
   }
 
   return (
