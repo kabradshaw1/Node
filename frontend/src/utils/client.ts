@@ -1,8 +1,8 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import store from '../store';
+
 const httpLink = createHttpLink({
-  
   uri: '/graphql',
 });
 

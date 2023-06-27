@@ -15,7 +15,6 @@ import Button from 'react-bootstrap/Button';
 type Inputs = {
   email: string;
   password: string;
-  username: string;
 }
 
 function Login() {
@@ -29,7 +28,6 @@ function Login() {
   const validationSchema = Yup.object().shape({
     email: Yup.string().required('Email is required.').email('Email is invalid.'),
     password: Yup.string().required('Password is required.').min(6, 'Password must be at least 6 characters.').max(40, 'Password must not exceed 40 characters.'),
-    username: Yup.string().required('Username is required.').min(1, 'Username must have at least 1 character.').max(15, 'Username must not exceed 40 characters.'),
   });
 
   const { register, handleSubmit, formState:{errors} } = useForm<Inputs>(
@@ -40,10 +38,10 @@ function Login() {
     setLoading(true);
     try {
       const mutationResponse = await login({
-        variables: {email: data.email, passowrd: data.password, username: data.username},
+        variables: {email: data.email, passowrd: data.password},
       });
-      const token = mutationResponse.data.login.token;
-      console.log(token);
+      // const token = mutationResponse.data.login.token;
+      console.log(mutationResponse);
       setLoading(false);
     } catch (e) {
       console.log(e);
@@ -56,11 +54,6 @@ function Login() {
       <Form noValidate onSubmit={handleSubmit(formSubmit)}>
         <Form.Label><h3>Login</h3></Form.Label>
         <Col className="mb-3">
-          <Form.Group as={Row} md="3">
-            <Form.Label>Username</Form.Label>
-            <Form.Control type='username' {...register('username')} className={`form-control ${errors.username? 'is-invalid' : ''}`}/>
-            <Form.Control.Feedback className="invalid-feedback">{errors.username?.message}</Form.Control.Feedback>
-          </Form.Group>
           <Form.Group as={Row} md="3">
             <Form.Label>Email</Form.Label>
             <Form.Control type='email' {...register('email')} className={`form-control ${errors.email ? 'is-invalid' : ''}`}/>
