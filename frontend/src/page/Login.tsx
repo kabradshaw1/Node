@@ -36,9 +36,10 @@ function Login() {
 
   const formSubmit: SubmitHandler<Inputs> = async data => {
     setLoading(true);
+    console.log(data.email, data.password)
     try {
       const mutationResponse = await login({
-        variables: {email: data.email, passowrd: data.password},
+        variables: {email: data.email, password: data.password},
       });
       // const token = mutationResponse.data.login.token;
       console.log(mutationResponse);
