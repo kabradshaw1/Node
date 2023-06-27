@@ -30,26 +30,26 @@ function Login() {
 
   const formSubmit: SubmitHandler<LoginMutationVariables> = async data => {
     setLoading(true);
-    console.log(data.email, data.password)
     try {
       const mutationResponse = await loginMutation({
         variables: {email: data.email, password: data.password},
       });
-      if(mutationResponse && mutationResponse.data && mutationResponse.data.login) {
-        const token = mutationResponse.data.login.token;
-        const userData = mutationResponse.data.login.user
-        if(userData && token) {
-          dispatch(authSlice.actions.setAuth({token: token, _id: userData._id, username: userData.username}))
+      if(error) {
+        setMessage("Login failed. Please check your email and password.")
+      };
+      if(mutationResponse && mutationResponse.data?.login?.token && mutationResponse.data?.login?.user) {
+        const { token, user } = mutationResponse.data.login;
+        if(user._id && user.username) {
+          dispatch(authSlice.actions.setAuth({ token: token, user: { _id: user._id, username: user.username } }));
           setLoading(false);
           navigate('/')
         }
-      }
-
+      };
     } catch (e) {
       console.log(e);
       // setMessage(e.response.data.detail.toString())
       setLoading(false);
-    }
+    };
 
   };
 
@@ -69,7 +69,7 @@ function Login() {
           </Form.Group>
           <Form.Label>{message}</Form.Label>
         </Col>
-        <Button type="submit" disabled={loading}>Submit Form</Button>
+        <Button type="submit" disabled={loading || mutationLoading}>Submit Form</Button>
       </Form>
   )
 };
