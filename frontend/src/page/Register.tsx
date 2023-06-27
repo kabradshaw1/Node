@@ -7,20 +7,16 @@ import Button from 'react-bootstrap/Button';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
-import { ADD_USER } from '../utils/mutations';
+import { useAddUserMutation, AddUserMutationVariables } from '../generated/graphql';
 
-type Inputs = {
-  username: string,
-  email: string,
-  password: string,
-  confirmPassword: string,
-}
+type FormFields = AddUserMutationVariables & {
+  confirmPassword: string;
+};
 
 export default function Register() {
   const navigate = useNavigate()
   const [message, setMessage] = useState("");
-  const [addUser] = useMutation(ADD_USER)
+  const [AddUserMutation, { data, loading: muationLoading, error }] = useAddUserMutation();
 
   const validationSchema = Yup.object().shape({
     username: Yup.string().required('Username is required.').min(1, 'Username must have at least 1 character.').max(15, 'Username must not exceed 40 characters.'),
@@ -29,16 +25,16 @@ export default function Register() {
     confirmPassword: Yup.string().required('Confirm Password is required').oneOf([Yup.ref('password')], 'Confirm Password does not match'),
   });
 
-  const { register, handleSubmit, formState:{errors} } = useForm<Inputs>(
+  const { register, handleSubmit, formState:{errors} } = useForm<FormFields>(
     {resolver: yupResolver(validationSchema)}
   );
 
-  const formSubmit: SubmitHandler<Inputs> = async data => {
+  const formSubmit: SubmitHandler<FormFields> = async data => {
     try {
-      const mutationResponse = await addUser({
-        variables: {email: data.email, passowrd: data.password, username: data.username}
+      const mutationResponse = await AddUserMutation({
+        variables: {email: data.email, password: data.password, username: data.username}
       });
-      
+
     } catch (e) {
       console.log(e)
     }
