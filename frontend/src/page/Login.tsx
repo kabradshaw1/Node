@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import authSlice from '../store/slices/authSlice';
 import { LOGIN } from '../utils/mutations';
+
 import { useDispatch } from 'react-redux';
 import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
@@ -41,11 +42,14 @@ function Login() {
       const mutationResponse = await login({
         variables: {email: data.email, password: data.password},
       });
-      // const token = mutationResponse.data.login.token;
-      console.log(mutationResponse);
+      const token = mutationResponse.data.login.token;
+      const userData = mutationResponse.data.login.user
+      dispatch(authSlice.actions.setAuth({token: token, _id: userData._id, username: userData.username}))
       setLoading(false);
+      navigate('/')
     } catch (e) {
       console.log(e);
+      // setMessage(e.response.data.detail.toString())
       setLoading(false);
     }
 
