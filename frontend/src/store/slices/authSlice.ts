@@ -2,8 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type State = {
   token: string | null,
-  _id: number | null,
-  username: string | null,
+  _id: string | null | undefined,
+  username: string | null | undefined,
 }
 
 const initialState: State = { token: null, _id: null, username: null, };
