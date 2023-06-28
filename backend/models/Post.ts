@@ -1,5 +1,5 @@
 import { getModelForClass, prop, Ref } from '@typegoose/typegoose';
-import { Response } from './Response';
+import { Comment } from './Comment';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 import dateFormat from '../utils/dateFormat';
 
@@ -13,11 +13,11 @@ export class Post extends TimeStamps {
   @prop({ required: true })
   public username!: string;
 
-  @prop({ ref: () => Response })
-  public responses?: Ref<Response>[];
+  @prop({ ref: () => Comment })
+  public comments?: Ref<Comment>[];
 
-  public get responseCount() {
-    return this.responses?.length || 0;
+  public get commentCount() {
+    return this.comments?.length || 0;
   }
 }
 

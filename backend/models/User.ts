@@ -30,4 +30,4 @@ export class User {
   }
 }
 
-export default getModelForClass(User);
+export const UserModel = getModelForClass(User);

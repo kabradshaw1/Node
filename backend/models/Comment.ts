@@ -1,9 +1,9 @@
 import { getModelForClass, prop } from '@typegoose/typegoose';
 import dateFormat from '../utils/dateFormat';
 
-export class Response {
+export class Comment {
   @prop({ required: true, maxlength: 280 })
-  public responseBody!: string;
+  public commentBody!: string;
 
   @prop({ required: true })
   public username!: string;
@@ -12,5 +12,5 @@ export class Response {
   public createdAt?: Date;
 }
 
-export const ResponseModel = getModelForClass(Response);
-export default Response; // you need to export this to use as a reference in the Post model
+export const CommentModel = getModelForClass(Comment);
+
