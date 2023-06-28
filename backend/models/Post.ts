@@ -1,22 +1,19 @@
-import { getModelForClass, prop, Ref, index, plugin, pre, modelOptions, Severity } from '@typegoose/typegoose';
+import { getModelForClass, prop, Ref } from '@typegoose/typegoose';
 import { Response } from './Response';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
-import * as mongoose from 'mongoose';
-import * as dateFormat from '../utils/dateFormat';
+import dateFormat from '../utils/dateFormat';
 
-@index({ username: 1 })
-@modelOptions({ options: { customName: 'Post' }, schemaOptions: { toJSON: { virtuals: true, getters: true, versionKey: false }, toObject: { virtuals: true }, timestamps: true } })
-class Post extends TimeStamps {
+export class Post extends TimeStamps {
   @prop({ required: true, minlength: 1, maxlength: 280 })
-  public PostText!: string;
+  public postText!: string;
 
-  @prop({ default: () => Date.now(), get: (timestamp: Date) => dateFormat(timestamp) })
+  @prop({ default: () => Date.now(), get: (timestamp: Date) => dateFormat(timestamp.getTime()) })
   public createdAt?: Date;
 
   @prop({ required: true })
   public username!: string;
 
-  @prop({ ref: () => response })
+  @prop({ ref: () => Response })
   public responses?: Ref<Response>[];
 
   public get responseCount() {
