@@ -9,7 +9,7 @@ function App() {
   return (
     <>
       <Header/>
-      <Container fluid as='main'>
+      <Container as='main'>
         <Routes>
           <Route path='/' element={<Home/>}/>
           <Route path='/register' element={<Register/>}/>

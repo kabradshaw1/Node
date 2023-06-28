@@ -19,3 +19,30 @@ mutation addUser(
     password: $password
   )
 }
+
+mutation addPost($poestText: String!) {
+  addPost(poestText: $poestText) {
+    _id
+    poestText
+    createdAt
+    unsername
+    commentCount
+    comments {
+      _id
+    }
+  }
+}
+
+mutation addComment($PostId: ID!, $commentBody: String!) {
+  addComment(PostId: $PostId, commentBody: $commentBody) {
+    _id
+    commentCount
+    comments {
+      _id
+      commentBody
+      createdAt
+      unsername
+    }
+  }
+}
+
