@@ -1,5 +1,6 @@
 import { prop, getModelForClass, pre, plugin, DocumentType, Ref } from '@typegoose/typegoose';
 import mongooseUniqueValidator from 'mongoose-unique-validator';
+import mongoose from 'mongoose';
 import { Post } from './Post';
 import bcrypt from 'bcrypt';
 
@@ -13,6 +14,7 @@ import bcrypt from 'bcrypt';
 })
 @plugin(mongooseUniqueValidator)
 export class User {
+  _id!: mongoose.Types.ObjectId;
   @prop({ required: true, trim: true })
   public username!: string;
 
@@ -23,7 +25,7 @@ export class User {
   public password!: string;
 
   @prop({ ref: () => Post })
-  public post?:Ref<Post>[]
+  public posts?:Ref<Post>[]
 
   public async isCorrectPassword(this: DocumentType<User>, password: string) {
     return await bcrypt.compare(password, this.password);
