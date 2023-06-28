@@ -1,0 +1,4 @@
+{
+  "watch": ["schemas/typeDef.graphql"],
+  "exec": "npm run codegen"
+}

@@ -19,10 +19,12 @@
   },
   "include": [
     "./*.ts",
+    "./*.graphql",
     "./config/*.ts",
     "./models/*.ts",
     "./schemas/*.ts",
-    "./utils/*.ts"
+    "./utils/*.ts",
+    "./generated/*.ts"
   ],
   "exclude": ["node_modules"]
 }
