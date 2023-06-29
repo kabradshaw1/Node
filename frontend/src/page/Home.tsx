@@ -22,13 +22,29 @@ const Home: React.FC = () => {
           </Card>
 
         </Col>
+        <Col>
+          <Card>
+            <Card.Header>
+              <h3>TRICYPAA's Mission.</h3>
+            </Card.Header>
+            <Card.Text>
+              Someone please write me a statement to stick here!
+            </Card.Text>
+          </Card>
+        </Col>
+        <Col>
+          <Card>
+            <Card.Header>
+              <h3>This Site</h3>
+            </Card.Header>
+            <Card.Text>
+              This site is currently under development.  Please checkout our forum for suggestions and discussion of features and design.
+            </Card.Text>
+          </Card>
+        </Col>
       </Row>
       <Row>
-        <Card>
-          <Card.Header>
-            <h3>Our Mission.</h3>
-          </Card.Header>
-        </Card>
+
       </Row>
     </Container>
   )
