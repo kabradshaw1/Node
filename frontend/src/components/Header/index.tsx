@@ -42,18 +42,17 @@ export default function Header() {
                       ? <LinkContainer to='/'>
                           <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
                         </LinkContainer>
-                      : <><LinkContainer to='/login'>
-                          <NavDropdown.Item>Login</NavDropdown.Item>
-                        </LinkContainer>
-                        <LinkContainer to='/register'>
-                          <NavDropdown.Item>Register</NavDropdown.Item>
-                        </LinkContainer>
+                      : <>
+                          <LinkContainer to='/login'>
+                            <NavDropdown.Item>Login</NavDropdown.Item>
+                          </LinkContainer>
+                          <LinkContainer to='/register'>
+                            <NavDropdown.Item>Register</NavDropdown.Item>
+                          </LinkContainer>
                         </>
                     }
                     <LinkContainer to='/profile'>
-                      <NavDropdown.Item>
-                        Profile
-                      </NavDropdown.Item>
+                      <NavDropdown.Item>Profile</NavDropdown.Item>
                     </LinkContainer>
 
                     <NavDropdown.Item href="#action/3.2">

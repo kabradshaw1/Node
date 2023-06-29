@@ -10,6 +10,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Logo from '../components/Logo';
 
 
 function Login() {
@@ -55,23 +57,32 @@ function Login() {
   };
 
   return (
-      <Form noValidate onSubmit={handleSubmit(formSubmit)}>
-        <Form.Label><h3>Login</h3></Form.Label>
-        <Col className="mb-3">
-          <Form.Group as={Row} md="3">
-            <Form.Label>Email</Form.Label>
-            <Form.Control type='email' {...register('email')} className={`form-control ${errors.email ? 'is-invalid' : ''}`}/>
-            <Form.Control.Feedback className="invalid-feedback">{errors.email?.message}</Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group as={Row} md="3">
-            <Form.Label>Password</Form.Label>
-            <Form.Control type='password' {...register('password')} className={`form-control ${errors.password ? 'is-invalid' : ''}`}/>
-            <Form.Control.Feedback className="invalid-feedback">{errors.password?.message}</Form.Control.Feedback>
-          </Form.Group>
-          <Form.Label>{message}</Form.Label>
-        </Col>
-        <Button type="submit" disabled={loading || mutationLoading}>Submit Form</Button>
-      </Form>
+    <Row>
+      <Col>
+        <Form noValidate onSubmit={handleSubmit(formSubmit)}>
+          <Form.Label><h3>Login</h3></Form.Label>
+          <Col className="mb-3">
+            <Form.Group as={Row} md="3">
+              <Form.Label>Email</Form.Label>
+              <Form.Control type='email' {...register('email')} className={`form-control ${errors.email ? 'is-invalid' : ''}`}/>
+              <Form.Control.Feedback className="invalid-feedback">{errors.email?.message}</Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Row} md="3">
+              <Form.Label>Password</Form.Label>
+              <Form.Control type='password' {...register('password')} className={`form-control ${errors.password ? 'is-invalid' : ''}`}/>
+              <Form.Control.Feedback className="invalid-feedback">{errors.password?.message}</Form.Control.Feedback>
+            </Form.Group>
+            <Form.Label>{message}</Form.Label>
+            <Button className='mt-3' type="submit" disabled={loading || mutationLoading}>Submit Form</Button>
+          </Col>
+        </Form>
+      </Col>
+      <Col>
+        <Card>
+          <Logo/>
+        </Card>
+      </Col>
+    </Row>
   )
 };
 
