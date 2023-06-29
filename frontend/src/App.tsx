@@ -4,7 +4,7 @@ import Login from './page/Login';
 import Forums from './page/Forums';
 import Profile from './page/Profile';
 import Register from './page/Register';
-import SinglePost from './page/SinglePost';
+import SinglePost from './page/SinglePostPage';
 import { Routes, Route } from 'react-router-dom';
 import Container  from 'react-bootstrap/Container';
 

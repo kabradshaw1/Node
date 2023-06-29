@@ -14,8 +14,8 @@ query post($id: ID!) {
   }
 }
 
-query posts($username: String) {
-  posts(username: $username) {
+query posts {
+  posts {
     _id
     postText
     createdAt
