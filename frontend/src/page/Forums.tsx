@@ -1,6 +1,8 @@
+import PostForm from "../components/PostForm";
+
 const Forums: React.FC = () => {
   return (
-    <h3>forums</h3>
+    <PostForm/>
   )
 }
 
