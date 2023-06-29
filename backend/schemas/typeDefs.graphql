@@ -29,7 +29,7 @@ type Comment {
 type Query {
   users: [User]
   me: User
-  user(unsername: String!): User
+  user(username: String!): User
   posts(username: String): [Post]
   post(_id: ID!): Post
 }

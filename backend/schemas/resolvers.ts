@@ -51,7 +51,7 @@ const resolver: Resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
     user: async (parent: ResolversParentTypes['Query'], args: QueryUserArgs): Promise<ResolversTypes['User']> => {
-      const user = await UserModel.findOne({ username: args.unsername }).select('-__v -password').populate('posts');
+      const user = await UserModel.findOne({ username: args.username }).select('-__v -password').populate('posts');
 
       if (!user) {
         throw new Error('User not found');

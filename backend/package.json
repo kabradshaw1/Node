@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
-    "watch": "nodemon",
+    "start": "ts-node server.ts",
+    "watch": "nodemon --exec ts-node server.ts",
     "seed": "node config/seeds.js",
     "codegen": "graphql-codegen --config codegen.yml"
   },

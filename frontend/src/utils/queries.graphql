@@ -44,22 +44,3 @@ query posts($username: String) {
     }
   }
 
-  {
-    me {
-      _id
-      username
-      email
-      posts {
-        _id
-        postText
-        createdAt
-        commentCount
-        comments {
-          _id
-          createdAt
-          commentBody
-          username
-        }
-      }
-    }
-  }

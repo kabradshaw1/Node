@@ -3,7 +3,8 @@ import Home from './page/Home';
 import Login from './page/Login';
 import Forums from './page/Forums';
 import Profile from './page/Profile';
-import Register from "./page/Register";
+import Register from './page/Register';
+import SinglePost from './page/SinglePost';
 import { Routes, Route } from 'react-router-dom';
 import Container  from 'react-bootstrap/Container';
 
@@ -18,6 +19,7 @@ function App() {
           <Route path='/login' element={<Login/>}/>
           <Route path='/forums' element={<Forums/>}/>
           <Route path='/profile' element={<Profile/>}/>
+          <Route path='/single_post' element={<SinglePost/>}/>
         </Routes>
       </Container>
     </>
