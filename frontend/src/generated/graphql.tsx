@@ -123,7 +123,7 @@ export type AddUserMutationVariables = Exact<{
 export type AddUserMutation = { __typename?: 'Mutation', addUser?: { __typename?: 'Auth', token?: string | null } | null };
 
 export type AddPostMutationVariables = Exact<{
-  poestText: Scalars['String']['input'];
+  postText: Scalars['String']['input'];
 }>;
 
 
@@ -233,8 +233,8 @@ export type AddUserMutationHookResult = ReturnType<typeof useAddUserMutation>;
 export type AddUserMutationResult = Apollo.MutationResult<AddUserMutation>;
 export type AddUserMutationOptions = Apollo.BaseMutationOptions<AddUserMutation, AddUserMutationVariables>;
 export const AddPostDocument = gql`
-    mutation addPost($poestText: String!) {
-  addPost(postText: $poestText) {
+    mutation addPost($postText: String!) {
+  addPost(postText: $postText) {
     _id
     postText
     createdAt
@@ -261,7 +261,7 @@ export type AddPostMutationFn = Apollo.MutationFunction<AddPostMutation, AddPost
  * @example
  * const [addPostMutation, { data, loading, error }] = useAddPostMutation({
  *   variables: {
- *      poestText: // value for 'poestText'
+ *      postText: // value for 'postText'
  *   },
  * });
  */

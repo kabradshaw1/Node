@@ -14,8 +14,8 @@ mutation addUser($username: String!, $email: String!, $password: String!) {
   }
 }
 
-mutation addPost($poestText: String!) {
-  addPost(postText: $poestText) {
+mutation addPost($postText: String!) {
+  addPost(postText: $postText) {
     _id
     postText
     createdAt
