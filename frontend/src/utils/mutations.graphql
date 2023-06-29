@@ -8,24 +8,18 @@ mutation login($email: String!, $password: String!) {
   }
 }
 
-mutation addUser(
-  $username: String!
-  $email: String!
-  $password: String!
-) {
-  addUser(
-    username: $username
-    email: $email
-    password: $password
-  )
+mutation addUser($username: String!, $email: String!, $password: String!) {
+  addUser(username: $username, email: $email, password: $password) {
+    token
+  }
 }
 
 mutation addPost($poestText: String!) {
   addPost(poestText: $poestText) {
     _id
-    poestText
+    postText
     createdAt
-    unsername
+    username
     commentCount
     comments {
       _id
@@ -41,7 +35,7 @@ mutation addComment($PostId: ID!, $commentBody: String!) {
       _id
       commentBody
       createdAt
-      unsername
+      username
     }
   }
 }
