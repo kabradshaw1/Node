@@ -3,7 +3,7 @@ query post($id: ID!) {
     _id
     postText
     createdAt
-    user
+    username
     commentCount
     comments {
       _id
