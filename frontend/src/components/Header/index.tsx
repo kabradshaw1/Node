@@ -50,10 +50,11 @@ export default function Header() {
                         </LinkContainer>
                         </>
                     }
-
-                    <NavDropdown.Item>
-                      Profile
-                    </NavDropdown.Item>
+                    <LinkContainer to='/profile'>
+                      <NavDropdown.Item>
+                        Profile
+                      </NavDropdown.Item>
+                    </LinkContainer>
 
                     <NavDropdown.Item href="#action/3.2">
                       Free Space
