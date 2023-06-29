@@ -1,6 +1,7 @@
 import Header from "./components/Header";
 import Home from './page/Home';
 import Login from './page/Login';
+import Forums from './page/Forums';
 import Register from "./page/Register";
 import { Routes, Route } from 'react-router-dom';
 import Container  from 'react-bootstrap/Container';
@@ -14,6 +15,7 @@ function App() {
           <Route path='/' element={<Home/>}/>
           <Route path='/register' element={<Register/>}/>
           <Route path='/login' element={<Login/>}/>
+          <Route path='/forums' element={<Forums/>}/>
         </Routes>
       </Container>
     </>

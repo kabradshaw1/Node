@@ -29,6 +29,11 @@ export default function Header() {
               <LinkContainer to=''>
                 <Navbar.Brand>TRICYPAA</Navbar.Brand>
               </LinkContainer>
+              <LinkContainer to='/forums'>
+                <Nav.Link>
+                  Forums
+                </Nav.Link>
+              </LinkContainer>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
@@ -46,7 +51,9 @@ export default function Header() {
                         </>
                     }
 
-                      <NavDropdown.Item>Free space 1</NavDropdown.Item>
+                    <NavDropdown.Item>
+                      Profile
+                    </NavDropdown.Item>
 
                     <NavDropdown.Item href="#action/3.2">
                       Free Space
