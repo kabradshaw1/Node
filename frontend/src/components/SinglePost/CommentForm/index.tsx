@@ -28,10 +28,14 @@ const CommentForm: React.FC<PostId> = ({ PostId }) => {
     {resolver: yupResolver(validationSchema)}
   );
 
-  const formSubmit: SubmitHandler<AddCommentMutationVariables> = async data => {
+  const formSubmit: SubmitHandler<FormFields> = async data => {
     setLoading(true);
     try {
       await addCommentMutation({variables: {commentBody: data.commentBody, PostId: PostId}});
+      if(error) {
+        setMessage('Create cpmment failed.');
+        setLoading(false);
+      }
       setLoading(false);
     } catch (e) {
       setLoading(false);
@@ -41,7 +45,16 @@ const CommentForm: React.FC<PostId> = ({ PostId }) => {
   };
 
   return (
-    <p>Comment form placeholder</p>
+    <Card>
+      <Form noValidate onSubmit={handleSubmit(formSubmit)}>
+      <Form.Group className='m-3'>
+          <Form.Control as="textarea" rows={1} {...register('commentBody')} className={`form-control ${errors.commentBody ? 'is-invalid' : ''}`}/>
+          <Form.Control.Feedback className='invalid-feedback'>{errors.commentBody?.message}</Form.Control.Feedback>
+        </Form.Group>
+        <Form.Label>{message}</Form.Label>
+        <Button className='m-3 mt-0' type='submit' disabled={loading || mutationLoading}>Submit Comment</Button>
+      </Form>
+    </Card>
   )
 };
 

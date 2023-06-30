@@ -32,6 +32,7 @@ const PostForm: React.FC = () => {
         setMessage('Create post failed.');
         setLoading(false);
       }
+      setLoading(false);
     } catch (e) {
       console.log(e);
       setLoading(false);
