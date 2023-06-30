@@ -6,7 +6,8 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Post } from '../../generated/graphql';
-import Comment from './Comment'
+import Comment from './Comments'
+import CommentForm from './CommentForm';
 
 interface SinglePostProp {
   data: Post | null
@@ -25,6 +26,7 @@ const SinglePost: React.FC<SinglePostProp> = ({ data: post })  => {
       {post.comments && post.comments.map((comment) => (
         <Comment key={comment?._id} data={comment}/>
       ))}
+      
     </Card>
   )
 }
