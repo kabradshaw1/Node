@@ -1,15 +1,28 @@
 import SinglePost from "../SinglePost";
-import useSWR from 'swr';
 import { usePostsQuery } from "../../generated/graphql";
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import { Post } from '../../../../backend/models/Post'
 
 const PostList: React.FC = () => {
-  
+  const { loading, error, data } = usePostsQuery();
+
+  if (loading) return <h4>Loading...</h4>
+  if(error) return <h4>Error...</h4>
+
+  const posts = data?.posts;
+  if (!posts) return <h4>No Posts Found</h4>
+
   return (
-    <h3>Post list placeholder</h3>
+    <Container>
+      <Col>
+        {posts && posts.map((post) => {
+          return (
+            <SinglePost key={post?._id} data={post}/>
+          )
+        })}
+      </Col>
+    </Container>
   )
 }
 
