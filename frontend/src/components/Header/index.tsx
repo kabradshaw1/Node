@@ -11,7 +11,7 @@ import authSlice from '../../store/slices/authSlice';
 
 export default function Header() {
 
-  const isLoggedIn = useSelector((state: RootState) => state.auth._id);
+  const isLoggedIn = useSelector((state: RootState) => state.auth.user?.username);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -29,21 +29,31 @@ export default function Header() {
               <LinkContainer to=''>
                 <Navbar.Brand>TRICYPAA</Navbar.Brand>
               </LinkContainer>
+              <LinkContainer to='/forums'>
+                <Nav.Link>
+                  Forums
+                </Nav.Link>
+              </LinkContainer>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
-                  {isLoggedIn
-                    ? <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
-                    : <LinkContainer to='/login'>
-                        <Nav.Link>Login</Nav.Link>
-                      </LinkContainer>
-                  }
-                  <LinkContainer to='register'>
-                    <Nav.Link>Register</Nav.Link>
-                  </LinkContainer>
-                  <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-
-                      <NavDropdown.Item>Free space 1</NavDropdown.Item>
+                  <NavDropdown title={isLoggedIn ? `${isLoggedIn}`: 'Welcome'} id="basic-nav-dropdown">
+                    {isLoggedIn
+                      ? <LinkContainer to='/'>
+                          <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
+                        </LinkContainer>
+                      : <>
+                          <LinkContainer to='/login'>
+                            <NavDropdown.Item>Login</NavDropdown.Item>
+                          </LinkContainer>
+                          <LinkContainer to='/register'>
+                            <NavDropdown.Item>Register</NavDropdown.Item>
+                          </LinkContainer>
+                        </>
+                    }
+                    <LinkContainer to='/profile'>
+                      <NavDropdown.Item>Profile</NavDropdown.Item>
+                    </LinkContainer>
 
                     <NavDropdown.Item href="#action/3.2">
                       Free Space

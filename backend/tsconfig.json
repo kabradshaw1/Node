@@ -11,17 +11,20 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
+    "noEmit": false,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "rootDir": "./"
   },
   "include": [
     "./*.ts",
+    "./*.graphql",
     "./config/*.ts",
     "./models/*.ts",
     "./schemas/*.ts",
-    "./utils/*.ts"
+    "./utils/*.ts",
+    "./generated/*.ts"
   ],
   "exclude": ["node_modules"]
 }

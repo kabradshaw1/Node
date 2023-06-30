@@ -4,23 +4,21 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Logo from '../components/Logo';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
-import { ADD_USER } from '../utils/mutations';
+import { useAddUserMutation, AddUserMutationVariables } from '../generated/graphql';
 
-type Inputs = {
-  username: string,
-  email: string,
-  password: string,
-  confirmPassword: string,
-}
+type FormFields = AddUserMutationVariables & {
+  confirmPassword: string;
+};
 
 export default function Register() {
   const navigate = useNavigate()
   const [message, setMessage] = useState("");
-  const [addUser] = useMutation(ADD_USER)
+  const [AddUserMutation, { error }] = useAddUserMutation();
 
   const validationSchema = Yup.object().shape({
     username: Yup.string().required('Username is required.').min(1, 'Username must have at least 1 character.').max(15, 'Username must not exceed 40 characters.'),
@@ -29,50 +27,62 @@ export default function Register() {
     confirmPassword: Yup.string().required('Confirm Password is required').oneOf([Yup.ref('password')], 'Confirm Password does not match'),
   });
 
-  const { register, handleSubmit, formState:{errors} } = useForm<Inputs>(
+  const { register, handleSubmit, formState:{errors} } = useForm<FormFields>(
     {resolver: yupResolver(validationSchema)}
   );
 
-  const formSubmit: SubmitHandler<Inputs> = async data => {
+  const formSubmit: SubmitHandler<FormFields> = async data => {
     try {
-      const mutationResponse = await addUser({
-        variables: {email: data.email, passowrd: data.password, username: data.username}
+      await AddUserMutation({
+        variables: {email: data.email, password: data.password, username: data.username}
       });
-      
+      if(error) {
+        console.log(error);
+        setMessage("Registration failed, please try again.")
+      } else {
+        navigate('/login')
+      };
     } catch (e) {
       console.log(e)
-    }
+    };
   }
 
   return (
     <Row>
-      <Form noValidate onSubmit={handleSubmit(formSubmit)}>
-        <Form.Label><h3>Register</h3></Form.Label>
-        <Col className="mb-3">
-          <Form.Group as={Row} md="3">
-            <Form.Label>Email</Form.Label>
-            <Form.Control type='email' {...register('email')} className={`form-control ${errors.email ? 'is-invalid' : ''}`}/>
-            <Form.Control.Feedback className="invalid-feedback">{errors.email?.message}</Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group as={Row} md="3">
-            <Form.Label>username</Form.Label>
-            <Form.Control type='username' {...register('username')} className={`form-control ${errors.username ? 'is-invalid' : ''}`}/>
-            <Form.Control.Feedback className="invalid-feedback">{errors.username?.message}</Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group as={Row} md="3">
-            <Form.Label>Password</Form.Label>
-            <Form.Control type='password' {...register('password')} className={`form-control ${errors.password ? 'is-invalid' : ''}`}/>
-            <Form.Control.Feedback className="invalid-feedback">{errors.password?.message}</Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group as={Row} md="3">
-            <Form.Label>Confirm Password</Form.Label>
-            <Form.Control type='password' {...register('confirmPassword')} className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''}`}/>
-            <Form.Control.Feedback className="invalid-feedback">{errors.confirmPassword?.message}</Form.Control.Feedback>
-          </Form.Group>
-          <Form.Label>{message}</Form.Label>
-        </Col>
-        <Button type="submit">Submit Form</Button>
-      </Form>
+      <Col>
+        <Form noValidate onSubmit={handleSubmit(formSubmit)}>
+          <Form.Label><h3>Register</h3></Form.Label>
+          <Col className="mb-3">
+            <Form.Group as={Row} md="3">
+              <Form.Label>Email</Form.Label>
+              <Form.Control type='email' {...register('email')} className={`form-control ${errors.email ? 'is-invalid' : ''}`}/>
+              <Form.Control.Feedback className="invalid-feedback">{errors.email?.message}</Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Row} md="3">
+              <Form.Label>username</Form.Label>
+              <Form.Control type='username' {...register('username')} className={`form-control ${errors.username ? 'is-invalid' : ''}`}/>
+              <Form.Control.Feedback className="invalid-feedback">{errors.username?.message}</Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Row} md="3">
+              <Form.Label>Password</Form.Label>
+              <Form.Control type='password' {...register('password')} className={`form-control ${errors.password ? 'is-invalid' : ''}`}/>
+              <Form.Control.Feedback className="invalid-feedback">{errors.password?.message}</Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Row} md="3">
+              <Form.Label>Confirm Password</Form.Label>
+              <Form.Control type='password' {...register('confirmPassword')} className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''}`}/>
+              <Form.Control.Feedback className="invalid-feedback">{errors.confirmPassword?.message}</Form.Control.Feedback>
+            </Form.Group>
+            <Form.Label>{message}</Form.Label>
+            <Button className='mt-3' type="submit">Submit Form</Button>
+          </Col>
+        </Form>
+      </Col>
+      <Col>
+        <Card>
+          <Logo/>
+        </Card>
+      </Col>
     </Row>
   )
 }

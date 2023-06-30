@@ -2,11 +2,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type State = {
   token: string | null,
-  _id: number | null,
-  username: string | null,
+  user: {
+    _id: string | null,
+    username: string | null,
+  } | null
 }
 
-const initialState: State = { token: null, _id: null, username: null, };
+const initialState: State = { token: null, user: null};
 
 const authSlice = createSlice({
   name: "auth",
@@ -17,13 +19,11 @@ const authSlice = createSlice({
       action: PayloadAction<State>
     ) {
       state.token = action.payload.token;
-      state._id = action.payload._id;
-      state.username = action.payload.username;
+      state.user = action.payload.user
     },
     logout(state: State) {
-      state._id = null;
       state.token = null;
-      state.username = null;
+      state.user = null;
     },
   },
 });
