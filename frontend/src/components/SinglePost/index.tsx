@@ -1,10 +1,4 @@
-import { useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
 import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
 import { Post } from '../../generated/graphql';
 import Comment from './Comments'
 import CommentForm from './CommentForm';
@@ -23,10 +17,11 @@ const SinglePost: React.FC<SinglePostProp> = ({ data: post })  => {
       <Card.Header>{post.username}</Card.Header>
       <Card.Text>{post.postText}</Card.Text>
       <Card.Text>{post.createdAt}</Card.Text>
+      {post._id && <CommentForm PostId={post._id}/>}
       {post.comments && post.comments.map((comment) => (
         <Comment key={comment?._id} data={comment}/>
       ))}
-      
+
     </Card>
   )
 }

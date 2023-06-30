@@ -14,15 +14,13 @@ const PostList: React.FC = () => {
   if (!posts) return <h4>No Posts Found</h4>
 
   return (
-    <Container>
-      <Col>
+      <Row>
         {posts && posts.map((post) => {
           return (
             <SinglePost key={post?._id} data={post}/>
           )
         })}
-      </Col>
-    </Container>
+      </Row>
   )
 }
 
