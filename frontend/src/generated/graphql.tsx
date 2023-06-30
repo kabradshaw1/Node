@@ -23,31 +23,10 @@ export type Auth = {
   user?: Maybe<User>;
 };
 
-export type Comment = {
-  __typename?: 'Comment';
-  _id?: Maybe<Scalars['ID']['output']>;
-  commentBody?: Maybe<Scalars['String']['output']>;
-  createdAt?: Maybe<Scalars['String']['output']>;
-  username?: Maybe<Scalars['String']['output']>;
-};
-
 export type Mutation = {
   __typename?: 'Mutation';
-  addComment?: Maybe<Post>;
-  addPost?: Maybe<Post>;
   addUser?: Maybe<Auth>;
   login?: Maybe<Auth>;
-};
-
-
-export type MutationAddCommentArgs = {
-  PostId: Scalars['ID']['input'];
-  commentBody: Scalars['String']['input'];
-};
-
-
-export type MutationAddPostArgs = {
-  postText: Scalars['String']['input'];
 };
 
 
@@ -63,45 +42,15 @@ export type MutationLoginArgs = {
   password: Scalars['String']['input'];
 };
 
-export type Post = {
-  __typename?: 'Post';
-  _id?: Maybe<Scalars['ID']['output']>;
-  commentCount?: Maybe<Scalars['Int']['output']>;
-  comments?: Maybe<Array<Maybe<Comment>>>;
-  createdAt?: Maybe<Scalars['String']['output']>;
-  postText?: Maybe<Scalars['String']['output']>;
-  username?: Maybe<Scalars['String']['output']>;
-};
-
 export type Query = {
   __typename?: 'Query';
-  me?: Maybe<User>;
-  post?: Maybe<Post>;
-  posts?: Maybe<Array<Maybe<Post>>>;
   user?: Maybe<User>;
-  users?: Maybe<Array<Maybe<User>>>;
-};
-
-
-export type QueryPostArgs = {
-  _id: Scalars['ID']['input'];
-};
-
-
-export type QueryPostsArgs = {
-  username?: InputMaybe<Scalars['String']['input']>;
-};
-
-
-export type QueryUserArgs = {
-  username: Scalars['String']['input'];
 };
 
 export type User = {
   __typename?: 'User';
   _id?: Maybe<Scalars['ID']['output']>;
   email?: Maybe<Scalars['String']['output']>;
-  posts?: Maybe<Array<Maybe<Post>>>;
   username?: Maybe<Scalars['String']['output']>;
 };
 
