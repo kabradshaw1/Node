@@ -1,7 +1,5 @@
 import SinglePost from "../SinglePost";
 import { usePostsQuery } from "../../generated/graphql";
-import Container from 'react-bootstrap/Container';
-import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 const PostList: React.FC = () => {
@@ -14,13 +12,15 @@ const PostList: React.FC = () => {
   if (!posts) return <h4>No Posts Found</h4>
 
   return (
-      <Row>
-        {posts && posts.map((post) => {
-          return (
+    <>
+      {posts && posts.map((post) => {
+        return (
+          <Row>
             <SinglePost key={post?._id} data={post}/>
-          )
-        })}
-      </Row>
+          </Row>
+        )
+      })}
+    </>
   )
 }
 
