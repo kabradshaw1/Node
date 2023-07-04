@@ -1,6 +1,6 @@
 import { AuthenticationError } from "apollo-server-express";
 import { UserModel, User } from '../models/User';
-import { PostModel, Post } from '../models/Post';
+import { PostModel } from '../models/Post';
 import { signToken } from "../utils/auth";
 import {
   MutationAddUserArgs,

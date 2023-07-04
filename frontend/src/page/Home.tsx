@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Logo from '../components/Logo';
 
 const Home: React.FC = () => {
-  console.log(process.env.REACT_APP_BASE_URL)
+
   return (
     <Container>
       <Row>
