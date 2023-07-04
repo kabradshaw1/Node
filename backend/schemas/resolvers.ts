@@ -19,14 +19,6 @@ import {
 } from '../generated/graphql';
 
 
-const transformDoc = (doc: any) => {
-  return {
-    _id: doc._id.toString(),
-    username: doc.username,
-    email: doc.email,
-    posts: doc.posts.map((post: any) => transformDoc(post))
-  };
-};
 
 interface Context {
   user?: Maybe<User>;
@@ -45,7 +37,7 @@ const resolver: Resolvers = {
           throw new Error('User not found');
         }
 
-        return transformDoc(userData);
+        return userData;
       }
 
       throw new AuthenticationError('You need to be logged in!');
@@ -57,7 +49,7 @@ const resolver: Resolvers = {
         throw new Error('User not found');
       }
 
-      return transformDoc(user);
+      return user;
     },
     users: async () => {
       return UserModel.find()
@@ -72,7 +64,7 @@ const resolver: Resolvers = {
       const posts = await PostModel.find(params).sort({ createdAt: -1 });
 
       // Transform each post document to match the expected shape
-      return posts.map(post => transformDoc(post));
+      return posts.map(post => post);
     }
 
 
@@ -82,7 +74,7 @@ const resolver: Resolvers = {
       const user = await UserModel.create(args);
       const token = signToken(user);
 
-      return { token, user: transformDoc(user) };
+      return { token, user: user };
     },
     login: async (parent: ResolversParentTypes['Mutation'], { email, password }: MutationLoginArgs): Promise<ResolversTypes['Auth']> => {
       const user = await UserModel.findOne({ email });
@@ -99,7 +91,7 @@ const resolver: Resolvers = {
 
       const token = signToken(user);
 
-      return { token, user: transformDoc(user) };
+      return { token, user: user };
     },
     addPost: async (parent: ResolversParentTypes['Mutation'], args: MutationAddPostArgs, context: Context): Promise<ResolversTypes['Post']> => {
       if(context.user) {
@@ -111,7 +103,7 @@ const resolver: Resolvers = {
           { new: true }
         );
 
-        return transformDoc(post);
+        return post;
       }
 
       throw new AuthenticationError('You need to be logged in!');
@@ -128,7 +120,7 @@ const resolver: Resolvers = {
           throw new Error('Post not found');
         }
 
-        return transformDoc(updatedPost);
+        return updatedPost;
       }
 
       throw new AuthenticationError('You need to be logged in!');

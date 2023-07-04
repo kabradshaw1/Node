@@ -48,8 +48,8 @@ const PostForm: React.FC = () => {
           <Form.Control as="textarea" rows={1} {...register('postText')} className={`form-control ${errors.postText ? 'is-invalid' : ''}`}/>
           <Form.Control.Feedback className='invalid-feedback'>{errors.postText?.message}</Form.Control.Feedback>
         </Form.Group>
-        <Form.Label>{message}</Form.Label>
         <Button className='m-3 mt-0' type='submit' disabled={loading || mutationLoading}>Submit Post</Button>
+        <Form.Label>{message}</Form.Label>
       </Form>
     </Card>
   )
