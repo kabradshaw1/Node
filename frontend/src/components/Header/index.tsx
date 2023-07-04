@@ -12,7 +12,8 @@ import authSlice from '../../store/slices/authSlice';
 export default function Header() {
 
   const isLoggedIn = useSelector((state: RootState) => state.auth.user?.username);
-
+  const isLoggedIn2 = useSelector((state: RootState) => state.auth.user?._id);
+  console.log(isLoggedIn2)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

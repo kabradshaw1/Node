@@ -59,7 +59,7 @@ const resolver: Resolvers = {
 
       return transformDoc(user);
     },
-    users: async () => {
+    users: async (parent: ResolversParentTypes['Query']): Promise<ResolversTypes['User'][]> => {
       return UserModel.find()
         .select('-__v -password')
         .populate('posts')
