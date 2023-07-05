@@ -13,14 +13,18 @@ const SinglePost: React.FC<SinglePostProp> = ({ data: post })  => {
   }
 
   return (
-    <Card>
-      <Card.Header>{post.username}</Card.Header>
-      <Card.Text>{post.postText}</Card.Text>
-      <Card.Text>{post.createdAt}</Card.Text>
-      {post._id && <CommentForm PostId={post._id}/>}
-      {post.comments && post.comments.map((comment) => (
-        <Comment key={comment?._id} data={comment}/>
-      ))}
+    <Card >
+      <Card>
+        <Card.Body>
+          <Card.Title>{post.username}</Card.Title>
+          <Card.Text>{post.postText}</Card.Text>
+          <Card.Text>{post.createdAt}</Card.Text>
+        </Card.Body>
+      </Card>
+        {post._id && <CommentForm PostId={post._id}/>}
+        {post.comments && post.comments.map((comment) => (
+          <Comment key={comment?._id} data={comment}/>
+        ))}
     </Card>
   )
 }

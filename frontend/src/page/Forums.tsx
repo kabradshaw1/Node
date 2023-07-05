@@ -9,6 +9,7 @@ const Forums: React.FC = () => {
       <Row>
         <PostForm/>
       </Row>
+      <h2>Posts</h2>
       <PostList/>
     </Col>
   )

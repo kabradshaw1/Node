@@ -73,7 +73,7 @@ const PostForm: React.FC = () => {
 
   return (
     <Card>
-      <Card.Header><h4>Post</h4></Card.Header>
+      <Card.Header><h4>Create Post</h4></Card.Header>
       <Form noValidate onSubmit={handleSubmit(formSubmit)}>
         <Form.Group className='m-3'>
           <Form.Control as="textarea" rows={1} {...register('postText')} className={`form-control ${errors.postText ? 'is-invalid' : ''}`}/>
