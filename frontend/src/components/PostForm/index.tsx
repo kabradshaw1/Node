@@ -5,11 +5,46 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import { useAddPostMutation, AddPostMutationVariables } from '../../generated/graphql';
+import {
+  useAddPostMutation,
+  AddPostMutationVariables,
+  AddPostMutation,
+  useMeQuery,
+  MeDocument,
+  PostsDocument,
+  MeQuery,
+  PostsQuery } from '../../generated/graphql';
 import './index.css';
+import { ApolloCache } from '@apollo/client';
 
 const PostForm: React.FC = () => {
-  const [addPostMutation, { data, loading: mutationLoading, error }] = useAddPostMutation();
+  const { data: meData, error: meError } = useMeQuery();
+
+  const [addPost, { data, loading: mutationLoading, error }] = useAddPostMutation({
+    update(cache: ApolloCache<AddPostMutation>,  { data }) {
+      if (data?.addPost) {
+        try {
+          const meData = cache.readQuery<MeQuery>({ query: MeDocument });
+          if (meData && meData.me && meData.me.posts) {
+            cache.writeQuery({
+              query: MeDocument,
+              data: { me: { ...meData.me, posts: [...meData.me.posts, data.addPost] } },
+            });
+          }
+        } catch (e) {
+          console.warn("First post insertion by user!")
+        }
+
+        const postData = cache.readQuery<PostsQuery>({ query: PostsDocument });
+        if (postData && postData.posts) {
+          cache.writeQuery({
+            query: PostsDocument,
+            data: { posts: [data.addPost, ...postData.posts] },
+          });
+        }
+      }
+    },
+  });
 
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -25,7 +60,7 @@ const PostForm: React.FC = () => {
   const formSubmit: SubmitHandler<AddPostMutationVariables> = async data => {
     setLoading(true);
     try {
-      await addPostMutation({
+      await addPost({
         variables: {postText: data.postText}
       });
       setLoading(false);

@@ -144,7 +144,9 @@ export type PostQueryVariables = Exact<{
 
 export type PostQuery = { __typename?: 'Query', post?: { __typename?: 'Post', _id?: string | null, postText?: string | null, createdAt?: string | null, username?: string | null, commentCount?: number | null, comments?: Array<{ __typename?: 'Comment', _id?: string | null, createdAt?: string | null, username?: string | null, commentBody?: string | null } | null> | null } | null };
 
-export type PostsQueryVariables = Exact<{ [key: string]: never; }>;
+export type PostsQueryVariables = Exact<{
+  username?: InputMaybe<Scalars['String']['input']>;
+}>;
 
 
 export type PostsQuery = { __typename?: 'Query', posts?: Array<{ __typename?: 'Post', _id?: string | null, postText?: string | null, createdAt?: string | null, username?: string | null, commentCount?: number | null, comments?: Array<{ __typename?: 'Comment', _id?: string | null, username?: string | null, createdAt?: string | null, commentBody?: string | null } | null> | null } | null> | null };
@@ -362,8 +364,8 @@ export type PostQueryHookResult = ReturnType<typeof usePostQuery>;
 export type PostLazyQueryHookResult = ReturnType<typeof usePostLazyQuery>;
 export type PostQueryResult = Apollo.QueryResult<PostQuery, PostQueryVariables>;
 export const PostsDocument = gql`
-    query posts {
-  posts {
+    query posts($username: String) {
+  posts(username: $username) {
     _id
     postText
     createdAt
@@ -391,6 +393,7 @@ export const PostsDocument = gql`
  * @example
  * const { data, loading, error } = usePostsQuery({
  *   variables: {
+ *      username: // value for 'username'
  *   },
  * });
  */
