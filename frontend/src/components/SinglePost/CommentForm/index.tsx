@@ -52,7 +52,7 @@ const CommentForm: React.FC<PostId> = ({ PostId }) => {
           <Form.Control as="textarea" rows={1} {...register('commentBody')} className={`form-control ${errors.commentBody ? 'is-invalid' : ''}`}/>
           <Form.Control.Feedback className='invalid-feedback'>{errors.commentBody?.message}</Form.Control.Feedback>
         </Form.Group>
-        <Button className='m-1 mt-0' type='submit' disabled={loading || mutationLoading}>Submit Comment</Button>
+        <Button type='submit' disabled={loading || mutationLoading}>Submit Comment</Button>
         <Form.Label>{message}</Form.Label>
       </Form>
     </Card>

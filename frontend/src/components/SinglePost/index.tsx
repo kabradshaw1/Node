@@ -15,8 +15,8 @@ const SinglePost: React.FC<SinglePostProp> = ({ data: post })  => {
   return (
     <Card >
       <Card>
+        <Card.Header>{post.username}</Card.Header>
         <Card.Body>
-          <Card.Title>{post.username}</Card.Title>
           <Card.Text>{post.postText}</Card.Text>
           <Card.Text>{post.createdAt}</Card.Text>
         </Card.Body>
