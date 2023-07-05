@@ -21,7 +21,6 @@ const SinglePost: React.FC<SinglePostProp> = ({ data: post })  => {
       {post.comments && post.comments.map((comment) => (
         <Comment key={comment?._id} data={comment}/>
       ))}
-
     </Card>
   )
 }
