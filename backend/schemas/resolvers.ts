@@ -1,6 +1,7 @@
 import { AuthenticationError } from "apollo-server-express";
 import { UserModel, User } from '../models/User';
 import { PostModel } from '../models/Post';
+import { CommentModel } from "../models/Comment";
 import { signToken } from "../utils/auth";
 import {
   MutationAddUserArgs,
@@ -107,12 +108,15 @@ const resolvers = {
     },
     addComment: async (parent: ResolversParentTypes['Mutation'], args: MutationAddCommentArgs, context: Context) => {
       if(context.user) {
+        // First, create the new comment
+        const newComment = await CommentModel.create({ body: args.commentBody, username: context.user.username });
+
+        // Then, push the _id of the new comment into the post's comments array
         const updatedPost = await PostModel.findOneAndUpdate(
-          {_id: args.PostId },
-          { $push: { comments: { body: args.commentBody, username: context.user.username } } },
+          { _id: args.PostId },
+          { $push: { comments: newComment._id } },
           { new: true, runValidators: true }
         );
-
         if (!updatedPost) {
           throw new Error('Post not found');
         }

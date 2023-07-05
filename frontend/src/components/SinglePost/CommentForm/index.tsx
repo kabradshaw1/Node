@@ -15,8 +15,7 @@ interface PostId {
 interface FormFields extends Omit<AddCommentMutationVariables, 'PostId'> {}
 
 const CommentForm: React.FC<PostId> = ({ PostId }) => {
-  const [addCommentMutation, { data, loading: mutationLoading, error }] = useAddCommentMutation();
-
+  const [addComment, { data, loading: mutationLoading, error }] = useAddCommentMutation();
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -30,8 +29,10 @@ const CommentForm: React.FC<PostId> = ({ PostId }) => {
 
   const formSubmit: SubmitHandler<FormFields> = async data => {
     setLoading(true);
+    console.log(data.commentBody, PostId)
     try {
-      await addCommentMutation({variables: {commentBody: data.commentBody, PostId: PostId}});
+      await addComment({variables: {commentBody: data.commentBody, PostId: PostId}});
+
       if(error) {
         setMessage('Create cpmment failed.');
         setLoading(false);
