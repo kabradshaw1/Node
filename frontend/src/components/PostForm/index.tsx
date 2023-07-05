@@ -73,13 +73,13 @@ const PostForm: React.FC = () => {
 
   return (
     <Card>
-      <Card.Header><h4>Create Post</h4></Card.Header>
       <Form noValidate onSubmit={handleSubmit(formSubmit)}>
-        <Form.Group className='m-3'>
+        <Card.Header><h4>Create Post</h4></Card.Header>
+        <Form.Group>
           <Form.Control as="textarea" rows={1} {...register('postText')} className={`form-control ${errors.postText ? 'is-invalid' : ''}`}/>
           <Form.Control.Feedback className='invalid-feedback'>{errors.postText?.message}</Form.Control.Feedback>
         </Form.Group>
-        <Button className='m-3 mt-0' type='submit' disabled={loading || mutationLoading}>Submit Post</Button>
+        <Button type='submit' disabled={loading || mutationLoading}>Submit Post</Button>
         <Form.Label>{message}</Form.Label>
       </Form>
     </Card>

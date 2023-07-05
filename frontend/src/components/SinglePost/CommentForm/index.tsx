@@ -47,12 +47,12 @@ const CommentForm: React.FC<PostId> = ({ PostId }) => {
   return (
     <Card>
       <Form noValidate onSubmit={handleSubmit(formSubmit)}>
-      <Card.Header className='m-3 mb-0 mt-1'>Comment</Card.Header>
-      <Form.Group className='m-3'>
+        <Card.Header>Comment</Card.Header>
+        <Form.Group>
           <Form.Control as="textarea" rows={1} {...register('commentBody')} className={`form-control ${errors.commentBody ? 'is-invalid' : ''}`}/>
           <Form.Control.Feedback className='invalid-feedback'>{errors.commentBody?.message}</Form.Control.Feedback>
         </Form.Group>
-        <Button className='m-3 mt-0' type='submit' disabled={loading || mutationLoading}>Submit Comment</Button>
+        <Button className='m-1 mt-0' type='submit' disabled={loading || mutationLoading}>Submit Comment</Button>
         <Form.Label>{message}</Form.Label>
       </Form>
     </Card>
