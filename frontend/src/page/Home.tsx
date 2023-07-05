@@ -12,7 +12,7 @@ const Home: React.FC = () => {
       <Row>
         <Col xs={12} md={8} lg={6}>
           <Card>
-            <Card.Header><h2>Welcome to TRICPYAA's homepage!</h2></Card.Header>
+            <Card.Header><h2>Welcome to TRICYPYAA's homepage!</h2></Card.Header>
             <Logo/>
           </Card>
         </Col>

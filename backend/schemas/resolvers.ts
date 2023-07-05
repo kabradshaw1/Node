@@ -34,7 +34,7 @@ interface Context {
 }
 
 
-const resolvers: Resolvers = {
+const resolver: Resolvers = {
   Query: {
     me: async (parent: ResolversParentTypes['Query'], context: Context): Promise<ResolversTypes['User']> => {
       if (context.user) {
@@ -138,4 +138,4 @@ const resolvers: Resolvers = {
 
 };
 
-export default resolvers;
+export default resolver;
