@@ -28,10 +28,6 @@ const PostForm: React.FC = () => {
       await addPostMutation({
         variables: {postText: data.postText}
       });
-      if(error) {
-        setMessage('Create post failed.');
-        setLoading(false);
-      }
       setLoading(false);
     } catch (e) {
       console.log(e);

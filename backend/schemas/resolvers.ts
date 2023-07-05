@@ -20,6 +20,7 @@ import {
 
 
 const transformDoc = (doc: any) => {
+  console.log(doc.posts)
   return {
     _id: doc._id.toString(),
     username: doc.username,
