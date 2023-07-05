@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row';
 
 const PostList: React.FC = () => {
   const { loading, error, data } = usePostsQuery();
-  console.log(data)
+
   if (loading) return <h4>Loading...</h4>
   if(error) return <h4>Error...</h4>
 
@@ -15,8 +15,8 @@ const PostList: React.FC = () => {
     <>
       {posts && posts.map((post) => {
         return (
-          <Row className="mb-1">
-            <SinglePost key={post?._id} data={post}/>
+          <Row className="mb-1" key={post?._id}>
+            <SinglePost  data={post}/>
           </Row>
         )
       })}

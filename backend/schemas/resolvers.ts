@@ -1,6 +1,7 @@
 import { AuthenticationError } from "apollo-server-express";
 import { UserModel, User } from '../models/User';
 import { PostModel } from '../models/Post';
+import { CommentModel } from "../models/Comment";
 import { signToken } from "../utils/auth";
 import {
   MutationAddUserArgs,
@@ -26,6 +27,7 @@ const transformDoc = (doc: any) => {
     email: doc.email,
     postText: doc.postText,
     createdAt: doc.createdAt,
+    commentBody: doc.commentBody
     // posts: doc.posts.map((post: any) => transformDoc(post))
   };
 };
@@ -120,9 +122,14 @@ const resolvers: Resolvers = {
     },
     addComment: async (parent: ResolversParentTypes['Mutation'], args: MutationAddCommentArgs, context: Context): Promise<ResolversTypes['Post']> => {
       if(context.user) {
+        const comment = new CommentModel({
+          commentBody: args.commentBody,
+          username: context.user.username
+        });
+
         const updatedPost = await PostModel.findOneAndUpdate(
           {_id: args.PostId },
-          { $push: { comments: { body: args.commentBody, username: context.user.username } } },
+          { $push: { comments: comment } },
           { new: true, runValidators: true }
         );
 

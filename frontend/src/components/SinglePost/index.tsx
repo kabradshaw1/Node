@@ -11,7 +11,7 @@ const SinglePost: React.FC<SinglePostProp> = ({ data: post })  => {
   if (!post) {
     return <Card><Card.Text>No post data</Card.Text></Card>;
   }
-
+  console.log(post.comments)
   return (
     <Card >
       <Card>
