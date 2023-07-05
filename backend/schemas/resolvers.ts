@@ -20,12 +20,13 @@ import {
 
 
 const transformDoc = (doc: any) => {
-  console.log(doc.posts)
   return {
     _id: doc._id.toString(),
     username: doc.username,
     email: doc.email,
-    posts: doc.posts.map((post: any) => transformDoc(post))
+    postText: doc.postText,
+    createdAt: doc.createdAt,
+    // posts: doc.posts.map((post: any) => transformDoc(post))
   };
 };
 
@@ -34,7 +35,7 @@ interface Context {
 }
 
 
-const resolver: Resolvers = {
+const resolvers: Resolvers = {
   Query: {
     me: async (parent: ResolversParentTypes['Query'], context: Context): Promise<ResolversTypes['User']> => {
       if (context.user) {
@@ -138,4 +139,4 @@ const resolver: Resolvers = {
 
 };
 
-export default resolver;
+export default resolvers;
