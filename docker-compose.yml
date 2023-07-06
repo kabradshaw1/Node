@@ -5,4 +5,19 @@ services:
     build:
       context: .
     command: >
-      sh -c "npm run develop"
+      sh -c "npm start"
+    ports:
+      - '3000:3000'
+    environment:
+      - JWT_SECRET=mysecret
+      - REACT_APP_EX_API_
+  db:
+    image: mongo:6.0.7
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_PASSWORD=dbpass
+      - MONGO_INITDB_ROOT_USERNAME=dbuser
+    volumes:
+      - mongo-data:/data/db
+volumes:
+  mongo-data:
