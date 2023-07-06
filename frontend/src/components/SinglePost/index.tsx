@@ -14,7 +14,7 @@ const SinglePost: React.FC<SinglePostProp> = ({ data: post })  => {
   console.log(post.comments)
   return (
     <Card >
-      <Card>
+      <Card className='mt-2'>
         <Card.Header>{post.username}</Card.Header>
         <Card.Body>
           <Card.Text>{post.postText}</Card.Text>
