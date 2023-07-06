@@ -19,7 +19,7 @@ app.use(express.json());
 
 const startApolloServer = async (typeDefs: any, resolvers: any) => {
   await server.start();
-  server.applyMiddleware({ app });
+  server.applyMiddleware({ app, path: '/api' });
 
   db.once('open', () => {
     app.listen(PORT, () => {
