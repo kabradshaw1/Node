@@ -4,10 +4,6 @@ services:
   express:
     build:
       context: .
-    command: >
-      sh -c 'npm i &&
-             npm run build &&
-             npm start'
     ports:
       -'4000:4000'
     environment:
@@ -21,6 +17,9 @@ services:
   mongo:
     image: mongo:6.0.7
     restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
     volumes:
       - mongo-data:/data/db
 volumes:
