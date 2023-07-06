@@ -1,3 +1,4 @@
+import { classicNameResolver } from 'typescript';
 import { Comment as CommentType } from '../../../generated/graphql';
 import Card from 'react-bootstrap/Card';
 

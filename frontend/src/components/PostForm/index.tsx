@@ -75,12 +75,14 @@ const PostForm: React.FC = () => {
     <Card>
       <Form noValidate onSubmit={handleSubmit(formSubmit)}>
         <Card.Header><h4>Create Post</h4></Card.Header>
-        <Form.Group>
-          <Form.Control as="textarea" rows={1} {...register('postText')} className={`form-control ${errors.postText ? 'is-invalid' : ''}`}/>
-          <Form.Control.Feedback className='invalid-feedback'>{errors.postText?.message}</Form.Control.Feedback>
-        </Form.Group>
-        <Button type='submit' disabled={loading || mutationLoading}>Submit Post</Button>
-        <Form.Label>{message}</Form.Label>
+        <Card.Body>
+          <Form.Group>
+            <Form.Control as="textarea" rows={1} {...register('postText')} className={`form-control ${errors.postText ? 'is-invalid' : ''}`}/>
+            <Form.Control.Feedback className='invalid-feedback'>{errors.postText?.message}</Form.Control.Feedback>
+          </Form.Group>
+          <Button type='submit' disabled={loading || mutationLoading}>Submit Post</Button>
+          <Form.Label>{message}</Form.Label>
+        </Card.Body>
       </Form>
     </Card>
   )
