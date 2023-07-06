@@ -1,7 +1,6 @@
 import { AuthenticationError } from "apollo-server-express";
 import { UserModel, User } from '../models/User';
 import { PostModel } from '../models/Post';
-import { CommentModel } from "../models/Comment";
 import { signToken } from "../utils/auth";
 import {
   MutationAddUserArgs,
@@ -56,7 +55,7 @@ const resolvers = {
         .populate('posts')
     },
     post: async (parent: ResolversParentTypes['Query'], args: QueryPostArgs): Promise<ResolversTypes['Post'] | null> => {
-      return PostModel.findOne({_id: args._id})
+      return PostModel.findOne({_id: args._id}).populate('comments')
     },
     posts: async (parent: ResolversParentTypes['Query'], args: QueryPostsArgs) => {
       const params = args.username ? { username: args.username } : {};
@@ -108,15 +107,17 @@ const resolvers = {
     },
     addComment: async (parent: ResolversParentTypes['Mutation'], args: MutationAddCommentArgs, context: Context) => {
       if(context.user) {
-        // First, create the new comment
-        const newComment = await CommentModel.create({ body: args.commentBody, username: context.user.username });
+        const newComment = {
+          commentBody: args.commentBody,
+          username: context.user.username
+        };
 
-        // Then, push the _id of the new comment into the post's comments array
         const updatedPost = await PostModel.findOneAndUpdate(
           { _id: args.PostId },
-          { $push: { comments: newComment._id } },
+          { $push: { comments: newComment } },
           { new: true, runValidators: true }
         );
+
         if (!updatedPost) {
           throw new Error('Post not found');
         }
@@ -126,6 +127,7 @@ const resolvers = {
 
       throw new AuthenticationError('You need to be logged in!');
     }
+
   },
 
 };
