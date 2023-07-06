@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  express:
+    build:
+      context: .
+    command: >
+      sh -c 'npm i &&
+             npm run build &&
+             npm start'
+    ports:
+      -'4000:4000'
+    environment:
+      - JWT_SECRET=${JWT_SECRET}
+      - PORT=4000
+      - MONGO_USERNAME=${MONGO_USERNAME}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
+      - MONGO_DB_NAME=${MONGO_DB_NAME}
+    depeonds_on:
+      - mongo
+  mongo:
+    image: mongo:6.0.7
+    restart: always
+    volumes:
+      - mongo-data:/data/db
+volumes:
+  mongo-data:

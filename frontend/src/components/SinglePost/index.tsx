@@ -11,11 +11,10 @@ const SinglePost: React.FC<SinglePostProp> = ({ data: post })  => {
   if (!post) {
     return <Card><Card.Text>No post data</Card.Text></Card>;
   }
-  console.log(post.comments)
   return (
     <Card bg='secondary'>
       <Card className='mt-2'>
-        <Card.Header>{post.username}</Card.Header>
+        <Card.Header><h4>Posted by {post.username}</h4></Card.Header>
         <Card.Body>
           <Card.Text>{post.postText}</Card.Text>
           <Card.Text>{post.createdAt}</Card.Text>

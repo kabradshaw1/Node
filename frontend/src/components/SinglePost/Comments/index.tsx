@@ -11,7 +11,6 @@ const Comment: React.FC<CommentProps> = ({ data: comment })  => {
   if (!comment) {
     return <p>No comment data</p>;
   }
-
   return (
     <Card key={comment._id}>
       <Card.Header>{comment.username}</Card.Header>

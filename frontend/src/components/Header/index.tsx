@@ -31,7 +31,7 @@ export default function Header() {
               </LinkContainer>
               <LinkContainer to='/forums'>
                 <Nav.Link>
-                  Forums
+                  Suggestion Forum
                 </Nav.Link>
               </LinkContainer>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -58,7 +58,6 @@ export default function Header() {
                     <NavDropdown.Item href="#action/3.2">
                       Free Space
                     </NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.3">Free space 2</NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item href="#action/3.4">
                       Fill Me!
