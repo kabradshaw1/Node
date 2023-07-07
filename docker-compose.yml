@@ -16,7 +16,7 @@ services:
       - MONGO_DB_NAME=devdb
     depends_on:
       - db
-  db:
+  mongo:
     image: mongo:6.0.7
     restart: always
     environment:
