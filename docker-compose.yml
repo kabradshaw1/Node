@@ -10,7 +10,12 @@ services:
       - '3000:3000'
     environment:
       - JWT_SECRET=mysecret
-      - REACT_APP_EX_API_
+      - REACT_APP_EX_API_URL=http://localhost:3001/api
+      - MONGO_USERNAME=dbuser
+      - MONGO_PASSWORD=dbpass
+      - MONGO_DB_NAME=devdb
+    depends_on:
+      - db
   db:
     image: mongo:6.0.7
     restart: always
@@ -19,5 +24,7 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=dbuser
     volumes:
       - mongo-data:/data/db
+    ports:
+      - "27017:27017"
 volumes:
   mongo-data:
