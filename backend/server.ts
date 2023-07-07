@@ -6,7 +6,7 @@ import { typeDefs, resolvers } from './schemas';
 import { authMiddleware } from './utils/auth';
 import db from './config/connection';
 
-const PORT = process.env.PORT || 3001;
+const PORT = 4000;
 const app = express();
 const server = new ApolloServer({
   typeDefs,
