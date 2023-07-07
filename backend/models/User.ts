@@ -1,5 +1,4 @@
-import { prop, getModelForClass, pre, plugin, DocumentType, Ref } from '@typegoose/typegoose';
-import mongooseUniqueValidator from 'mongoose-unique-validator';
+import { prop, getModelForClass, pre, DocumentType, Ref } from '@typegoose/typegoose';
 import mongoose from 'mongoose';
 import { Post } from './Post';
 import bcrypt from 'bcrypt';
@@ -12,7 +11,6 @@ import bcrypt from 'bcrypt';
 
   next();
 })
-@plugin(mongooseUniqueValidator)
 export class User {
   _id!: mongoose.Types.ObjectId;
   @prop({ required: true, trim: true })
