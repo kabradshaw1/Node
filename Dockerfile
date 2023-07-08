@@ -5,3 +5,4 @@ COPY frontend/package*.json ./frontend
 COPY backend/package*.json ./backend
 RUN npm i
 RUN npm i -g typescript
+COPY ./frontend /Dev/
