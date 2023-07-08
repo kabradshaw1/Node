@@ -7,7 +7,7 @@ const Logo: React.FC = () => {
       overflow: 'hidden'
     }}>
       <img
-        src={`public/images/TRICYPAA_LOGO.png`}
+        src={`public/images/TRICYPAA_LOGO.PNG`}
         alt="Logo"
         style={{
           position: 'absolute',
