@@ -6,8 +6,9 @@
   "scripts": {
     "start": "ts-node server.ts",
     "start:prod": "node dist/server.js",
-    "build": "tsc && copyfiles -u 1 schemas/*.graphql dist/schemas",
-    "watch": "nodemon --exec ts-node server.ts",
+    "watch:server": "nodemon --exec 'npm run start'",
+    "watch:codegen": "nodemon --config nodemon_codegen.json",
+    "watch": "concurrently npm:watch:*",
     "codegen": "graphql-codegen --config codegen.yml",
     "test": "jest"
   },
