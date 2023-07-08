@@ -6,11 +6,15 @@ services:
       context: .
     command: >
       sh -c "npm start"
+    volumes:
+      - ./backend:/backend
+      - ./frontend/src:/frontend/src
     ports:
       - '3000:3000'
+      - '4000:4000'
     environment:
       - JWT_SECRET=mysecret
-      - REACT_APP_EX_API_URL=http://localhost:3001/api
+      - REACT_APP_EX_API_URL=http://localhost:4000/api
       - MONGO_USERNAME=dbuser
       - MONGO_PASSWORD=dbpass
       - MONGO_DB_NAME=devdb
