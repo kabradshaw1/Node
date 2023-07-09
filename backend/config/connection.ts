@@ -1,6 +1,16 @@
 import mongoose from 'mongoose';
 
-mongoose.connect(`mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}:27017/${process.env.MONGO_DB_NAME}?authSource=admin`);
+const mongoUsernameAndPassword = process.env.MONGO_USERNAME && process.env.MONGO_PASSWORD
+    ? `${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@`
+    : '';
+
+let connectionString = `mongodb://${mongoUsernameAndPassword}${process.env.MONGO_HOST}:27017/${process.env.MONGO_DB_NAME}`;
+
+if(mongoUsernameAndPassword){
+    connectionString += '?authSource=admin';
+}
+
+mongoose.connect(connectionString);
 
 const db = mongoose.connection;
 

@@ -6,7 +6,6 @@
   "scripts": {
     "start": "concurrently \"cd frontend && npm start\" \"cd frontend && npm run codegen:watch\" \"cd backend && npm run watch\" \"cd backend && npm run watch:codegen\""
   },
-
   "author": "Kyle Bradshaw",
   "license": "ISC",
   "bugs": {
