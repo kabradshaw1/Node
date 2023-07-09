@@ -4,7 +4,7 @@
   "description": "This project is to practice the MERN stack.",
   "main": "backend/server.ts",
   "scripts": {
-    "start": "concurrently \"cd frontend && npm start\" \"cd frontend && npm run codegen:watch\" \"cd backend && npm run watch\""
+    "start": "concurrently \"cd frontend && npm start\" \"cd frontend && npm run codegen:watch\" \"cd backend && npm run watch\" \"cd backend && npm run watch:codegen\""
   },
 
   "author": "Kyle Bradshaw",
