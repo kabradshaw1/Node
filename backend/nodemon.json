@@ -1,4 +1,4 @@
 {
-  "watch": ["models/**/*.ts", "schema/resolvers.ts"],
-  "exec": "npm run start"
+  "watch": ["schemas/typeDefs.graphql"],
+  "exec": "npm run codegen"
 }
