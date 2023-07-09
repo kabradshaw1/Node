@@ -12,6 +12,7 @@ services:
       - MONGO_USERNAME=${MONGO_USERNAME}
       - MONGO_PASSWORD=${MONGO_PASSWORD}
       - MONGO_DB_NAME=${MONGO_DB_NAME}
+      - MONGO_HOST=${MONGO_HOST}
     depends_on:
       - mongo
 
