@@ -7,9 +7,9 @@
     "start": "ts-node server.ts",
     "start:prod": "node dist/server.js",
     "build": "tsc && copyfiles -u 1 schemas/*.graphql dist/schemas",
-    "watch": "nodemon --watch 'models/**/*.ts' --watch 'schema/resolvers.ts' --exec ts-node server.ts",
+    "watch": "nodemon --watch 'models/**/*.ts' --watch 'schema/resolvers.ts' --exec npx ts-node server.ts",
     "codegen": "graphql-codegen --config codegen.yml",
-    "watch:codegen": "nodemon --watch 'schemas/typeDefs.graphql' --exec 'npm run codegen'",
+    "watch:codegen": "nodemon --watch 'schemas/typeDefs.graphql' --exec npm run codegen",
     "test": "jest"
   },
   "keywords": [],
