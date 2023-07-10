@@ -23,7 +23,14 @@ const Home: React.FC = () => {
             </Card.Header>
             <Card.Body>
               <Card.Text>
-                Someone please write me a statement to stick here!
+              Triangle Committee of Young People in Alcoholics Anonymous is committed to
+              providing a strong, unified fellowship of young recovering people in the
+              Triangle area. In accordance with AA's 12 Traditions and 12 Concepts for
+              World Service we host a variety of both recovery related and fellowship focused
+              events along with encouraging participation in statewide NCCYPAA functions. In the
+              spirit of service, our primary purpose is to share the message of recovery
+              to newcomers in an attractive setting for young people.
+
               </Card.Text>
             </Card.Body>
           </Card>
