@@ -23,7 +23,10 @@ export class User {
   public password!: string;
 
   @prop({ ref: () => Post })
-  public posts?:Ref<Post>[]
+  public posts?:Ref<Post>[];
+
+  // @prop({ required: true, default: false })
+  // public isAdmin: boolean;
 
   public async isCorrectPassword(this: DocumentType<User>, password: string) {
     return await bcrypt.compare(password, this.password);
