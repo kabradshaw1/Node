@@ -1,0 +1,10 @@
+{
+  "watch": [
+    "models/**/*",
+    "schemas/resolvers.ts"
+  ],
+  "execMap": {
+    "ts": "ts-node"
+  },
+  "script": "./server.ts"
+}

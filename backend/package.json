@@ -2,12 +2,12 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.ts",
   "scripts": {
     "start": "ts-node server.ts",
     "start:prod": "node dist/server.js",
     "build": "tsc && copyfiles -u 1 schemas/*.graphql dist/schemas",
-    "watch": "nodemon --exec \"ts-node server.ts\" --watch \"./models/**/*.ts\" --watch \"./schemas/resolvers.ts\"",
+    "watch": "nodemon",
     "codegen": "graphql-codegen --config codegen.yml",
     "codegen:watch": "nodemon --exec \"npm run codegen\" --watch \"./schemas/typeDefs.graphql\"",
     "test": "jest"
