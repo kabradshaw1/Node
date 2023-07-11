@@ -23,8 +23,7 @@ import fs from 'fs';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { S3Client } from '@aws-sdk/client-s3';
 
-
-interface Context {
+export interface Context {
   user?: Maybe<User>;
   s3: S3Client;
 }
