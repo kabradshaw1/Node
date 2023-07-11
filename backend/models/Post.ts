@@ -1,4 +1,4 @@
-import { getModelForClass, prop, Ref, modelOptions, Severity } from '@typegoose/typegoose';
+import { getModelForClass, prop, modelOptions, Severity } from '@typegoose/typegoose';
 import mongoose from 'mongoose';
 import { Comment } from './Comment';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
