@@ -15,6 +15,8 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  Date: { input: any; output: any; }
+  Upload: { input: any; output: any; }
 };
 
 export type Auth = {
@@ -31,9 +33,19 @@ export type Comment = {
   username?: Maybe<Scalars['String']['output']>;
 };
 
+export type Event = {
+  __typename?: 'Event';
+  _id?: Maybe<Scalars['ID']['output']>;
+  date?: Maybe<Scalars['Date']['output']>;
+  discription?: Maybe<Scalars['String']['output']>;
+  file?: Maybe<Scalars['Upload']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addComment?: Maybe<Post>;
+  addEvent?: Maybe<Event>;
   addPost?: Maybe<Post>;
   addUser?: Maybe<Auth>;
   login?: Maybe<Auth>;
@@ -43,6 +55,14 @@ export type Mutation = {
 export type MutationAddCommentArgs = {
   PostId: Scalars['ID']['input'];
   commentBody: Scalars['String']['input'];
+};
+
+
+export type MutationAddEventArgs = {
+  date: Scalars['Date']['input'];
+  discription?: InputMaybe<Scalars['String']['input']>;
+  file?: InputMaybe<Scalars['Upload']['input']>;
+  title: Scalars['String']['input'];
 };
 
 
@@ -136,6 +156,16 @@ export type AddCommentMutationVariables = Exact<{
 
 
 export type AddCommentMutation = { __typename?: 'Mutation', addComment?: { __typename?: 'Post', _id?: string | null, commentCount?: number | null, comments?: Array<{ __typename?: 'Comment', _id?: string | null, commentBody?: string | null, createdAt?: string | null, username?: string | null } | null> | null } | null };
+
+export type AddEventMutationVariables = Exact<{
+  file?: InputMaybe<Scalars['Upload']['input']>;
+  title: Scalars['String']['input'];
+  discription?: InputMaybe<Scalars['String']['input']>;
+  date: Scalars['Date']['input'];
+}>;
+
+
+export type AddEventMutation = { __typename?: 'Mutation', addEvent?: { __typename?: 'Event', _id?: string | null, title?: string | null, discription?: string | null, date?: any | null, file?: any | null } | null };
 
 export type PostQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -318,6 +348,46 @@ export function useAddCommentMutation(baseOptions?: Apollo.MutationHookOptions<A
 export type AddCommentMutationHookResult = ReturnType<typeof useAddCommentMutation>;
 export type AddCommentMutationResult = Apollo.MutationResult<AddCommentMutation>;
 export type AddCommentMutationOptions = Apollo.BaseMutationOptions<AddCommentMutation, AddCommentMutationVariables>;
+export const AddEventDocument = gql`
+    mutation addEvent($file: Upload, $title: String!, $discription: String, $date: Date!) {
+  addEvent(file: $file, title: $title, discription: $discription, date: $date) {
+    _id
+    title
+    discription
+    date
+    file
+  }
+}
+    `;
+export type AddEventMutationFn = Apollo.MutationFunction<AddEventMutation, AddEventMutationVariables>;
+
+/**
+ * __useAddEventMutation__
+ *
+ * To run a mutation, you first call `useAddEventMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddEventMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addEventMutation, { data, loading, error }] = useAddEventMutation({
+ *   variables: {
+ *      file: // value for 'file'
+ *      title: // value for 'title'
+ *      discription: // value for 'discription'
+ *      date: // value for 'date'
+ *   },
+ * });
+ */
+export function useAddEventMutation(baseOptions?: Apollo.MutationHookOptions<AddEventMutation, AddEventMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddEventMutation, AddEventMutationVariables>(AddEventDocument, options);
+      }
+export type AddEventMutationHookResult = ReturnType<typeof useAddEventMutation>;
+export type AddEventMutationResult = Apollo.MutationResult<AddEventMutation>;
+export type AddEventMutationOptions = Apollo.BaseMutationOptions<AddEventMutation, AddEventMutationVariables>;
 export const PostDocument = gql`
     query post($id: ID!) {
   post(_id: $id) {

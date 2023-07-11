@@ -40,12 +40,13 @@ mutation addComment($PostId: ID!, $commentBody: String!) {
   }
 }
 
-muation addEvent($file: Upload, $title: String!, $discription: String, $date: Date!) {
+mutation addEvent($file: Upload, $title: String!, $discription: String, $date: Date!) {
   addEvent(file: $file, title: $title, discription: $discription, date: $date) {
     _id
     title
     discription
     date
     file
+
   }
 }
