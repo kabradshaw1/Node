@@ -64,7 +64,7 @@ app.post('/upload', upload.array('photos', 3), (req: Request, res: Response, nex
 
 const startApolloServer = async (typeDefs: any, resolvers: any) => {
   await server.start();
-  server.applyMiddleware({ app, path: '/api' });
+  server.applyMiddleware({ app, path: '/api/graphql' });
 
   db.once('open', () => {
     app.listen(PORT, () => {

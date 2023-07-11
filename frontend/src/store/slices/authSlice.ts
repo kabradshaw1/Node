@@ -5,7 +5,7 @@ export type State = {
   user: {
     _id: string | null,
     username: string | null,
-    isAdmin: boolean
+    isAdmin: boolean | null,
   } | null
 }
 

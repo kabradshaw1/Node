@@ -43,7 +43,7 @@ function Login() {
       if(mutationResponse && mutationResponse.data?.login?.token && mutationResponse.data?.login?.user) {
         const { token, user } = mutationResponse.data.login;
         if(user._id && user.username) {
-          dispatch(authSlice.actions.setAuth({ token: token, user: { _id: user._id, username: user.username } }));
+          dispatch(authSlice.actions.setAuth({ token: token, user: { _id: user._id, username: user.username, isAdmin: user.isAdmin } }));
           setLoading(false);
           navigate('/')
         }
