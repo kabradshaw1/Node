@@ -38,8 +38,15 @@ export type Event = {
   _id?: Maybe<Scalars['ID']['output']>;
   date?: Maybe<Scalars['Date']['output']>;
   discription?: Maybe<Scalars['String']['output']>;
-  file?: Maybe<Scalars['Upload']['output']>;
+  file?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
+};
+
+export type File = {
+  __typename?: 'File';
+  encoding?: Maybe<Scalars['String']['output']>;
+  filename: Scalars['String']['output'];
+  mimetype?: Maybe<Scalars['String']['output']>;
 };
 
 export type Mutation = {
@@ -121,6 +128,7 @@ export type User = {
   __typename?: 'User';
   _id?: Maybe<Scalars['ID']['output']>;
   email?: Maybe<Scalars['String']['output']>;
+  isAdmin?: Maybe<Scalars['Boolean']['output']>;
   posts?: Maybe<Array<Maybe<Post>>>;
   username?: Maybe<Scalars['String']['output']>;
 };
@@ -131,7 +139,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'Auth', token?: string | null, user?: { __typename?: 'User', _id?: string | null, username?: string | null } | null } | null };
+export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'Auth', token?: string | null, user?: { __typename?: 'User', _id?: string | null, username?: string | null, isAdmin?: boolean | null } | null } | null };
 
 export type AddUserMutationVariables = Exact<{
   username: Scalars['String']['input'];
@@ -165,7 +173,7 @@ export type AddEventMutationVariables = Exact<{
 }>;
 
 
-export type AddEventMutation = { __typename?: 'Mutation', addEvent?: { __typename?: 'Event', _id?: string | null, title?: string | null, discription?: string | null, date?: any | null, file?: any | null } | null };
+export type AddEventMutation = { __typename?: 'Mutation', addEvent?: { __typename?: 'Event', _id?: string | null, title?: string | null, discription?: string | null, date?: any | null, file?: string | null } | null };
 
 export type PostQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -201,6 +209,7 @@ export const LoginDocument = gql`
     user {
       _id
       username
+      isAdmin
     }
   }
 }
