@@ -6,7 +6,6 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { useAddCommentMutation, AddCommentMutationVariables } from '../../../generated/graphql';
-import '../../../components/PostForm/index.css';
 
 interface PostId {
   PostId: string;

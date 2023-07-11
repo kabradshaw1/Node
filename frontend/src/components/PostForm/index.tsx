@@ -14,7 +14,6 @@ import {
   PostsDocument,
   MeQuery,
   PostsQuery } from '../../generated/graphql';
-import './index.css';
 import { ApolloCache } from '@apollo/client';
 
 const PostForm: React.FC = () => {
