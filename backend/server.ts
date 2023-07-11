@@ -11,18 +11,32 @@ import multerS3 from 'multer-s3';
 
 const s3 = new S3Client({ region: 'us-east-1a'});
 
-const upload = multer({
-  storage: multerS3({
+let storage;
+if (process.env.NODE_ENV === 'production') {
+  // In production, use S3
+  storage = multerS3({
     s3: s3,
-    bucket: 'tricypaa', 
+    bucket: 'tricypaa',
     metadata: function (req, file, cb) {
       cb(null, {fieldName: file.fieldname});
     },
     key: function (req, file, cb) {
       cb(null, Date.now().toString()) // use Date.now() for unique file keys
     }
-  })
-});
+  });
+} else {
+  // In development, store files locally
+  storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './uploads/')
+    },
+    filename: function (req, file, cb) {
+      cb(null, Date.now() + '-' + file.originalname)
+    }
+  });
+}
+
+const upload = multer({ storage: storage });
 
 const PORT = 4000;
 const app = express();
