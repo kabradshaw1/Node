@@ -4,6 +4,7 @@ import Login from './page/Login';
 import Forums from './page/Forums';
 import Profile from './page/Profile';
 import Register from './page/Register';
+import EventForm from "./page/EventForm";
 import SinglePost from './page/SinglePostPage';
 import { Routes, Route } from 'react-router-dom';
 import Container  from 'react-bootstrap/Container';
@@ -20,6 +21,7 @@ function App() {
           <Route path='/forums' element={<Forums/>}/>
           <Route path='/profile' element={<Profile/>}/>
           <Route path='/single_post' element={<SinglePost/>}/>
+          <Route path='event_form' element={<EventForm/>}/>
         </Routes>
       </Container>
     </>

@@ -12,7 +12,7 @@ import authSlice from '../../store/slices/authSlice';
 export default function Header() {
 
   const isLoggedIn = useSelector((state: RootState) => state.auth.user);
-  console.log(isLoggedIn?.isAdmin)
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
