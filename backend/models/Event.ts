@@ -13,4 +13,6 @@ export class Event extends TimeStamps {
 
   @prop({ required: true })
   public date: Date;
-}
+};
+
+export const EventModel = getModelForClass(Event);

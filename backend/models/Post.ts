@@ -22,6 +22,6 @@ export class Post extends TimeStamps {
   public get commentCount() {
     return this.comments?.length || 0;
   }
-}
+};
 
 export const PostModel = getModelForClass(Post);

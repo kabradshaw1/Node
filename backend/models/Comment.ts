@@ -12,7 +12,7 @@ export class Comment {
 
   @prop({ default: () => Date.now(), get: (timestamp: Date) => dateFormat(timestamp.getTime()) })
   public createdAt?: Date;
-}
+};
 
 export const CommentModel = getModelForClass(Comment);
 

@@ -31,6 +31,6 @@ export class User {
   public async isCorrectPassword(this: DocumentType<User>, password: string): Promise<boolean> {
     return await bcrypt.compare(password, this.password);
   }
-}
+};
 
 export const UserModel = getModelForClass(User);

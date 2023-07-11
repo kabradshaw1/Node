@@ -1,6 +1,7 @@
 import { AuthenticationError } from "apollo-server-express";
 import { UserModel, User } from '../models/User';
 import { PostModel } from '../models/Post';
+import { EventModel } from '../models/Event'
 import { signToken } from "../utils/auth";
 import {
   MutationAddUserArgs,
@@ -120,7 +121,7 @@ const resolvers = {
 
         if (!updatedPost) {
           throw new Error('Post not found');
-        }
+        };
 
         return updatedPost;
       }
@@ -129,8 +130,10 @@ const resolvers = {
     },
     addEvent: async (parent: ResolversParentTypes['Mutation'], args: MutationAddEventArgs, context: Context) => {
       if(context.user) {
-        isAdmin(context.user);
+        isAdmin(context.user); // this will throw an error if the user is not an admin
 
+        const event = await EventModel.create(args)
+        return event;
       }
       throw new AuthenticationError('You need to be logged in!');
     }
