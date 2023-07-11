@@ -7,6 +7,7 @@ import {
   MutationLoginArgs,
   MutationAddPostArgs,
   MutationAddCommentArgs,
+  MutationAddEventArgs,
 
   QueryUserArgs,
   QueryPostArgs,
@@ -48,12 +49,12 @@ const resolvers = {
 
       return user;
     },
-    users: async (parent: ResolversParentTypes['Query']): Promise<ResolversTypes['User'][]> => {
+    users: async (parent: ResolversParentTypes['Query']) => {
       return UserModel.find()
         .select('-__v -password')
         .populate('posts')
     },
-    post: async (parent: ResolversParentTypes['Query'], args: QueryPostArgs): Promise<ResolversTypes['Post'] | null> => {
+    post: async (parent: ResolversParentTypes['Query'], args: QueryPostArgs) => {
       return PostModel.findOne({_id: args._id}).populate('comments')
     },
     posts: async (parent: ResolversParentTypes['Query'], args: QueryPostsArgs) => {
@@ -125,6 +126,9 @@ const resolvers = {
       }
 
       throw new AuthenticationError('You need to be logged in!');
+    },
+    addEvent: async (parent: ResolversParentTypes['Mutation'], args: MutationAddEventArgs, context: Context) => {
+
     }
 
   },

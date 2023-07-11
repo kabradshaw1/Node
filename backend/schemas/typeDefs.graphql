@@ -36,6 +36,13 @@ type Event {
   discription: String
   file: Upload
 }
+
+type File {
+  filename: String!
+  mimetype: String
+  encoding: String
+}
+
 type Query {
   users: [User]
   me: User
