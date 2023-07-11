@@ -43,7 +43,10 @@ const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: authMiddleware
+  context: ({ req }) => {
+    const user = authMiddleware(req);
+    return { user, s3 };
+  },
 });
 
 app.use(express.urlencoded({ extended: false }));

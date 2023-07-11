@@ -37,7 +37,7 @@ export type Event = {
   _id?: Maybe<Scalars['ID']['output']>;
   date?: Maybe<Scalars['Date']['output']>;
   discription?: Maybe<Scalars['String']['output']>;
-  file?: Maybe<Scalars['Upload']['output']>;
+  file?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
@@ -258,7 +258,7 @@ export type EventResolvers<ContextType = any, ParentType extends ResolversParent
   _id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   date?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   discription?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  file?: Resolver<Maybe<ResolversTypes['Upload']>, ParentType, ContextType>;
+  file?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

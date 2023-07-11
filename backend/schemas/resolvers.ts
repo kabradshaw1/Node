@@ -19,9 +19,14 @@ import {
 } from '../generated/graphql';
 import dateScalar from "../utils/dateScalar";
 import { isAdmin } from '../utils/admin'
+import fs from 'fs';
+import { PutObjectCommand } from '@aws-sdk/client-s3';
+import { S3Client } from '@aws-sdk/client-s3';
+
 
 interface Context {
   user?: Maybe<User>;
+  s3: S3Client;
 }
 
 const resolvers = {
@@ -129,12 +134,39 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
     addEvent: async (parent: ResolversParentTypes['Mutation'], args: MutationAddEventArgs, context: Context) => {
-      if(context.user) {
+      if (context.user) {
         isAdmin(context.user); // this will throw an error if the user is not an admin
 
-        const event = await EventModel.create(args)
+        let filePath = null;
+        if (args.file) {
+          const { createReadStream, filename, mimetype } = await args.file;
+          const stream = createReadStream();
+
+          if (process.env.NODE_ENV === 'production') {
+            const params = {
+              Bucket: 'tricypaa',
+              Key: Date.now().toString(),
+              Body: stream,
+              ContentType: mimetype,
+            };
+            await context.s3.send(new PutObjectCommand(params));
+            filePath = `https://tricypaa.s3.amazonaws.com/${params.Key}`;
+          } else {
+            const path = `./uploads/${Date.now()}-${filename}`;
+            const writeStream = fs.createWriteStream(path);
+            stream.pipe(writeStream);
+            await new Promise((resolve, reject) => {
+              writeStream.on('finish', resolve);
+              writeStream.on('error', reject);
+            });
+            filePath = path;
+          }
+        };
+
+        const event = await EventModel.create({ ...args, file: filePath });
         return event;
       }
+
       throw new AuthenticationError('You need to be logged in!');
     }
 

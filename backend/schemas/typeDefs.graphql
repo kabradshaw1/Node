@@ -34,7 +34,7 @@ type Event {
   date: Date
   title: String
   discription: String
-  file: Upload
+  file: String
 }
 
 type File {
