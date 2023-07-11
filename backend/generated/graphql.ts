@@ -127,6 +127,7 @@ export type User = {
   __typename?: 'User';
   _id?: Maybe<Scalars['ID']['output']>;
   email?: Maybe<Scalars['String']['output']>;
+  isAdmin?: Maybe<Scalars['Boolean']['output']>;
   posts?: Maybe<Array<Maybe<Post>>>;
   username?: Maybe<Scalars['String']['output']>;
 };
@@ -303,6 +304,7 @@ export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTyp
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   _id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  isAdmin?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   posts?: Resolver<Maybe<Array<Maybe<ResolversTypes['Post']>>>, ParentType, ContextType>;
   username?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;

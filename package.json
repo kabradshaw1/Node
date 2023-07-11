@@ -6,7 +6,6 @@
   "scripts": {
     "start": "concurrently \"cd frontend && npm start\" \"cd frontend && npm run codegen:watch\" \"cd backend && npm run watch\" \"cd backend && npm run codegen:watch\""
   },
-
   "author": "Kyle Bradshaw",
   "license": "ISC",
   "bugs": {
@@ -14,7 +13,10 @@
   },
   "devDependencies": {
     "@types/mongoose-unique-validator": "^1.0.7",
+    "aws-sdk-mock": "^5.8.0",
     "concurrently": "^5.1.0",
+    "jest-mock-extended": "^3.0.4",
+    "mongodb-memory-server": "^8.13.0",
     "nodemon": "^2.0.22",
     "ts-node": "^10.9.1"
   }

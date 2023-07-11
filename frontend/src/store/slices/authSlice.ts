@@ -5,10 +5,11 @@ export type State = {
   user: {
     _id: string | null,
     username: string | null,
+    isAdmin: boolean
   } | null
 }
 
-const initialState: State = { token: null, user: null};
+const initialState: State = { token: null, user: null };
 
 const authSlice = createSlice({
   name: "auth",
