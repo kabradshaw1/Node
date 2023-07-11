@@ -1,4 +1,5 @@
 scalar Date
+scalar Upload
 
 type User {
   _id: ID
@@ -30,7 +31,10 @@ type Comment {
 
 type Event {
   _id: ID
-
+  date: Date
+  title: String
+  discription: String
+  file: Upload
 }
 type Query {
   users: [User]
@@ -45,5 +49,5 @@ type Mutation {
   login(email: String!, password: String!): Auth
   addPost(postText: String!): Post
   addComment(commentBody: String!, PostId: ID!): Post
-  addEvent(file: Upload, title: String!, discription: String, date: Date!)
+  addEvent(file: Upload, title: String!, discription: String, date: Date!): Event
 }
