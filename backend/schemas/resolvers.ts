@@ -14,10 +14,10 @@ import {
   QueryPostsArgs,
 
   ResolversParentTypes,
-  ResolversTypes,
   Maybe,
 } from '../generated/graphql';
 import dateScalar from "../utils/dateScalar";
+import { isAdmin } from '../utils/admin'
 
 interface Context {
   user?: Maybe<User>;
@@ -128,7 +128,11 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
     addEvent: async (parent: ResolversParentTypes['Mutation'], args: MutationAddEventArgs, context: Context) => {
+      if(context.user) {
+        isAdmin(context.user);
 
+      }
+      throw new AuthenticationError('You need to be logged in!');
     }
 
   },
