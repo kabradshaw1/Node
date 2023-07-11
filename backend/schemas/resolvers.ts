@@ -16,15 +16,14 @@ import {
   ResolversTypes,
   Maybe,
 } from '../generated/graphql';
-
+import dateScalar from "../utils/dateScalar";
 
 interface Context {
   user?: Maybe<User>;
 }
 
-
-
 const resolvers = {
+  Date: dateScalar,
   Query: {
     me: async (parent: ResolversParentTypes['Query'], context: Context) => {
       if (context.user) {
