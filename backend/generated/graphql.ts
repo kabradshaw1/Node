@@ -41,13 +41,6 @@ export type Event = {
   title?: Maybe<Scalars['String']['output']>;
 };
 
-export type File = {
-  __typename?: 'File';
-  encoding?: Maybe<Scalars['String']['output']>;
-  filename: Scalars['String']['output'];
-  mimetype?: Maybe<Scalars['String']['output']>;
-};
-
 export type Mutation = {
   __typename?: 'Mutation';
   addComment?: Maybe<Post>;
@@ -66,7 +59,7 @@ export type MutationAddCommentArgs = {
 
 export type MutationAddEventArgs = {
   date: Scalars['Date']['input'];
-  discription?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   file?: InputMaybe<Scalars['Upload']['input']>;
   title: Scalars['String']['input'];
 };
@@ -208,7 +201,6 @@ export type ResolversTypes = {
   Comment: ResolverTypeWrapper<Comment>;
   Date: ResolverTypeWrapper<Scalars['Date']['output']>;
   Event: ResolverTypeWrapper<Event>;
-  File: ResolverTypeWrapper<File>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   Mutation: ResolverTypeWrapper<{}>;
@@ -226,7 +218,6 @@ export type ResolversParentTypes = {
   Comment: Comment;
   Date: Scalars['Date']['output'];
   Event: Event;
-  File: File;
   ID: Scalars['ID']['output'];
   Int: Scalars['Int']['output'];
   Mutation: {};
@@ -261,13 +252,6 @@ export type EventResolvers<ContextType = any, ParentType extends ResolversParent
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   file?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type FileResolvers<ContextType = any, ParentType extends ResolversParentTypes['File'] = ResolversParentTypes['File']> = {
-  encoding?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  filename?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  mimetype?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -315,7 +299,6 @@ export type Resolvers<ContextType = any> = {
   Comment?: CommentResolvers<ContextType>;
   Date?: GraphQLScalarType;
   Event?: EventResolvers<ContextType>;
-  File?: FileResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Post?: PostResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
