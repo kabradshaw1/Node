@@ -48,6 +48,5 @@ mutation addEvent($file: Upload, $title: String!, $discription: String, $date: D
     discription
     date
     file
-
   }
 }
