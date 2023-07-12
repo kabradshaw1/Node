@@ -46,26 +46,16 @@ const EventForm: React.FC = () => {
   const formSubmit: SubmitHandler<AddEventMutationVariables> = async data => {
     setLoading(true);
     const { title, description, date, file } = data;
-
-    const payload: AddEventMutationVariables = {
-      title,
-      description,
-      date: date ? date.toISOString() : null,  // Date object converted to ISO string
-    };
-
-    console.log("Payload to be sent:", payload);  // Log the payload
-
-    // If file is not null or undefined, log it as well
-    if (file) {
-      console.log("File to be sent:", file);
-    }
-
+    console.log(data);
     try {
       const response = await addEvent({
         variables: {
-          ...payload,
-          file: file,
+          title,
+          description,
+          date: date ? date.toISOString() : null,  // Date object converted to ISO string
+          file
         },
+
       });
 
       if (response && response.data) {
@@ -123,7 +113,7 @@ const EventForm: React.FC = () => {
                 <Controller
                   control={control}
                   name="file"
-                  render={({ field: { onChange, value, ref } }) => (
+                  render={({ field: { onChange, ref } }) => (
                     <Form.Control
                       type='file'
                       ref={ref}

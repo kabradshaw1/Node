@@ -2,7 +2,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 import express, { Request, Response, NextFunction } from 'express';
 import { ApolloServer } from 'apollo-server-express';
-import graphqlUploadExpress from 'graphql-upload';
 import { typeDefs, resolvers } from './schemas';
 import { authMiddleware } from './utils/auth';
 import db from './config/connection';
@@ -41,23 +40,22 @@ const upload = multer({ storage: storage });
 
 const PORT = 4000;
 const app = express();
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: authMiddleware
+  context: authMiddleware,
 });
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // endpoint to handle file uploads
-app.post('/upload', upload.array('photos', 3), (req: Request, res: Response, next: NextFunction) => {
-  if (!req.files) {
-    return next(new Error('Files not found'));
+app.post('/upload', upload.single('image'), (req: Request, res: Response) => {
+  if(!req.file) {
+    return
   }
-
-  const files = req.files as Express.Multer.File[];
-  res.send('Successfully uploaded ' + files.length + ' files!');
+  res.json({ imageUrl: `/uploads/${req.file.filename}`});
 });
 
 const startApolloServer = async (typeDefs: any, resolvers: any) => {
