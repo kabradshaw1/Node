@@ -23,18 +23,18 @@ const EventForm: React.FC = () => {
 
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  console.log(loading)
+
   const validationSchema = Yup.object().shape({
     date: Yup.date().nullable().transform((curr, orig) => orig === '' ? null : curr).required('You must put choose a date'),
     title: Yup.string().required('You must set a title for event'),
     file: Yup.mixed()
       .test('fileSize', 'The file is too large', value => {
-        const files = value as FileList;
-        return !files || (files[0] && files[0].size <= 5000000);
+        const file = value as File;
+        return !file || file.size <= 5000000;
       })
       .test('fileType', 'Unsupported File Format. Supported formats are .jpg, .jpeg, .png, .gif, .webp', value => {
-        const files = value as FileList;
-        return !files || (files[0] && ['image/jpeg', 'image/png', 'image/gif', 'image/webp'].includes(files[0].type));
+        const file = value as File;
+        return !file || ['image/jpeg', 'image/png', 'image/gif', 'image/webp'].includes(file.type);
       }),
     description: Yup.string(),
   });
@@ -50,8 +50,15 @@ const EventForm: React.FC = () => {
     const payload: AddEventMutationVariables = {
       title,
       description,
-      date: date?.target?.value
+      date: date ? date.toISOString() : null,  // Date object converted to ISO string
     };
+
+    console.log("Payload to be sent:", payload);  // Log the payload
+
+    // If file is not null or undefined, log it as well
+    if (file) {
+      console.log("File to be sent:", file);
+    }
 
     try {
       const response = await addEvent({
@@ -98,10 +105,10 @@ const EventForm: React.FC = () => {
                     control={control}
                     name="date"
                     render={({ field: { onChange, value } }) => (
-                      <ReactDatePicker
+                        <ReactDatePicker
                         selected={value}
-                        onChange={(date) => {
-                          onChange({ target: { value: date } } as any); // Here's the change
+                        onChange={(date: Date) => {
+                          onChange(date);  // You should pass Date or null to onChange
                         }}
                         dateFormat="MM/dd/yyyy"
                         className={`form-control ${errors.date ? 'is-invalid' : ''}`}
