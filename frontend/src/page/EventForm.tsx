@@ -10,14 +10,16 @@ import {
   useAddEventMutation,
   AddEventMutationVariables,} from '../generated/graphql';
 import { useNavigate } from 'react-router-dom';
-import { IoCalendarOutline } from "react-icons/io5";
+import { BsFillCalendarEventFill } from "react-icons/bs";
 import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Card from 'react-bootstrap/Card';
+import Logo from '../components/Logo';
+import Container from 'react-bootstrap/Container';
 
 const EventForm: React.FC = () => {
   const [ addEvent, { data, loading: mutationLoading, error } ] = useAddEventMutation();
   const navigate = useNavigate();
-
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -34,7 +36,7 @@ const EventForm: React.FC = () => {
         const files = value as FileList;
         return !files || (files[0] && ['image/jpeg', 'image/png', 'image/gif', 'image/webp'].includes(files[0].type));
       }),
-    discription: Yup.string(),
+    description: Yup.string(),
   });
 
   const { control, register, handleSubmit, formState:{errors}, setValue } = useForm(
@@ -46,48 +48,78 @@ const EventForm: React.FC = () => {
   };
 
   return (
-    <Form noValidate onSubmit={handleSubmit(formSubmit)}>
-      <Form.Label><h3>Event Form</h3></Form.Label>
-      <Form.Group>
-        <Form.Label>Event Title</Form.Label>
-        <Form.Control type='string' {...register('title')} className={`form-control ${errors.title ? 'is-invalid' : ''}`}/>
-        <Form.Control.Feedback className='invalid-feedback'>{errors.title?.message}</Form.Control.Feedback>
-      </Form.Group>
-      <Form.Group>
-        <Col>
-        <Form.Label>Event Date</Form.Label>
-        <Controller
-          control={control}
-          name="date"
-          render={({ field: { onChange, value } }) => (
-            <ReactDatePicker
-              selected={value}
-              onChange={(date) => {
-                onChange({ target: { value: date } } as any); // Here's the change
-              }}
-              dateFormat="MM/dd/yyyy"
-              className={`form-control ${errors.date ? 'is-invalid' : ''}`}
-            />
-          )}
-        />
-        <Form.Control.Feedback className='invalid-feedback'>{errors.date?.message}</Form.Control.Feedback>
+    <Container>
+      <Row>
+        <Col md={6} sm={12}>
+          <Card>
+            <Form noValidate onSubmit={handleSubmit(formSubmit)}>
+              <Card.Header><h3>Event Form</h3></Card.Header>
+              <Card.Body>
+              <Form.Group>
+                <Form.Label>Event Title (Required)</Form.Label>
+                <Form.Control type='string' {...register('title')} className={`form-control ${errors.title ? 'is-invalid' : ''}`}/>
+                <Form.Control.Feedback className='invalid-feedback'>{errors.title?.message}</Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group>
+                <Col>
+                  <Row>
+                  <Form.Label>Event Date (Required)</Form.Label>
+                  </Row>
+                  <BsFillCalendarEventFill className=''/>
+                  <Controller
+                    control={control}
+                    name="date"
+                    render={({ field: { onChange, value } }) => (
+                      <ReactDatePicker
+                        selected={value}
+                        onChange={(date) => {
+                          onChange({ target: { value: date } } as any); // Here's the change
+                        }}
+                        dateFormat="MM/dd/yyyy"
+                        className={`form-control ${errors.date ? 'is-invalid' : ''}`}
+                      />
+                    )}
+                  />
+                  <Form.Control.Feedback className='invalid-feedback'>{errors.date?.message}</Form.Control.Feedback>
+                </Col>
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Image Upload (Optional)</Form.Label>
+                <Controller
+                  control={control}
+                  name="file"
+                  render={({ field: { onChange, value, ref } }) => (
+                    <Form.Control
+                      type='file'
+                      ref={ref}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        onChange(e.target.files?.[0]); // update the form value
+                        if (e.target.files) {
+                          setValue('file', e.target.files[0], { shouldValidate: true }); // set the file value for validation
+                        }
+                      }}
+                    />
+                  )}
+                />
+              </Form.Group>
+              <Form.Group className='mb-1'>
+                <Form.Label>Event description (Optional)</Form.Label>
+                <Form.Control type='string' {...register('description')} className={`form-control ${errors.description ? 'is-invalid' : ''}`}/>
+                <Form.Control.Feedback className='invalid-feedback'>{errors.description?.message}</Form.Control.Feedback>
+              </Form.Group>
+              <Button type='submit' disabled={loading || mutationLoading}>Submit Event</Button>
+              <Form.Label>{message}</Form.Label>
+              </Card.Body>
+            </Form>
+          </Card>
         </Col>
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Image Upload</Form.Label>
-        <Form.Control
-          type='file'
-          {...register('file')}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            if(e.target.files) {
-              setValue('file', e.target.files[0], { shouldValidate: true });
-            }
-          }}
-        />
-      </Form.Group>
-      <Button type='submit' disabled={loading || mutationLoading}>Submit Event</Button>
-      <Form.Label>{message}</Form.Label>
-    </Form>
+        <Col md={6} sm={12}>
+          <Card>
+            <Logo/>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   )
 };
 

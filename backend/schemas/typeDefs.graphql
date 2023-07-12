@@ -34,7 +34,7 @@ type Event {
   _id: ID
   date: Date
   title: String
-  discription: String
+  description: String
   file: String
 }
 
