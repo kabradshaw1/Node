@@ -45,6 +45,36 @@ const EventForm: React.FC = () => {
 
   const formSubmit: SubmitHandler<AddEventMutationVariables> = async data => {
     setLoading(true);
+    const { title, description, date, file } = data;
+
+    const payload: AddEventMutationVariables = {
+      title,
+      description,
+      date: date?.terget?.value
+    };
+
+    if (file) {
+      const fileData = await file;
+      payload.file = fileData;
+    };
+
+    try {
+      const response = await addEvent({
+        variables: payload
+      });
+
+      if (response && response.data) {
+        navigate('/')
+      } else if (response.errors) {
+        console.log(response.errors);
+        setMessage('An error has occured.');
+        setLoading(false);
+      }
+    } catch (e) {
+      console.log(e)
+      setMessage('An error has occured.');
+      setLoading(false);
+    }
   };
 
   return (

@@ -37,16 +37,9 @@ export type Event = {
   __typename?: 'Event';
   _id?: Maybe<Scalars['ID']['output']>;
   date?: Maybe<Scalars['Date']['output']>;
-  discription?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
   file?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
-};
-
-export type File = {
-  __typename?: 'File';
-  encoding?: Maybe<Scalars['String']['output']>;
-  filename: Scalars['String']['output'];
-  mimetype?: Maybe<Scalars['String']['output']>;
 };
 
 export type Mutation = {
@@ -67,7 +60,7 @@ export type MutationAddCommentArgs = {
 
 export type MutationAddEventArgs = {
   date: Scalars['Date']['input'];
-  discription?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   file?: InputMaybe<Scalars['Upload']['input']>;
   title: Scalars['String']['input'];
 };
@@ -168,12 +161,12 @@ export type AddCommentMutation = { __typename?: 'Mutation', addComment?: { __typ
 export type AddEventMutationVariables = Exact<{
   file?: InputMaybe<Scalars['Upload']['input']>;
   title: Scalars['String']['input'];
-  discription?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   date: Scalars['Date']['input'];
 }>;
 
 
-export type AddEventMutation = { __typename?: 'Mutation', addEvent?: { __typename?: 'Event', _id?: string | null, title?: string | null, discription?: string | null, date?: any | null, file?: string | null } | null };
+export type AddEventMutation = { __typename?: 'Mutation', addEvent?: { __typename?: 'Event', _id?: string | null, title?: string | null, description?: string | null, date?: any | null, file?: string | null } | null };
 
 export type PostQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -358,11 +351,11 @@ export type AddCommentMutationHookResult = ReturnType<typeof useAddCommentMutati
 export type AddCommentMutationResult = Apollo.MutationResult<AddCommentMutation>;
 export type AddCommentMutationOptions = Apollo.BaseMutationOptions<AddCommentMutation, AddCommentMutationVariables>;
 export const AddEventDocument = gql`
-    mutation addEvent($file: Upload, $title: String!, $discription: String, $date: Date!) {
-  addEvent(file: $file, title: $title, discription: $discription, date: $date) {
+    mutation addEvent($file: Upload, $title: String!, $description: String, $date: Date!) {
+  addEvent(file: $file, title: $title, description: $description, date: $date) {
     _id
     title
-    discription
+    description
     date
     file
   }
@@ -385,7 +378,7 @@ export type AddEventMutationFn = Apollo.MutationFunction<AddEventMutation, AddEv
  *   variables: {
  *      file: // value for 'file'
  *      title: // value for 'title'
- *      discription: // value for 'discription'
+ *      description: // value for 'description'
  *      date: // value for 'date'
  *   },
  * });
