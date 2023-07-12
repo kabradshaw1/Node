@@ -20,8 +20,7 @@ import {
 import dateScalar from "../utils/dateScalar";
 import { isAdmin } from '../utils/admin'
 import fs from 'fs';
-import { PutObjectCommand } from '@aws-sdk/client-s3';
-import { S3Client } from '@aws-sdk/client-s3';
+import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 
 interface Context {
   user?: Maybe<User>;
@@ -141,16 +140,16 @@ const resolvers = {
           const { createReadStream, filename, mimetype } = await args.file;
           const stream = createReadStream();
 
-          if (process.env.NODE_ENV === 'production') {
-            const params = {
-              Bucket: 'tricypaa',
-              Key: Date.now().toString(),
-              Body: stream,
-              ContentType: mimetype,
-            };
-            await context.s3.send(new PutObjectCommand(params));
-            filePath = `https://tricypaa.s3.amazonaws.com/${params.Key}`;
-          } else {
+          // if (process.env.NODE_ENV === 'production') {
+          //   const params = {
+          //     Bucket: 'tricypaa',
+          //     Key: Date.now().toString(),
+          //     Body: stream,
+          //     ContentType: mimetype,
+          //   };
+          //   await context.s3.send(new PutObjectCommand(params));
+          //   filePath = `https://tricypaa.s3.amazonaws.com/${params.Key}`;
+          // } else {
             const path = `./uploads/${Date.now()}-${filename}`;
             const writeStream = fs.createWriteStream(path);
             stream.pipe(writeStream);
@@ -159,7 +158,7 @@ const resolvers = {
               writeStream.on('error', reject);
             });
             filePath = path;
-          }
+          // }
         };
 
         const event = await EventModel.create({ ...args, file: filePath });

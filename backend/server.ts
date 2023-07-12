@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 dotenv.config();
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response } from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { typeDefs, resolvers } from './schemas';
 import { authMiddleware } from './utils/auth';
