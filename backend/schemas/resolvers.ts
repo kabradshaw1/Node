@@ -1,4 +1,4 @@
-import { AuthenticationError } from "apollo-server-express";
+import { AuthenticationError } from 'apollo-server-express';
 import { UserModel, User } from '../models/User';
 import { PostModel } from '../models/Post';
 import { EventModel } from '../models/Event'
@@ -23,7 +23,7 @@ import fs from 'fs';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { S3Client } from '@aws-sdk/client-s3';
 
-export interface Context {
+interface Context {
   user?: Maybe<User>;
   s3: S3Client;
 }

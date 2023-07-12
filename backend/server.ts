@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 import express, { Request, Response, NextFunction } from 'express';
 import { ApolloServer } from 'apollo-server-express';
+import graphqlUploadExpress from 'graphql-upload';
 import { typeDefs, resolvers } from './schemas';
 import { authMiddleware } from './utils/auth';
 import db from './config/connection';
