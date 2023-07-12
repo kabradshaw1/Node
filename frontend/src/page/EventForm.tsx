@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -23,7 +23,7 @@ const EventForm: React.FC = () => {
 
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-
+  console.log(loading)
   const validationSchema = Yup.object().shape({
     date: Yup.date().nullable().transform((curr, orig) => orig === '' ? null : curr).required('You must put choose a date'),
     title: Yup.string().required('You must set a title for event'),
@@ -50,17 +50,15 @@ const EventForm: React.FC = () => {
     const payload: AddEventMutationVariables = {
       title,
       description,
-      date: date?.terget?.value
-    };
-
-    if (file) {
-      const fileData = await file;
-      payload.file = fileData;
+      date: date?.target?.value
     };
 
     try {
       const response = await addEvent({
-        variables: payload
+        variables: {
+          ...payload,
+          file: file,
+        },
       });
 
       if (response && response.data) {
@@ -128,9 +126,11 @@ const EventForm: React.FC = () => {
                           setValue('file', e.target.files[0], { shouldValidate: true }); // set the file value for validation
                         }
                       }}
+                      isInvalid={!!errors.file} // add this line to mark the input as invalid if there are errors
                     />
                   )}
                 />
+                <Form.Control.Feedback className='invalid-feedback'>{errors.file?.message}</Form.Control.Feedback>
               </Form.Group>
               <Form.Group className='mb-1'>
                 <Form.Label>Event description (Optional)</Form.Label>
