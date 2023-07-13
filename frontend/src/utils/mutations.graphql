@@ -47,6 +47,12 @@ mutation addEvent($file: Upload, $title: String!, $description: String, $date: D
     title
     description
     date
-    imageUrl
+    file
+  }
+}
+
+mutation UploadFile($file: Upload!) {
+  singleUpload(file: $file) {
+    filename
   }
 }
