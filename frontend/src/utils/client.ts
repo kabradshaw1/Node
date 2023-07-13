@@ -8,7 +8,7 @@ const uploadLink = createUploadLink({
 });
 
 const authLink = setContext((_, { headers }) => {
-  // Get the token from the Redux store
+
   const token = store.getState().auth.token;
 
   return {

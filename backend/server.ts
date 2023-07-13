@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-dotenv.config();
 import express, { Request, Response } from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { typeDefs, resolvers } from './schemas';
@@ -8,6 +7,9 @@ import db from './config/connection';
 import { S3Client } from '@aws-sdk/client-s3';
 import multer from 'multer';
 import multerS3 from 'multer-s3';
+const {
+  graphqlUploadExpress, // A Koa implementation is also exported.
+} = require('graphql-upload');
 
 const s3 = new S3Client({ region: 'us-east-1a'});
 
@@ -41,6 +43,9 @@ const upload = multer({ storage: storage });
 const PORT = 4000;
 const app = express();
 
+// Add the graphqlUploadExpress middleware
+app.use(graphqlUploadExpress());
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -49,6 +54,7 @@ const server = new ApolloServer({
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
 
 // endpoint to handle file uploads
 app.post('/upload', upload.single('image'), (req: Request, res: Response) => {

@@ -21,6 +21,7 @@ import dateScalar from "../utils/dateScalar";
 import { isAdmin } from '../utils/admin'
 import fs from 'fs';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+const { GraphQLUpload } = require('graphql-upload');
 
 interface Context {
   user?: Maybe<User>;
@@ -29,6 +30,7 @@ interface Context {
 
 const resolvers = {
   Date: dateScalar,
+  Upload: GraphQLUpload,
   Query: {
     me: async (parent: ResolversParentTypes['Query'], context: Context) => {
       if (context.user) {
@@ -150,14 +152,23 @@ const resolvers = {
           //   await context.s3.send(new PutObjectCommand(params));
           //   filePath = `https://tricypaa.s3.amazonaws.com/${params.Key}`;
           // } else {
-            const path = `./uploads/${Date.now()}-${filename}`;
-            const writeStream = fs.createWriteStream(path);
-            stream.pipe(writeStream);
-            await new Promise((resolve, reject) => {
-              writeStream.on('finish', resolve);
-              writeStream.on('error', reject);
-            });
-            filePath = path;
+            try {
+              const path = `./uploads/${Date.now()}-${filename}`;
+              const writeStream = fs.createWriteStream(path);
+              stream.pipe(writeStream);
+              await new Promise((resolve, reject) => {
+                writeStream.on('finish', resolve);
+                writeStream.on('error', (error) => {
+                  fs.unlink(path, () => {}); // remove the file
+                  reject(error);
+                });
+              });
+              filePath = path;
+            } catch (error) {
+              // handle error, e.g. by logging it and returning an error response
+              console.error('File upload failed:', error);
+              throw new Error('File upload failed');
+            }
           // }
         };
 
