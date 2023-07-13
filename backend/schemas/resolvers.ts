@@ -21,17 +21,13 @@ import {
 import dateScalar from "../utils/dateScalar";
 import { isAdmin } from '../utils/admin'
 import fs from 'fs';
-// import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
-// import GraphQLUpload from 'graphql-upload/GraphQLUpload.mjs';
 
 interface Context {
   user?: Maybe<User>;
-  // s3: S3Client;
 }
 
 const resolvers = {
   Date: dateScalar,
-  // Upload: GraphQLUpload,
   Query: {
     me: async (parent: ResolversParentTypes['Query'], context: Context) => {
       if (context.user) {
@@ -90,9 +86,7 @@ const resolvers = {
           })
           .pipe(fs.createWriteStream(path))
           .on('error', reject)
-          .on('finish', resolve);
-
-          return { filename, mimetype, encoding };
+          .on('finish', () => resolve({ filename, mimetype, encoding }));
       })
     },
     addEvent: async (parent: ResolversParentTypes['Mutation'], args: MutationAddEventArgs, context: Context) => {
