@@ -38,6 +38,12 @@ type Event {
   file: String
 }
 
+type File {
+  filename: String!
+  mimetype: String!
+  encoding: String!
+}
+
 type Query {
   users: [User]
   me: User
@@ -46,11 +52,6 @@ type Query {
   post(_id: ID!): Post
 }
 
-type File {
-  filename: String!
-  mimetype: String!
-  encoding: String!
-}
 
 type Mutation {
   addUser(username: String!, email: String!, password: String!): Auth

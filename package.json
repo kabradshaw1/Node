@@ -12,16 +12,6 @@
     "url": "https://github.com/kabradshaw1/Node/issues"
   },
   "devDependencies": {
-    "@types/graphql-upload": "^16.0.0",
-    "@types/mongoose-unique-validator": "^1.0.7",
-    "aws-sdk-mock": "^5.8.0",
-    "concurrently": "^5.1.0",
-    "jest-mock-extended": "^3.0.4",
-    "mongodb-memory-server": "^8.13.0",
-    "nodemon": "^2.0.22",
-    "ts-node": "^10.9.1"
-  },
-  "dependencies": {
-    "graphql-upload": "^16.0.2"
+    "concurrently": "^5.1.0"
   }
 }
