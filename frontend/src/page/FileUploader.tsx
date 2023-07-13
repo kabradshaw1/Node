@@ -1,4 +1,4 @@
-import { useUploadFileMutation, UploadFileMutationVariables } from '../generated/graphql';
+import { useUploadFileMutation } from '../generated/graphql';
 import { useRef } from 'react';
 
 const FileUploader: React.FC = () => {
