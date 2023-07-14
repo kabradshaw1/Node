@@ -53,10 +53,13 @@ const EventForm: React.FC = () => {
       method: 'PUT',
       body: file
     });
-    if (results) {
-      
+    if (results.ok) {
+      navigate('/');
+    } else {
+      setMessage('An error has occured.');
+      setLoading(false);
+      throw new Error(`Failed to upload file: ${results.statusText}`);
     }
-    return results;
   };
 
   const formSubmit: SubmitHandler<FormSubmit> = async (data) => {
@@ -74,14 +77,10 @@ const EventForm: React.FC = () => {
 
       if (response.data?.addEvent?.signedURL) {
         uploadFile(response.data?.addEvent?.signedURL, data.file)
+      } else {
+        setMessage('An error has occured.');
+        setLoading(false);
       }
-      // if (response && response.data) {
-      //   navigate('/')
-      // } else if (response.errors) {
-      //   console.log(response.errors);
-        // setMessage('An error has occured.');
-
-      // }
     } catch (e) {
       console.log(e)
       setMessage('An error has occured.');

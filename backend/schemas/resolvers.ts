@@ -73,7 +73,7 @@ const resolvers = {
         if(args.fileName) {
           UploadURL = await generateDevUploadURL(args.fileName);
         };
-        await EventModel.create({...args, username: context.user.username});
+        await EventModel.create({...args, username: context.user.username, fileURL: `http://localhost:9000/dev-gql-s3-bucket/${args.fileName}`});
         return {signedURL: UploadURL};
       }
       throw new AuthenticationError('You need to be logged in!');

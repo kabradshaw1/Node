@@ -1,6 +1,6 @@
 const Profile: React.FC = () => {
   return (
-    <h3>Profile place holder</h3>
+    <h3>Profile place holder.  Coming soon!</h3>
 
   )
 }

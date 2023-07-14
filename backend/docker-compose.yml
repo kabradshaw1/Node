@@ -13,6 +13,7 @@ services:
       - MONGO_PASSWORD=${MONGO_PASSWORD}
       - MONGO_DB_NAME=${MONGO_DB_NAME}
       - MONGO_HOST=${MONGO_HOST}
+      - PRODUCTION=true
     depends_on:
       - mongo
 
