@@ -6,9 +6,7 @@ import * as Yup from 'yup';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import {
-  useAddEventMutation,
-  AddEventMutationVariables,} from '../generated/graphql';
+import { useAddEventMutation } from '../generated/graphql';
 import { useNavigate } from 'react-router-dom';
 import { BsFillCalendarEventFill } from "react-icons/bs";
 import Col from 'react-bootstrap/Col';
@@ -16,6 +14,13 @@ import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
 import Logo from '../components/Logo';
 import Container from 'react-bootstrap/Container';
+
+interface FormSubmit {
+  date: Date,
+  file?: any,
+  title: string,
+  description?: string
+}
 
 const EventForm: React.FC = () => {
   const [ addEvent, { data, loading: mutationLoading, error } ] = useAddEventMutation();
@@ -43,17 +48,16 @@ const EventForm: React.FC = () => {
     {resolver: yupResolver(validationSchema)}
   );
 
-  const formSubmit = async (data: any) => {
+  const formSubmit: SubmitHandler<FormSubmit> = async (data) => {
     setLoading(true);
-    const { title, description, date, fileName } = data;
-    console.log(data);
+
     try {
       const response = await addEvent({
         variables: {
-          title,
-          description,
-          date: date,  // Date object converted to ISO string
-          fileName
+          title: data.title,
+          description: data.description,
+          date: data.date.toString(),
+          fileName: data.file?.name
         },
 
       });
