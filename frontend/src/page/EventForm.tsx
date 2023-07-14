@@ -79,6 +79,7 @@ const EventForm: React.FC = () => {
         uploadFile(response.data?.addEvent?.signedURL, data.file)
       } else {
         setMessage('An error has occured.');
+        console.log('No signedURL returned.')
         setLoading(false);
       }
     } catch (e) {

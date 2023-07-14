@@ -18,7 +18,9 @@ import {
   Maybe,
 } from '../generated/graphql';
 import { isAdmin } from '../utils/admin'
-import {generateDevUploadURL} from '../utils/uploadURL'
+import {generateDevUploadURL} from '../utils/signedURL';
+import { bucket, bucketEndpoint } from '../utils/bucket';
+
 interface Context {
   user?: Maybe<User>;
 }
@@ -73,7 +75,7 @@ const resolvers = {
         if(args.fileName) {
           UploadURL = await generateDevUploadURL(args.fileName);
         };
-        await EventModel.create({...args, username: context.user.username, fileURL: `http://localhost:9000/dev-gql-s3-bucket/${args.fileName}`});
+        await EventModel.create({...args, username: context.user.username, fileURL: `${bucketEndpoint}/${bucket}/${args.fileName}`});
         return {signedURL: UploadURL};
       }
       throw new AuthenticationError('You need to be logged in!');

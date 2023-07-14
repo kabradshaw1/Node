@@ -1,6 +1,7 @@
 import AWS from 'aws-sdk';
 
 export const bucket = 'dev-gql-s3-bucket';
+export const bucketEndpoint = 'http://localhost:9000';
 
 export const s3 = new AWS.S3({
   endpoint: 'http://localhost:9000',
