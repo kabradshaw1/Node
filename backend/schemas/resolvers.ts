@@ -66,13 +66,16 @@ const resolvers = {
 
   },
   Mutation: {
-    addEvent: async (parent: ResolversParentTypes['Mutation'], args:MutationAddEventArgs) => {
-      let UploadURL;
-      if(args.fileName) {
-        UploadURL = generateDevUploadURL(args.fileName);
-      };
-      await EventModel.create(args);
-      return UploadURL
+    addEvent: async (parent: ResolversParentTypes['Mutation'], args:MutationAddEventArgs, context: Context) => {
+      if (context.user) {
+        isAdmin(context.user)
+        let UploadURL;
+        if(args.fileName) {
+          UploadURL = generateDevUploadURL(args.fileName);
+        };
+        await EventModel.create(args);
+        return UploadURL
+      }
     },
     addUser: async (parent: ResolversParentTypes['Mutation'], args: MutationAddUserArgs) => {
       const user = await UserModel.create(args);

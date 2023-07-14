@@ -4,13 +4,12 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Logo from '../components/Logo';
-import FileUploader from './FileUploader';
+
 
 const Home: React.FC = () => {
 
   return (
     <Container>
-      <FileUploader/>
       <Row>
         <Col xs={12} md={8} lg={6}>
           <Card>

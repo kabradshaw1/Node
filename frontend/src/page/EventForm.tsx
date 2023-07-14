@@ -43,17 +43,17 @@ const EventForm: React.FC = () => {
     {resolver: yupResolver(validationSchema)}
   );
 
-  const formSubmit: SubmitHandler<AddEventMutationVariables> = async data => {
+  const formSubmit = async (data: any) => {
     setLoading(true);
-    const { title, description, date, file } = data;
+    const { title, description, date, fileName } = data;
     console.log(data);
     try {
       const response = await addEvent({
         variables: {
           title,
           description,
-          date: date ? date.toISOString() : null,  // Date object converted to ISO string
-          file
+          date: date,  // Date object converted to ISO string
+          fileName
         },
 
       });

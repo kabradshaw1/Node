@@ -15,8 +15,6 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  Date: { input: any; output: any; }
-  Upload: { input: any; output: any; }
 };
 
 export type Auth = {
@@ -33,30 +31,13 @@ export type Comment = {
   username?: Maybe<Scalars['String']['output']>;
 };
 
-export type Event = {
-  __typename?: 'Event';
-  _id?: Maybe<Scalars['ID']['output']>;
-  date?: Maybe<Scalars['Date']['output']>;
-  description?: Maybe<Scalars['String']['output']>;
-  file?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-};
-
-export type File = {
-  __typename?: 'File';
-  encoding: Scalars['String']['output'];
-  filename: Scalars['String']['output'];
-  mimetype: Scalars['String']['output'];
-};
-
 export type Mutation = {
   __typename?: 'Mutation';
   addComment?: Maybe<Post>;
-  addEvent?: Maybe<Event>;
+  addEvent?: Maybe<Url>;
   addPost?: Maybe<Post>;
   addUser?: Maybe<Auth>;
   login?: Maybe<Auth>;
-  singleUpload: File;
 };
 
 
@@ -67,9 +48,9 @@ export type MutationAddCommentArgs = {
 
 
 export type MutationAddEventArgs = {
-  date: Scalars['Date']['input'];
+  date: Scalars['String']['input'];
   description?: InputMaybe<Scalars['String']['input']>;
-  file?: InputMaybe<Scalars['Upload']['input']>;
+  fileName?: InputMaybe<Scalars['String']['input']>;
   title: Scalars['String']['input'];
 };
 
@@ -89,11 +70,6 @@ export type MutationAddUserArgs = {
 export type MutationLoginArgs = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
-};
-
-
-export type MutationSingleUploadArgs = {
-  file: Scalars['Upload']['input'];
 };
 
 export type Post = {
@@ -128,6 +104,11 @@ export type QueryPostsArgs = {
 
 export type QueryUserArgs = {
   username: Scalars['String']['input'];
+};
+
+export type Url = {
+  __typename?: 'Url';
+  signedURL: Scalars['String']['output'];
 };
 
 export type User = {
@@ -172,21 +153,14 @@ export type AddCommentMutationVariables = Exact<{
 export type AddCommentMutation = { __typename?: 'Mutation', addComment?: { __typename?: 'Post', _id?: string | null, commentCount?: number | null, comments?: Array<{ __typename?: 'Comment', _id?: string | null, commentBody?: string | null, createdAt?: string | null, username?: string | null } | null> | null } | null };
 
 export type AddEventMutationVariables = Exact<{
-  file?: InputMaybe<Scalars['Upload']['input']>;
+  fileName?: InputMaybe<Scalars['String']['input']>;
   title: Scalars['String']['input'];
   description?: InputMaybe<Scalars['String']['input']>;
-  date: Scalars['Date']['input'];
+  date: Scalars['String']['input'];
 }>;
 
 
-export type AddEventMutation = { __typename?: 'Mutation', addEvent?: { __typename?: 'Event', _id?: string | null, title?: string | null, description?: string | null, date?: any | null, file?: string | null } | null };
-
-export type UploadFileMutationVariables = Exact<{
-  file: Scalars['Upload']['input'];
-}>;
-
-
-export type UploadFileMutation = { __typename?: 'Mutation', singleUpload: { __typename?: 'File', filename: string } };
+export type AddEventMutation = { __typename?: 'Mutation', addEvent?: { __typename?: 'Url', signedURL: string } | null };
 
 export type PostQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -371,13 +345,14 @@ export type AddCommentMutationHookResult = ReturnType<typeof useAddCommentMutati
 export type AddCommentMutationResult = Apollo.MutationResult<AddCommentMutation>;
 export type AddCommentMutationOptions = Apollo.BaseMutationOptions<AddCommentMutation, AddCommentMutationVariables>;
 export const AddEventDocument = gql`
-    mutation addEvent($file: Upload, $title: String!, $description: String, $date: Date!) {
-  addEvent(file: $file, title: $title, description: $description, date: $date) {
-    _id
-    title
-    description
-    date
-    file
+    mutation addEvent($fileName: String, $title: String!, $description: String, $date: String!) {
+  addEvent(
+    fileName: $fileName
+    title: $title
+    description: $description
+    date: $date
+  ) {
+    signedURL
   }
 }
     `;
@@ -396,7 +371,7 @@ export type AddEventMutationFn = Apollo.MutationFunction<AddEventMutation, AddEv
  * @example
  * const [addEventMutation, { data, loading, error }] = useAddEventMutation({
  *   variables: {
- *      file: // value for 'file'
+ *      fileName: // value for 'fileName'
  *      title: // value for 'title'
  *      description: // value for 'description'
  *      date: // value for 'date'
@@ -410,39 +385,6 @@ export function useAddEventMutation(baseOptions?: Apollo.MutationHookOptions<Add
 export type AddEventMutationHookResult = ReturnType<typeof useAddEventMutation>;
 export type AddEventMutationResult = Apollo.MutationResult<AddEventMutation>;
 export type AddEventMutationOptions = Apollo.BaseMutationOptions<AddEventMutation, AddEventMutationVariables>;
-export const UploadFileDocument = gql`
-    mutation UploadFile($file: Upload!) {
-  singleUpload(file: $file) {
-    filename
-  }
-}
-    `;
-export type UploadFileMutationFn = Apollo.MutationFunction<UploadFileMutation, UploadFileMutationVariables>;
-
-/**
- * __useUploadFileMutation__
- *
- * To run a mutation, you first call `useUploadFileMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUploadFileMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [uploadFileMutation, { data, loading, error }] = useUploadFileMutation({
- *   variables: {
- *      file: // value for 'file'
- *   },
- * });
- */
-export function useUploadFileMutation(baseOptions?: Apollo.MutationHookOptions<UploadFileMutation, UploadFileMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UploadFileMutation, UploadFileMutationVariables>(UploadFileDocument, options);
-      }
-export type UploadFileMutationHookResult = ReturnType<typeof useUploadFileMutation>;
-export type UploadFileMutationResult = Apollo.MutationResult<UploadFileMutation>;
-export type UploadFileMutationOptions = Apollo.BaseMutationOptions<UploadFileMutation, UploadFileMutationVariables>;
 export const PostDocument = gql`
     query post($id: ID!) {
   post(_id: $id) {

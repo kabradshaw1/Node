@@ -1,25 +1,25 @@
-import { useUploadFileMutation } from '../generated/graphql';
-import { useRef } from 'react';
+// import { useUploadFileMutation } from '../generated/graphql';
+// import { useRef } from 'react';
 
-const FileUploader: React.FC = () => {
-  const [uploadFile] = useUploadFileMutation();
-  const fileInput = useRef<HTMLInputElement>(null);
+// const FileUploader: React.FC = () => {
+//   const [uploadFile] = useUploadFileMutation();
+//   const fileInput = useRef<HTMLInputElement>(null);
 
-  const upload = () => {
-    
-    let file = fileInput.current?.files?.[0];
-    console.log(file)
-    if (file) {
-      uploadFile({ variables: { file } });
-    }
-  };
+//   const upload = () => {
 
-  return (
-    <form >
-      <input type="file" ref={fileInput} />
-      <button onClick={upload}>Upload</button>
-    </form >
-  );
-};
+//     let file = fileInput.current?.files?.[0];
+//     console.log(file)
+//     if (file) {
+//       uploadFile({ variables: { file } });
+//     }
+//   };
 
-export default FileUploader;
+//   return (
+//     <form >
+//       <input type="file" ref={fileInput} />
+//       <button onClick={upload}>Upload</button>
+//     </form >
+//   );
+// };
+
+// export default FileUploader;

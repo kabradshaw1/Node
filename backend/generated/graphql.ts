@@ -1,4 +1,4 @@
-import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
+import { GraphQLResolveInfo } from 'graphql';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -14,7 +14,6 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  Upload: { input: any; output: any; }
 };
 
 export type Auth = {
@@ -34,7 +33,7 @@ export type Comment = {
 export type Mutation = {
   __typename?: 'Mutation';
   addComment?: Maybe<Post>;
-  addEvent?: Maybe<UploadUrl>;
+  addEvent?: Maybe<Url>;
   addPost?: Maybe<Post>;
   addUser?: Maybe<Auth>;
   login?: Maybe<Auth>;
@@ -106,9 +105,9 @@ export type QueryUserArgs = {
   username: Scalars['String']['input'];
 };
 
-export type UploadUrl = {
-  __typename?: 'UploadURL';
-  url: Scalars['String']['output'];
+export type Url = {
+  __typename?: 'Url';
+  signedURL: Scalars['String']['output'];
 };
 
 export type User = {
@@ -200,8 +199,7 @@ export type ResolversTypes = {
   Post: ResolverTypeWrapper<Post>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
-  Upload: ResolverTypeWrapper<Scalars['Upload']['output']>;
-  UploadURL: ResolverTypeWrapper<UploadUrl>;
+  Url: ResolverTypeWrapper<Url>;
   User: ResolverTypeWrapper<User>;
 };
 
@@ -216,8 +214,7 @@ export type ResolversParentTypes = {
   Post: Post;
   Query: {};
   String: Scalars['String']['output'];
-  Upload: Scalars['Upload']['output'];
-  UploadURL: UploadUrl;
+  Url: Url;
   User: User;
 };
 
@@ -237,7 +234,7 @@ export type CommentResolvers<ContextType = any, ParentType extends ResolversPare
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   addComment?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationAddCommentArgs, 'PostId' | 'commentBody'>>;
-  addEvent?: Resolver<Maybe<ResolversTypes['UploadURL']>, ParentType, ContextType, RequireFields<MutationAddEventArgs, 'date' | 'title'>>;
+  addEvent?: Resolver<Maybe<ResolversTypes['Url']>, ParentType, ContextType, RequireFields<MutationAddEventArgs, 'date' | 'title'>>;
   addPost?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationAddPostArgs, 'postText'>>;
   addUser?: Resolver<Maybe<ResolversTypes['Auth']>, ParentType, ContextType, RequireFields<MutationAddUserArgs, 'email' | 'password' | 'username'>>;
   login?: Resolver<Maybe<ResolversTypes['Auth']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'email' | 'password'>>;
@@ -261,12 +258,8 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   users?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
 };
 
-export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
-  name: 'Upload';
-}
-
-export type UploadUrlResolvers<ContextType = any, ParentType extends ResolversParentTypes['UploadURL'] = ResolversParentTypes['UploadURL']> = {
-  url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+export type UrlResolvers<ContextType = any, ParentType extends ResolversParentTypes['Url'] = ResolversParentTypes['Url']> = {
+  signedURL?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -285,8 +278,7 @@ export type Resolvers<ContextType = any> = {
   Mutation?: MutationResolvers<ContextType>;
   Post?: PostResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
-  Upload?: GraphQLScalarType;
-  UploadURL?: UploadUrlResolvers<ContextType>;
+  Url?: UrlResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 };
 
