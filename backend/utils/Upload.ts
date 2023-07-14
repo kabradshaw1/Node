@@ -2,7 +2,7 @@ import stream from 'stream';
 
 import { bucket, s3 } from './bucket'
 
-export const generateDevUploadURL = (fileName: string) => {
+export const generateDevUploadURL = (fileName: string): string | void  => {
   const params = {
     Bucket: bucket,
     key: fileName, //not sure what to do here yet
@@ -16,5 +16,5 @@ export const generateDevUploadURL = (fileName: string) => {
       console.log('The URL is', url);
       return url;
     }
-  });
+  })
 };

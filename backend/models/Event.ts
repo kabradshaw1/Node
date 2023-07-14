@@ -22,6 +22,9 @@ export class Event extends TimeStamps {
 
   @prop({ maxlength:300 })
   public discription?: string;
+
+  @prop({ maxlength:50})
+  public fileURL?: string;
 };
 
 export const EventModel = getModelForClass(Event);

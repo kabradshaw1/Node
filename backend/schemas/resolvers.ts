@@ -24,7 +24,6 @@ interface Context {
 }
 
 const resolvers = {
-
   Query: {
     me: async (parent: ResolversParentTypes['Query'], context: Context) => {
       if (context.user) {
