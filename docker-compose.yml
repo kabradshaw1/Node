@@ -1,36 +1,53 @@
 version: '3.9'
 
 services:
-  dev:
-    build:
-      context: .
-    command: >
-      sh -c "npm start"
-    volumes:
-      - ./backend:/app/backend
-      - ./frontend:/app/frontend
-    ports:
-      - '3000:3000'
-      - '4000:4000'
-    environment:
-      - JWT_SECRET=mysecret
-      - REACT_APP_EX_API_URL=http://localhost:4000/api
-      - MONGO_USERNAME=dbuser
-      - MONGO_PASSWORD=dbpass
-      - MONGO_DB_NAME=devdb
-      - WATCHPACK_POLLING=500
-    depends_on:
-      - mongo
-  mongo:
-    image: mongo:6.0.7
+  minio:
+    image: minio/minio:latest
+    container_name: minio
     restart: always
     environment:
-      - MONGO_INITDB_ROOT_PASSWORD=dbpass
-      - MONGO_INITDB_ROOT_USERNAME=dbuser
-    volumes:
-      - mongo-data:/data/db
+      MINIO_ROOT_USER: ly1y6iMtYf
+      MINIO_ROOT_PASSWORD: VNcmMuDARGGstqzkXF1Van1Mlki5HGU9
     ports:
-      - "27017:27017"
+      - '9000:9000'
+      - '32765:32765'
+    volumes:
+      - minio-data:/data
+    command: server --address 0.0.0.0:9000 --console-address 0.0.0.0:32765 /tmp
 
 volumes:
-  mongo-data:
+  minio-data:
+
+#   dev:
+#     build:
+#       context: .
+#     command: >
+#       sh -c "npm start"
+#     volumes:
+#       - ./backend:/app/backend
+#       - ./frontend:/app/frontend
+#     ports:
+#       - '3000:3000'
+#       - '4000:4000'
+#     environment:
+#       - JWT_SECRET=mysecret
+#       - REACT_APP_EX_API_URL=http://localhost:4000/api
+#       - MONGO_USERNAME=dbuser
+#       - MONGO_PASSWORD=dbpass
+#       - MONGO_DB_NAME=devdb
+#       - WATCHPACK_POLLING=500
+#     depends_on:
+#       - mongo
+#   mongo:
+#     image: mongo:6.0.7
+#     restart: always
+#     environment:
+#       - MONGO_INITDB_ROOT_PASSWORD=dbpass
+#       - MONGO_INITDB_ROOT_USERNAME=dbuser
+#     volumes:
+#       - mongo-data:/data/db
+#     ports:
+#       - "27017:27017"
+
+# volumes:
+#   mongo-data:

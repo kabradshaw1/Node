@@ -14,7 +14,6 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  Date: { input: any; output: any; }
   Upload: { input: any; output: any; }
 };
 
@@ -32,31 +31,11 @@ export type Comment = {
   username?: Maybe<Scalars['String']['output']>;
 };
 
-export type Event = {
-  __typename?: 'Event';
-  _id?: Maybe<Scalars['ID']['output']>;
-  date?: Maybe<Scalars['Date']['output']>;
-  description?: Maybe<Scalars['String']['output']>;
-  file?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-};
-
-export type FileUploadResponse = {
-  __typename?: 'FileUploadResponse';
-  Bucket: Scalars['String']['output'];
-  ETag: Scalars['String']['output'];
-  Key: Scalars['String']['output'];
-  Location: Scalars['String']['output'];
-  key: Scalars['String']['output'];
-};
-
 export type Mutation = {
   __typename?: 'Mutation';
   addComment?: Maybe<Post>;
-  addEvent?: Maybe<Event>;
   addPost?: Maybe<Post>;
   addUser?: Maybe<Auth>;
-  fileUpload: FileUploadResponse;
   login?: Maybe<Auth>;
 };
 
@@ -64,14 +43,6 @@ export type Mutation = {
 export type MutationAddCommentArgs = {
   PostId: Scalars['ID']['input'];
   commentBody: Scalars['String']['input'];
-};
-
-
-export type MutationAddEventArgs = {
-  date: Scalars['Date']['input'];
-  description?: InputMaybe<Scalars['String']['input']>;
-  file?: InputMaybe<Scalars['Upload']['input']>;
-  title: Scalars['String']['input'];
 };
 
 
@@ -84,11 +55,6 @@ export type MutationAddUserArgs = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
   username: Scalars['String']['input'];
-};
-
-
-export type MutationFileUploadArgs = {
-  file: Scalars['Upload']['input'];
 };
 
 
@@ -214,9 +180,6 @@ export type ResolversTypes = {
   Auth: ResolverTypeWrapper<Auth>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   Comment: ResolverTypeWrapper<Comment>;
-  Date: ResolverTypeWrapper<Scalars['Date']['output']>;
-  Event: ResolverTypeWrapper<Event>;
-  FileUploadResponse: ResolverTypeWrapper<FileUploadResponse>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   Mutation: ResolverTypeWrapper<{}>;
@@ -232,9 +195,6 @@ export type ResolversParentTypes = {
   Auth: Auth;
   Boolean: Scalars['Boolean']['output'];
   Comment: Comment;
-  Date: Scalars['Date']['output'];
-  Event: Event;
-  FileUploadResponse: FileUploadResponse;
   ID: Scalars['ID']['output'];
   Int: Scalars['Int']['output'];
   Mutation: {};
@@ -259,34 +219,10 @@ export type CommentResolvers<ContextType = any, ParentType extends ResolversPare
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
-  name: 'Date';
-}
-
-export type EventResolvers<ContextType = any, ParentType extends ResolversParentTypes['Event'] = ResolversParentTypes['Event']> = {
-  _id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
-  date?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
-  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  file?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type FileUploadResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['FileUploadResponse'] = ResolversParentTypes['FileUploadResponse']> = {
-  Bucket?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  ETag?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  Key?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  Location?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  key?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   addComment?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationAddCommentArgs, 'PostId' | 'commentBody'>>;
-  addEvent?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType, RequireFields<MutationAddEventArgs, 'date' | 'title'>>;
   addPost?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationAddPostArgs, 'postText'>>;
   addUser?: Resolver<Maybe<ResolversTypes['Auth']>, ParentType, ContextType, RequireFields<MutationAddUserArgs, 'email' | 'password' | 'username'>>;
-  fileUpload?: Resolver<ResolversTypes['FileUploadResponse'], ParentType, ContextType, RequireFields<MutationFileUploadArgs, 'file'>>;
   login?: Resolver<Maybe<ResolversTypes['Auth']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'email' | 'password'>>;
 };
 
@@ -324,9 +260,6 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 export type Resolvers<ContextType = any> = {
   Auth?: AuthResolvers<ContextType>;
   Comment?: CommentResolvers<ContextType>;
-  Date?: GraphQLScalarType;
-  Event?: EventResolvers<ContextType>;
-  FileUploadResponse?: FileUploadResponseResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Post?: PostResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
