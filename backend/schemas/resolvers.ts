@@ -1,7 +1,7 @@
 import { AuthenticationError } from 'apollo-server-express';
 import { UserModel, User } from '../models/User';
-import { PostModel } from '../models/Post';
-import { EventModel } from '../models/Event'
+import { PostModel, Post } from '../models/Post';
+import { EventModel, Event } from '../models/Event'
 import { signToken } from "../utils/auth";
 import {
   MutationAddUserArgs,
@@ -73,9 +73,10 @@ const resolvers = {
         if(args.fileName) {
           UploadURL = generateDevUploadURL(args.fileName);
         };
-        await EventModel.create(args);
+        await EventModel.create({...args, username: context.user.username});
         return UploadURL
       }
+      throw new AuthenticationError('You need to be logged in!');
     },
     addUser: async (parent: ResolversParentTypes['Mutation'], args: MutationAddUserArgs) => {
       const user = await UserModel.create(args);
