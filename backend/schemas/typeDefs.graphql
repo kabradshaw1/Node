@@ -1,4 +1,3 @@
-scalar Date
 scalar Upload
 
 type User {
@@ -30,20 +29,6 @@ type Comment {
   username: String
 }
 
-type Event {
-  _id: ID
-  date: Date
-  title: String
-  description: String
-  file: String
-}
-
-type File {
-  filename: String!
-  mimetype: String!
-  encoding: String!
-}
-
 type Query {
   users: [User]
   me: User
@@ -58,6 +43,4 @@ type Mutation {
   login(email: String!, password: String!): Auth
   addPost(postText: String!): Post
   addComment(commentBody: String!, PostId: ID!): Post
-  addEvent(file: Upload, title: String!, description: String, date: Date!): Event
-  singleUpload(file: Upload!): File!
 }

@@ -41,11 +41,13 @@ export type Event = {
   title?: Maybe<Scalars['String']['output']>;
 };
 
-export type File = {
-  __typename?: 'File';
-  encoding: Scalars['String']['output'];
-  filename: Scalars['String']['output'];
-  mimetype: Scalars['String']['output'];
+export type FileUploadResponse = {
+  __typename?: 'FileUploadResponse';
+  Bucket: Scalars['String']['output'];
+  ETag: Scalars['String']['output'];
+  Key: Scalars['String']['output'];
+  Location: Scalars['String']['output'];
+  key: Scalars['String']['output'];
 };
 
 export type Mutation = {
@@ -54,8 +56,8 @@ export type Mutation = {
   addEvent?: Maybe<Event>;
   addPost?: Maybe<Post>;
   addUser?: Maybe<Auth>;
+  fileUpload: FileUploadResponse;
   login?: Maybe<Auth>;
-  singleUpload: File;
 };
 
 
@@ -85,14 +87,14 @@ export type MutationAddUserArgs = {
 };
 
 
-export type MutationLoginArgs = {
-  email: Scalars['String']['input'];
-  password: Scalars['String']['input'];
+export type MutationFileUploadArgs = {
+  file: Scalars['Upload']['input'];
 };
 
 
-export type MutationSingleUploadArgs = {
-  file: Scalars['Upload']['input'];
+export type MutationLoginArgs = {
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
 };
 
 export type Post = {
@@ -214,7 +216,7 @@ export type ResolversTypes = {
   Comment: ResolverTypeWrapper<Comment>;
   Date: ResolverTypeWrapper<Scalars['Date']['output']>;
   Event: ResolverTypeWrapper<Event>;
-  File: ResolverTypeWrapper<File>;
+  FileUploadResponse: ResolverTypeWrapper<FileUploadResponse>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   Mutation: ResolverTypeWrapper<{}>;
@@ -232,7 +234,7 @@ export type ResolversParentTypes = {
   Comment: Comment;
   Date: Scalars['Date']['output'];
   Event: Event;
-  File: File;
+  FileUploadResponse: FileUploadResponse;
   ID: Scalars['ID']['output'];
   Int: Scalars['Int']['output'];
   Mutation: {};
@@ -270,10 +272,12 @@ export type EventResolvers<ContextType = any, ParentType extends ResolversParent
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type FileResolvers<ContextType = any, ParentType extends ResolversParentTypes['File'] = ResolversParentTypes['File']> = {
-  encoding?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  filename?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  mimetype?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+export type FileUploadResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['FileUploadResponse'] = ResolversParentTypes['FileUploadResponse']> = {
+  Bucket?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  ETag?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  Key?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  Location?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  key?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -282,8 +286,8 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   addEvent?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType, RequireFields<MutationAddEventArgs, 'date' | 'title'>>;
   addPost?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationAddPostArgs, 'postText'>>;
   addUser?: Resolver<Maybe<ResolversTypes['Auth']>, ParentType, ContextType, RequireFields<MutationAddUserArgs, 'email' | 'password' | 'username'>>;
+  fileUpload?: Resolver<ResolversTypes['FileUploadResponse'], ParentType, ContextType, RequireFields<MutationFileUploadArgs, 'file'>>;
   login?: Resolver<Maybe<ResolversTypes['Auth']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'email' | 'password'>>;
-  singleUpload?: Resolver<ResolversTypes['File'], ParentType, ContextType, RequireFields<MutationSingleUploadArgs, 'file'>>;
 };
 
 export type PostResolvers<ContextType = any, ParentType extends ResolversParentTypes['Post'] = ResolversParentTypes['Post']> = {
@@ -322,7 +326,7 @@ export type Resolvers<ContextType = any> = {
   Comment?: CommentResolvers<ContextType>;
   Date?: GraphQLScalarType;
   Event?: EventResolvers<ContextType>;
-  File?: FileResolvers<ContextType>;
+  FileUploadResponse?: FileUploadResponseResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Post?: PostResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;

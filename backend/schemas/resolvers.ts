@@ -8,8 +8,6 @@ import {
   MutationLoginArgs,
   MutationAddPostArgs,
   MutationAddCommentArgs,
-  MutationAddEventArgs,
-  MutationSingleUploadArgs,
 
   QueryUserArgs,
   QueryPostArgs,
@@ -19,7 +17,6 @@ import {
   Maybe,
 } from '../generated/graphql';
 import { isAdmin } from '../utils/admin'
-
 
 interface Context {
   user?: Maybe<User>;
@@ -69,12 +66,6 @@ const resolvers = {
 
   },
   Mutation: {
-    addEvent: async (parent: ResolversParentTypes['Mutation'], args: MutationAddEventArgs, context: Context) => {
-      if (context.user) {
-        return
-      }
-      throw new AuthenticationError('You need to be logged in!');
-    },
     addUser: async (parent: ResolversParentTypes['Mutation'], args: MutationAddUserArgs) => {
       const user = await UserModel.create(args);
       const token = signToken(user);
@@ -135,8 +126,6 @@ const resolvers = {
 
       throw new AuthenticationError('You need to be logged in!');
     },
-
-
   },
 
 };
