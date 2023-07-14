@@ -18,7 +18,7 @@ export class Event extends TimeStamps {
   public username!: string;
 
   @prop({ maxlength: 100 })
-  public file?: string;
+  public fileName?: string;
 
   @prop({ maxlength:300 })
   public discription?: string;

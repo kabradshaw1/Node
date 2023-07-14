@@ -8,6 +8,7 @@ import {
   MutationLoginArgs,
   MutationAddPostArgs,
   MutationAddCommentArgs,
+  MutationAddEventArgs,
 
   QueryUserArgs,
   QueryPostArgs,
@@ -17,7 +18,7 @@ import {
   Maybe,
 } from '../generated/graphql';
 import { isAdmin } from '../utils/admin'
-
+import {generateDevUploadURL} from '../utils/Upload'
 interface Context {
   user?: Maybe<User>;
 }
@@ -66,6 +67,14 @@ const resolvers = {
 
   },
   Mutation: {
+    addEvent: async (parent: ResolversParentTypes['Mutation'], args:MutationAddEventArgs) => {
+      let UploadURL;
+      if(args.fileName) {
+        UploadURL = generateDevUploadURL(args.fileName);
+      };
+      await EventModel.create(args);
+      return UploadURL
+    },
     addUser: async (parent: ResolversParentTypes['Mutation'], args: MutationAddUserArgs) => {
       const user = await UserModel.create(args);
       const token = signToken(user);
