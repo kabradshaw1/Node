@@ -1,7 +1,7 @@
 import { AuthenticationError } from 'apollo-server-express';
 import { UserModel, User } from '../models/User';
-import { PostModel, Post } from '../models/Post';
-import { EventModel, Event } from '../models/Event'
+import { PostModel } from '../models/Post';
+import { EventModel } from '../models/Event'
 import { signToken } from "../utils/auth";
 import {
   MutationAddUserArgs,
@@ -18,7 +18,7 @@ import {
   Maybe,
 } from '../generated/graphql';
 import { isAdmin } from '../utils/admin'
-import {generateDevUploadURL} from '../utils/Upload'
+import {generateDevUploadURL} from '../utils/uploadURL'
 interface Context {
   user?: Maybe<User>;
 }
@@ -71,10 +71,10 @@ const resolvers = {
         isAdmin(context.user)
         let UploadURL;
         if(args.fileName) {
-          UploadURL = generateDevUploadURL(args.fileName);
+          UploadURL = await generateDevUploadURL(args.fileName);
         };
         await EventModel.create({...args, username: context.user.username});
-        return UploadURL
+        return {signedURL: UploadURL};
       }
       throw new AuthenticationError('You need to be logged in!');
     },

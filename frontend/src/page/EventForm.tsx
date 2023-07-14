@@ -48,6 +48,14 @@ const EventForm: React.FC = () => {
     {resolver: yupResolver(validationSchema)}
   );
 
+  const uploadFile = async (signedURL: string, file: any) => {
+    const results = await fetch(signedURL, {
+      method: 'PUT',
+      body: file
+    });
+    return results;
+  };
+
   const formSubmit: SubmitHandler<FormSubmit> = async (data) => {
     setLoading(true);
 
@@ -59,16 +67,18 @@ const EventForm: React.FC = () => {
           date: data.date.toString(),
           fileName: data.file?.name
         },
-
       });
 
-      if (response && response.data) {
-        navigate('/')
-      } else if (response.errors) {
-        console.log(response.errors);
-        setMessage('An error has occured.');
-        setLoading(false);
+      if (response.data?.addEvent?.signedURL) {
+        uploadFile(response.data?.addEvent?.signedURL, data.file)
       }
+      // if (response && response.data) {
+      //   navigate('/')
+      // } else if (response.errors) {
+      //   console.log(response.errors);
+        // setMessage('An error has occured.');
+        setLoading(false);
+      // }
     } catch (e) {
       console.log(e)
       setMessage('An error has occured.');
