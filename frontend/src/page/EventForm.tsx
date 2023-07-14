@@ -49,9 +49,13 @@ const EventForm: React.FC = () => {
   );
 
   const uploadFile = async (signedURL: string, file: any) => {
+    console.log(file)
     const results = await fetch(signedURL, {
       method: 'PUT',
-      body: file
+      body: file,
+      headers: {
+        'Content-Type': file.type
+      }
     });
     if (results.ok) {
       navigate('/');

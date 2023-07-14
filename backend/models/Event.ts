@@ -23,7 +23,7 @@ export class Event extends TimeStamps {
   @prop({ maxlength:300 })
   public discription?: string;
 
-  @prop({ maxlength:50})
+  @prop({ maxlength:100})
   public fileURL?: string;
 };
 

@@ -26,6 +26,7 @@ export const generateDevUploadURL = async (fileName: string) => {
     Bucket: bucket,
     Key: fileName,
     Expires: 60,
+    ContentType: 'image/png'
   };
   try {
     const url = await s3.getSignedUrlPromise('putObject', params);
