@@ -21,12 +21,12 @@ export const generateProdUploadURL = (fileName: string) => {
   return generateUploadURL(process.env.BUCKET_NAME, fileName);
 };
 
-export const generateDevUploadURL = async (fileName: string) => {
+export const generateDevUploadURL = async (fileName: string, fileType: string): Promise<string>  => {
   const params = {
     Bucket: bucket,
     Key: fileName,
     Expires: 60,
-    ContentType: 'image/png'
+    ContentType: fileType
   };
   try {
     const url = await s3.getSignedUrlPromise('putObject', params);

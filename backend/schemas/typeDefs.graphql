@@ -44,5 +44,5 @@ type Mutation {
   login(email: String!, password: String!): Auth
   addPost(postText: String!): Post
   addComment(commentBody: String!, PostId: ID!): Post
-  addEvent(fileName: String, title: String!, description: String, date: String!): Url
+  addEvent(fileName: String, fileType: String, title: String!, description: String, date: String!): Url
 }

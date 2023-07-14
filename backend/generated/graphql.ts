@@ -50,6 +50,7 @@ export type MutationAddEventArgs = {
   date: Scalars['String']['input'];
   description?: InputMaybe<Scalars['String']['input']>;
   fileName?: InputMaybe<Scalars['String']['input']>;
+  fileType?: InputMaybe<Scalars['String']['input']>;
   title: Scalars['String']['input'];
 };
 

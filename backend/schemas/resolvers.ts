@@ -72,8 +72,8 @@ const resolvers = {
       if (context.user) {
         isAdmin(context.user)
         let UploadURL;
-        if(args.fileName) {
-          UploadURL = await generateDevUploadURL(args.fileName);
+        if(args.fileName && args.fileType) {
+          UploadURL = await generateDevUploadURL(args.fileName, args.fileType);
         };
         await EventModel.create({...args, username: context.user.username, fileURL: `${bucketEndpoint}/${bucket}/${args.fileName}`});
         return {signedURL: UploadURL};
