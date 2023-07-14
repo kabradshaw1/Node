@@ -53,6 +53,9 @@ const EventForm: React.FC = () => {
       method: 'PUT',
       body: file
     });
+    if (results) {
+      
+    }
     return results;
   };
 
@@ -77,7 +80,7 @@ const EventForm: React.FC = () => {
       // } else if (response.errors) {
       //   console.log(response.errors);
         // setMessage('An error has occured.');
-        setLoading(false);
+
       // }
     } catch (e) {
       console.log(e)

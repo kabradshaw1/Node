@@ -6,7 +6,7 @@ import PostList from "../components/PostList";
 const Forums: React.FC = () => {
   return (
     <Col>
-        <PostForm/>
+      <PostForm/>
       <h2>Posts</h2>
       <PostList/>
     </Col>
