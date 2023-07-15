@@ -76,7 +76,6 @@ const resolvers = {
             if (event.description) {
                 eventWithOptionalFields.description = event.description;
             }
-
             return eventWithOptionalFields;
         }));
         return eventsWithSignedURLs;
