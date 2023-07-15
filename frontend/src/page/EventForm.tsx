@@ -30,7 +30,7 @@ const EventForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   const validationSchema = Yup.object().shape({
-    date: Yup.date().nullable().transform((curr, orig) => orig === '' ? null : curr).required('You must put choose a date'),
+    date: Yup.date().nullable().transform((curr, orig) => orig === '' ? null : curr).min(new Date(), 'You must pick a future date.').required('You must choose a date'),
     title: Yup.string().required('You must set a title for event'),
     file: Yup.mixed()
       .test('fileSize', 'The file is too large', value => {

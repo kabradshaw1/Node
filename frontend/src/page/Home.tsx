@@ -51,7 +51,6 @@ const Home: React.FC = () => {
           <EventList/>
         </Col>
       </Row>
-
     </Container>
   )
 };

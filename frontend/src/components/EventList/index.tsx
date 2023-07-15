@@ -1,6 +1,6 @@
 import EventCard from "./EventCard";
-import {useEventsQuery} from '../../generated/graphql'
-import Row from 'react-bootstrap/Row'
+import {useEventsQuery} from '../../generated/graphql';
+
 const EventList: React.FC = () => {
   const { loading, error, data } = useEventsQuery()
   console.log(data)
@@ -12,11 +12,9 @@ const EventList: React.FC = () => {
 
   return (
     <>
-      {events && events.map((event, index) => {
+      {events && events.map((event) => {
         return(
-          <Row className='mb-1' key={index}>
-            <EventCard data={event}/>
-          </Row>
+          <EventCard data={event}/>
         )
       })}
     </>
