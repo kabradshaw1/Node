@@ -11,13 +11,13 @@ const Home: React.FC = () => {
   return (
     <Container>
       <Row>
-        <Col xs={12} md={8} lg={6}>
+        <Col sm={12} md={6}>
           <Card>
             <Card.Header><h2>Welcome to TRICYPYAA's homepage!</h2></Card.Header>
             <Logo/>
           </Card>
         </Col>
-        <Col>
+        <Col  sm={12} md={6}  lg={3}>
           <Card>
             <Card.Header>
               <h3>TRICYPAA's Mission.</h3>
@@ -31,12 +31,11 @@ const Home: React.FC = () => {
               events along with encouraging participation in statewide NCCYPAA functions. In the
               spirit of service, our primary purpose is to share the message of recovery
               to newcomers in an attractive setting for young people.
-
               </Card.Text>
             </Card.Body>
           </Card>
         </Col>
-        <Col>
+        <Col  sm={12} md={6} lg={3}>
           <Card>
             <Card.Header>
               <h3>This Site</h3>
