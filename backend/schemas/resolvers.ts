@@ -75,7 +75,7 @@ const resolvers = {
         if(args.fileName && args.fileType) {
           UploadURL = await generateUploadURL(args.fileName, args.fileType);
         };
-        await EventModel.create({...args, username: context.user.username, fileURL: `${bucketEndpoint}/${bucket}/${args.fileName}`});
+        await EventModel.create({...args, username: context.user.username});
         return {signedURL: UploadURL};
       }
       throw new GraphQLError('You need to be logged in!');
