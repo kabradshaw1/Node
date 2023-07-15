@@ -68,14 +68,15 @@ const EventForm: React.FC = () => {
 
   const formSubmit: SubmitHandler<FormSubmit> = async (data) => {
     setLoading(true);
-
+    console.log(data.file)
     try {
       const response = await addEvent({
         variables: {
           title: data.title,
           description: data.description,
           date: data.date.toString(),
-          fileName: data.file?.name
+          fileName: data.file?.name,
+          fileType: data.file?.type
         },
       });
 
