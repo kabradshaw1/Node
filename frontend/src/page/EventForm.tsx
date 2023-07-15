@@ -49,7 +49,7 @@ const EventForm: React.FC = () => {
   );
 
   const uploadFile = async (signedURL: string, file: any) => {
-    console.log(file)
+
     const results = await fetch(signedURL, {
       method: 'PUT',
       body: file,
@@ -68,7 +68,7 @@ const EventForm: React.FC = () => {
 
   const formSubmit: SubmitHandler<FormSubmit> = async (data) => {
     setLoading(true);
-    console.log(data.file)
+
     try {
       const response = await addEvent({
         variables: {

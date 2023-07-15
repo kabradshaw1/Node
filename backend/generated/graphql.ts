@@ -30,6 +30,14 @@ export type Comment = {
   username?: Maybe<Scalars['String']['output']>;
 };
 
+export type Event = {
+  __typename?: 'Event';
+  date?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  signedURL?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addComment?: Maybe<Post>;
@@ -84,6 +92,7 @@ export type Post = {
 
 export type Query = {
   __typename?: 'Query';
+  event?: Maybe<Event>;
   me?: Maybe<User>;
   post?: Maybe<Post>;
   posts?: Maybe<Array<Maybe<Post>>>;
@@ -108,7 +117,7 @@ export type QueryUserArgs = {
 
 export type Url = {
   __typename?: 'Url';
-  signedURL: Scalars['String']['output'];
+  signedURL?: Maybe<Scalars['String']['output']>;
 };
 
 export type User = {
@@ -194,6 +203,7 @@ export type ResolversTypes = {
   Auth: ResolverTypeWrapper<Auth>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   Comment: ResolverTypeWrapper<Comment>;
+  Event: ResolverTypeWrapper<Event>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   Mutation: ResolverTypeWrapper<{}>;
@@ -209,6 +219,7 @@ export type ResolversParentTypes = {
   Auth: Auth;
   Boolean: Scalars['Boolean']['output'];
   Comment: Comment;
+  Event: Event;
   ID: Scalars['ID']['output'];
   Int: Scalars['Int']['output'];
   Mutation: {};
@@ -233,6 +244,14 @@ export type CommentResolvers<ContextType = any, ParentType extends ResolversPare
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type EventResolvers<ContextType = any, ParentType extends ResolversParentTypes['Event'] = ResolversParentTypes['Event']> = {
+  date?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  signedURL?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   addComment?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationAddCommentArgs, 'PostId' | 'commentBody'>>;
   addEvent?: Resolver<Maybe<ResolversTypes['Url']>, ParentType, ContextType, RequireFields<MutationAddEventArgs, 'date' | 'title'>>;
@@ -252,6 +271,7 @@ export type PostResolvers<ContextType = any, ParentType extends ResolversParentT
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  event?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType>;
   me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   post?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<QueryPostArgs, '_id'>>;
   posts?: Resolver<Maybe<Array<Maybe<ResolversTypes['Post']>>>, ParentType, ContextType, Partial<QueryPostsArgs>>;
@@ -260,7 +280,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 };
 
 export type UrlResolvers<ContextType = any, ParentType extends ResolversParentTypes['Url'] = ResolversParentTypes['Url']> = {
-  signedURL?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  signedURL?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -276,6 +296,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 export type Resolvers<ContextType = any> = {
   Auth?: AuthResolvers<ContextType>;
   Comment?: CommentResolvers<ContextType>;
+  Event?: EventResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Post?: PostResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;

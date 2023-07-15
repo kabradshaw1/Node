@@ -18,8 +18,8 @@ import {
   Maybe,
 } from '../generated/graphql';
 import { isAdmin } from '../utils/admin'
-import {generateUploadURL} from '../utils/signedURL';
-import { bucket, bucketEndpoint } from '../utils/bucket';
+import {generateUploadURL, generateDownloadURL} from '../utils/signedURL';
+import e from 'express';
 
 interface Context {
   user?: Maybe<User>;
@@ -63,8 +63,18 @@ const resolvers = {
       const posts = await PostModel.find(params).sort({ createdAt: -1 });
 
       return posts;
-    }
+    },
+    event: async (parent: ResolversParentTypes['Query']) => {
+      const events = await EventModel.find()
 
+      return events.map(async (event) => {
+        if (event.fileName) {
+          const signedURL = await generateDownloadURL(event.fileName);
+          return {...event.toObject(), signedURL, description: event.description}
+        }
+      })
+      return {}
+    }
 
   },
   Mutation: {

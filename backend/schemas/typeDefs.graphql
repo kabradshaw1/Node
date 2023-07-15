@@ -20,6 +20,13 @@ type Post {
   comments: [Comment]
 }
 
+type Event {
+  title: String
+  description: String
+  signedURL: String
+  date: String
+}
+
 type Comment {
   _id: ID
   commentBody: String
@@ -28,7 +35,7 @@ type Comment {
 }
 
 type Url {
-  signedURL: String!
+  signedURL: String
 }
 
 type Query {
@@ -37,6 +44,7 @@ type Query {
   user(username: String!): User
   posts(username: String): [Post]
   post(_id: ID!): Post
+  event: Event
 }
 
 type Mutation {
