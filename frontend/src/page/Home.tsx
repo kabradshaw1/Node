@@ -11,7 +11,6 @@ const Home: React.FC = () => {
   return (
     <Container>
       <Row>
-
         <Col sm={12} md={6}>
           <Card>
             <Card.Header><h2>Welcome to TRICYPYAA's homepage!</h2></Card.Header>

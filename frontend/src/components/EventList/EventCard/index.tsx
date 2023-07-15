@@ -7,6 +7,7 @@ interface SingleEventProp {
 const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
   return (
     <Card>
+      
       <Card.Header>{event?.title}</Card.Header>
       <Card.Body>
         {event?.signedURL ? <Card.Img src={event.signedURL}/> : null}

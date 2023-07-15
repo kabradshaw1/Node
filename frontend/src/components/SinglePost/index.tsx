@@ -21,12 +21,11 @@ const SinglePost: React.FC<SinglePostProp> = ({ data: post })  => {
           {post._id && <CommentForm PostId={post._id}/>}
         </Card.Body>
       </Card>
-
       <Card className='mb-2 mt-1'>
         <Card.Header>Comments</Card.Header>
         {post.comments && post.comments.map((comment) => (
           <Comment key={comment?._id} data={comment}/>
-          ))}
+        ))}
       </Card>
     </Card>
   )
