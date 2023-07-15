@@ -13,9 +13,9 @@ const PostList: React.FC = () => {
 
   return (
     <>
-      {posts && posts.map((post) => {
+      {posts && posts.map((post, index) => {
         return (
-          <Row className="mb-1" key={post?._id}>
+          <Row className="mb-1" key={index}>
             <SinglePost  data={post}/>
           </Row>
         )
