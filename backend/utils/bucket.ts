@@ -8,6 +8,7 @@ const s3Config = isProduction
   ? { region: process.env.REGION }
   : {
       endpoint: bucketEndpoint,
+      region: process.env.REGION,
       credentials: {
         accessKeyId: 'ly1y6iMtYf',
         secretAccessKey: 'VNcmMuDARGGstqzkXF1Van1Mlki5HGU9',

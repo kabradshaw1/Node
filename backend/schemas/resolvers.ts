@@ -1,4 +1,4 @@
-import { AuthenticationError } from 'apollo-server-express';
+import { GraphQLError } from 'graphql';
 import { UserModel, User } from '../models/User';
 import { PostModel } from '../models/Post';
 import { EventModel } from '../models/Event'
@@ -39,7 +39,7 @@ const resolvers = {
         return userData;
       }
 
-      throw new AuthenticationError('You need to be logged in!');
+      throw new GraphQLError('You need to be logged in!');
     },
     user: async (parent: ResolversParentTypes['Query'], args: QueryUserArgs) => {
       const user = await UserModel.findOne({ username: args.username }).select('-__v -password').populate('posts');
@@ -78,7 +78,7 @@ const resolvers = {
         await EventModel.create({...args, username: context.user.username, fileURL: `${bucketEndpoint}/${bucket}/${args.fileName}`});
         return {signedURL: UploadURL};
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new GraphQLError('You need to be logged in!');
     },
     addUser: async (parent: ResolversParentTypes['Mutation'], args: MutationAddUserArgs) => {
       const user = await UserModel.create(args);
@@ -90,13 +90,13 @@ const resolvers = {
       const user = await UserModel.findOne({ email });
 
       if (!user) {
-        throw new AuthenticationError('Incorrect credentials');
+        throw new GraphQLError('In correct credentials!');
       }
 
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw new AuthenticationError('Incorrect credentials');
+        throw new GraphQLError('In correct credentials!');
       }
 
       const token = signToken(user);
@@ -116,7 +116,7 @@ const resolvers = {
         return post;
       }
 
-      throw new AuthenticationError('You need to be logged in!');
+      throw new GraphQLError('You need to be logged in!');
     },
     addComment: async (parent: ResolversParentTypes['Mutation'], args: MutationAddCommentArgs, context: Context) => {
       if(context.user) {
@@ -138,7 +138,7 @@ const resolvers = {
         return updatedPost;
       }
 
-      throw new AuthenticationError('You need to be logged in!');
+      throw new GraphQLError('You need to be logged in!');
     },
   },
 
