@@ -18,7 +18,7 @@ import {
   Maybe,
 } from '../generated/graphql';
 import { isAdmin } from '../utils/admin'
-import {generateDevUploadURL} from '../utils/signedURL';
+import {generateUploadURL} from '../utils/signedURL';
 import { bucket, bucketEndpoint } from '../utils/bucket';
 
 interface Context {
@@ -73,7 +73,7 @@ const resolvers = {
         isAdmin(context.user)
         let UploadURL;
         if(args.fileName && args.fileType) {
-          UploadURL = await generateDevUploadURL(args.fileName, args.fileType);
+          UploadURL = await generateUploadURL(args.fileName, args.fileType);
         };
         await EventModel.create({...args, username: context.user.username, fileURL: `${bucketEndpoint}/${bucket}/${args.fileName}`});
         return {signedURL: UploadURL};
