@@ -19,7 +19,6 @@ import {
 } from '../generated/graphql';
 import { isAdmin } from '../utils/admin'
 import {generateUploadURL, generateDownloadURL} from '../utils/signedURL';
-import e from 'express';
 
 interface Context {
   user?: Maybe<User>;
@@ -64,18 +63,24 @@ const resolvers = {
 
       return posts;
     },
-    event: async (parent: ResolversParentTypes['Query']) => {
-      const events = await EventModel.find()
+    events: async (parent: ResolversParentTypes['Query']) => {
+        const now = new Date();
+        const events = await EventModel.find({ date: { $gt: now } });
+        const eventsWithSignedURLs = await Promise.all(events.map(async (event) => {
+            let eventObject = event.toObject();
+            let eventWithOptionalFields: any = {
+                ...eventObject,
+                ...(event.fileName ? {signedURL: await generateDownloadURL(event.fileName)} : {}),
+            };
 
-      return events.map(async (event) => {
-        if (event.fileName) {
-          const signedURL = await generateDownloadURL(event.fileName);
-          return {...event.toObject(), signedURL, description: event.description}
-        }
-      })
-      return {}
+            if (event.description) {
+                eventWithOptionalFields.description = event.description;
+            }
+
+            return eventWithOptionalFields;
+        }));
+        return eventsWithSignedURLs;
     }
-
   },
   Mutation: {
     addEvent: async (parent: ResolversParentTypes['Mutation'], args:MutationAddEventArgs, context: Context) => {

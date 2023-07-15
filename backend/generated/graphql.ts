@@ -34,7 +34,7 @@ export type Event = {
   __typename?: 'Event';
   date?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
-  signedURL?: Maybe<Scalars['String']['output']>;
+  eventWith?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
@@ -92,7 +92,7 @@ export type Post = {
 
 export type Query = {
   __typename?: 'Query';
-  event?: Maybe<Event>;
+  events?: Maybe<Array<Maybe<Event>>>;
   me?: Maybe<User>;
   post?: Maybe<Post>;
   posts?: Maybe<Array<Maybe<Post>>>;
@@ -247,7 +247,7 @@ export type CommentResolvers<ContextType = any, ParentType extends ResolversPare
 export type EventResolvers<ContextType = any, ParentType extends ResolversParentTypes['Event'] = ResolversParentTypes['Event']> = {
   date?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  signedURL?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  eventWith?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -271,7 +271,7 @@ export type PostResolvers<ContextType = any, ParentType extends ResolversParentT
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  event?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType>;
+  events?: Resolver<Maybe<Array<Maybe<ResolversTypes['Event']>>>, ParentType, ContextType>;
   me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   post?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<QueryPostArgs, '_id'>>;
   posts?: Resolver<Maybe<Array<Maybe<ResolversTypes['Post']>>>, ParentType, ContextType, Partial<QueryPostsArgs>>;
