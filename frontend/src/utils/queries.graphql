@@ -63,3 +63,12 @@ query me {
     }
   }
 }
+
+query events {
+  events {
+    title
+    date
+    signedURL
+    description
+  }
+}

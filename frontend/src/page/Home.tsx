@@ -4,13 +4,14 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Logo from '../components/Logo';
-
+import EventList from '../components/EventList';
 
 const Home: React.FC = () => {
 
   return (
     <Container>
       <Row>
+
         <Col sm={12} md={6}>
           <Card>
             <Card.Header><h2>Welcome to TRICYPYAA's homepage!</h2></Card.Header>
@@ -47,10 +48,11 @@ const Home: React.FC = () => {
             </Card.Body>
           </Card>
         </Col>
+        <Col sm={12} md={6}>
+          <EventList/>
+        </Col>
       </Row>
-      <Row>
 
-      </Row>
     </Container>
   )
 };

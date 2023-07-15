@@ -31,6 +31,14 @@ export type Comment = {
   username?: Maybe<Scalars['String']['output']>;
 };
 
+export type Event = {
+  __typename?: 'Event';
+  date?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  signedURL?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addComment?: Maybe<Post>;
@@ -85,6 +93,7 @@ export type Post = {
 
 export type Query = {
   __typename?: 'Query';
+  events?: Maybe<Array<Maybe<Event>>>;
   me?: Maybe<User>;
   post?: Maybe<Post>;
   posts?: Maybe<Array<Maybe<Post>>>;
@@ -109,7 +118,7 @@ export type QueryUserArgs = {
 
 export type Url = {
   __typename?: 'Url';
-  signedURL: Scalars['String']['output'];
+  signedURL?: Maybe<Scalars['String']['output']>;
 };
 
 export type User = {
@@ -162,7 +171,7 @@ export type AddEventMutationVariables = Exact<{
 }>;
 
 
-export type AddEventMutation = { __typename?: 'Mutation', addEvent?: { __typename?: 'Url', signedURL: string } | null };
+export type AddEventMutation = { __typename?: 'Mutation', addEvent?: { __typename?: 'Url', signedURL?: string | null } | null };
 
 export type PostQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -189,6 +198,11 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', _id?: string | null, username?: string | null, email?: string | null, posts?: Array<{ __typename?: 'Post', _id?: string | null, postText?: string | null, createdAt?: string | null, commentCount?: number | null, comments?: Array<{ __typename?: 'Comment', _id?: string | null, createdAt?: string | null, commentBody?: string | null, username?: string | null } | null> | null } | null> | null } | null };
+
+export type EventsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type EventsQuery = { __typename?: 'Query', events?: Array<{ __typename?: 'Event', title?: string | null, date?: string | null, signedURL?: string | null, description?: string | null } | null> | null };
 
 
 export const LoginDocument = gql`
@@ -570,3 +584,40 @@ export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
+export const EventsDocument = gql`
+    query events {
+  events {
+    title
+    date
+    signedURL
+    description
+  }
+}
+    `;
+
+/**
+ * __useEventsQuery__
+ *
+ * To run a query within a React component, call `useEventsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useEventsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useEventsQuery(baseOptions?: Apollo.QueryHookOptions<EventsQuery, EventsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<EventsQuery, EventsQueryVariables>(EventsDocument, options);
+      }
+export function useEventsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<EventsQuery, EventsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<EventsQuery, EventsQueryVariables>(EventsDocument, options);
+        }
+export type EventsQueryHookResult = ReturnType<typeof useEventsQuery>;
+export type EventsLazyQueryHookResult = ReturnType<typeof useEventsLazyQuery>;
+export type EventsQueryResult = Apollo.QueryResult<EventsQuery, EventsQueryVariables>;
