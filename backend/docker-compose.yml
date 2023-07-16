@@ -27,8 +27,10 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
     volumes:
       - mongo-data:/data/db
+      - /etc/letsencrypt:/etc/letsencrypt
     ports:
       - "27017:27017"
+    command: --tlsMode requireTLS --tlsCertificateKeyFile /etc/letsencrypt/live/tricypaa.org/privkey.pem --tlsCAFile /etc/letsencrypt/live/tricypaa.org/fullchain.pem
 
 volumes:
   mongo-data:
