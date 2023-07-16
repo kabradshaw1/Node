@@ -11,7 +11,7 @@ export class Event extends TimeStamps {
   @prop({ default: () => Date.now(), get: (timestamp: Date) => dateFormat(timestamp.getTime()) })
   public createdAt?: Date;
 
-  @prop({ required: true })
+  @prop({ required: true, get: (timestamp: Date) => dateFormat(timestamp.getTime()) })
   public date!: Date;
 
   @prop({ required: true })

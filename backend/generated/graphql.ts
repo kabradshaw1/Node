@@ -32,8 +32,10 @@ export type Comment = {
 
 export type Event = {
   __typename?: 'Event';
+  createdAt?: Maybe<Scalars['String']['output']>;
   date?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
+  fileName?: Maybe<Scalars['String']['output']>;
   signedURL?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   username?: Maybe<Scalars['String']['output']>;
@@ -246,8 +248,10 @@ export type CommentResolvers<ContextType = any, ParentType extends ResolversPare
 };
 
 export type EventResolvers<ContextType = any, ParentType extends ResolversParentTypes['Event'] = ResolversParentTypes['Event']> = {
+  createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   date?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  fileName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   signedURL?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   username?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;

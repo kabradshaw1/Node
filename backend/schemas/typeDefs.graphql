@@ -30,6 +30,8 @@ type Event {
   signedURL: String
   date: String
   username: String
+  createdAt: String
+  fileName: String
 }
 
 type Comment {
