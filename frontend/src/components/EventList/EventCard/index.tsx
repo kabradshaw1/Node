@@ -5,6 +5,9 @@ interface SingleEventProp {
   data: Event | null
 }
 const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
+  if (event?.date) {
+    const date = event?.date.toString
+  }
   return (
     <Card>
       <Card.Header>{event?.title}</Card.Header>

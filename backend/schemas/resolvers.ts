@@ -67,8 +67,8 @@ const resolvers = {
       const now = new Date();
       const events = await EventModel.find({ date: { $gt: now } });
       const eventsWithSignedURLs = await Promise.all(events.map(async (event) => {
-          const { fileName, ...rest } = event;
-          let signedURL;
+          const { fileName, date, ...rest } = event.toObject();
+          let signedURL = null;
 
           if (fileName) {
               signedURL = await generateDownloadURL(fileName);
@@ -77,12 +77,15 @@ const resolvers = {
           return {
               ...rest,
               fileName,
-              signedURL
+              signedURL,
+              date: date.toISOString() // Convert Date to ISO string
           };
       }));
 
       return eventsWithSignedURLs;
   }
+
+
   },
   Mutation: {
     addEvent: async (parent: ResolversParentTypes['Mutation'], args:MutationAddEventArgs, context: Context) => {

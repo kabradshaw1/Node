@@ -72,5 +72,6 @@ query events {
     description
     createdAt
     username
+    fileName
   }
 }
