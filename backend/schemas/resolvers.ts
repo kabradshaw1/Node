@@ -74,12 +74,12 @@ const resolvers = {
           if (fileName) {
               signedURL = await generateDownloadURL(fileName);
           }
-          // const formattedDate = dateFormat()
+      
           return {
               ...rest,
               fileName,
               signedURL,
-              date: fotmatTimestamp(date.getTime()) // Convert Date to ISO string
+              date: fotmatTimestamp(date.getTime())
           };
       }));
 

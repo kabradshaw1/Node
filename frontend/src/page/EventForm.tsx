@@ -115,12 +115,16 @@ const EventForm: React.FC = () => {
                     control={control}
                     name="date"
                     render={({ field: { onChange, value } }) => (
-                        <ReactDatePicker
+                      <ReactDatePicker
                         selected={value}
                         onChange={(date: Date) => {
                           onChange(date);  // You should pass Date or null to onChange
                         }}
-                        dateFormat="MM/dd/yyyy"
+                        dateFormat="MM/dd/yyyy h:mm aa" // maintains the AM/PM format for time
+                        showTimeSelect
+                        timeFormat="h:mm aa" // updated to 12-hour time format
+                        timeIntervals={15}
+                        timeCaption="time"
                         className={`form-control ${errors.date ? 'is-invalid' : ''}`}
                       />
                     )}
