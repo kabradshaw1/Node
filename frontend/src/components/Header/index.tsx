@@ -46,9 +46,6 @@ export default function Header() {
                 <LinkContainer to='/profile'>
                   <NavDropdown.Item>Profile</NavDropdown.Item>
                 </LinkContainer>
-                <NavDropdown.Item href="#action/3.4">
-                  Fill Me!
-                </NavDropdown.Item>
                 <NavDropdown.Divider />
                 {isLoggedIn?.isAdmin
                   ? <LinkContainer to='/event_form'>
@@ -57,16 +54,15 @@ export default function Header() {
                   : null
                 }
               </NavDropdown>
-              <Navbar.Toggle aria-controls="basic-navbar-nav" />
-              <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="me-auto">
-                <LinkContainer to='/forums'>
+
+
+              <LinkContainer to='/forums'>
                 <Nav.Link>
                   Suggestion Forum
                 </Nav.Link>
               </LinkContainer>
-                </Nav>
-              </Navbar.Collapse>
+
+
             </Container>
           </Navbar>
         </Col>
