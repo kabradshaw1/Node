@@ -12,7 +12,7 @@ export class Event extends TimeStamps {
   public createdAt?: Date;
 
   @prop({ required: true })
-  public date!: string;
+  public date!: Date;
 
   @prop({ required: true })
   public username!: string;

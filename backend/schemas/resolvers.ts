@@ -64,21 +64,21 @@ const resolvers = {
       return posts;
     },
     events: async (parent: ResolversParentTypes['Query']) => {
-        console.log('stuff')
-        const events = await EventModel.find();
-        // const eventsWithSignedURLs = await Promise.all(events.map(async (event) => {
-        //     let eventObject = event.toObject();
-        //     let eventWithOptionalFields: any = {
-        //         ...eventObject,
-        //         ...(event.fileName ? {signedURL: await generateDownloadURL(event.fileName)} : {}),
-        //     };
+        const now = new Date();
+        const events = await EventModel.find({ date: { $gt: now } });
+        const eventsWithSignedURLs = await Promise.all(events.map(async (event) => {
+            let eventObject = event.toObject();
+            let eventWithOptionalFields: any = {
+                ...eventObject,
+                ...(event.fileName ? {signedURL: await generateDownloadURL(event.fileName)} : {}),
+            };
 
-        //     if (event.description) {
-        //         eventWithOptionalFields.description = event.description;
-        //     }
-        //     return eventWithOptionalFields;
-        // }));
-        return events;
+            if (event.description) {
+                eventWithOptionalFields.description = event.description;
+            }
+            return eventWithOptionalFields;
+        }));
+        return eventsWithSignedURLs;
     }
   },
   Mutation: {
@@ -89,7 +89,7 @@ const resolvers = {
         if(args.fileName && args.fileType) {
           UploadURL = await generateUploadURL(args.fileName, args.fileType);
         };
-        await EventModel.create({...args, username: context.user.username});
+        await EventModel.create({date: new Date(args.date), description: args.description, title: args.title, fileName: args.fileName ,username: context.user.username});
         return {signedURL: UploadURL};
       }
       throw new GraphQLError('You need to be logged in!');
