@@ -41,7 +41,7 @@ mutation addComment($PostId: ID!, $commentBody: String!) {
   }
 }
 
-mutation addEvent($fileName: String, $fileType: String, $title: String!, $description: String, $date: Date!) {
+mutation addEvent($fileName: String, $fileType: String, $title: String!, $description: String, $date: String!) {
   addEvent(fileName: $fileName, fileType: $fileType, title: $title, description: $description, date: $date) {
     signedURL
   }

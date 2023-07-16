@@ -70,5 +70,7 @@ query events {
     date
     signedURL
     description
+    createdAt
+    username
   }
 }
