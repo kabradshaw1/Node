@@ -19,6 +19,7 @@ import {
 } from '../generated/graphql';
 import { isAdmin } from '../utils/admin'
 import {generateUploadURL, generateDownloadURL} from '../utils/signedURL';
+import fotmatTimestamp from '../utils/dateFormat';
 
 interface Context {
   user?: Maybe<User>;
@@ -73,12 +74,12 @@ const resolvers = {
           if (fileName) {
               signedURL = await generateDownloadURL(fileName);
           }
-
+          // const formattedDate = dateFormat()
           return {
               ...rest,
               fileName,
               signedURL,
-              date: date.toISOString() // Convert Date to ISO string
+              date: fotmatTimestamp(date.getTime()) // Convert Date to ISO string
           };
       }));
 
