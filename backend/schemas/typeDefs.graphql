@@ -20,11 +20,16 @@ type Post {
   comments: [Comment]
 }
 
+type Url {
+  signedURL: String
+}
+
 type Event {
   title: String
   description: String
   signedURL: String
   date: String
+  username: String
 }
 
 type Comment {
@@ -32,10 +37,6 @@ type Comment {
   commentBody: String
   createdAt: String
   username: String
-}
-
-type Url {
-  signedURL: String
 }
 
 type Query {

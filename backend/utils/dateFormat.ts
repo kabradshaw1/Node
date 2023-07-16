@@ -22,15 +22,9 @@ interface FormatOptions {
 }
 
 const formatTimestamp = (
-  timestampOrIsoDate: number | string,
+  timestamp: number,
   { monthLength = 'short', dateSuffix = true }: FormatOptions = {}
 ): string => {
-    // Convert ISO 8601 date strings to timestamp if necessary
-  let timestamp = timestampOrIsoDate;
-  if (typeof timestampOrIsoDate === 'string') {
-    timestamp = new Date(timestampOrIsoDate).getTime();
-  }
-
   const months: { [key: number]: string } = {
     0: monthLength === 'short' ? 'Jan' : 'January',
     1: monthLength === 'short' ? 'Feb' : 'February',

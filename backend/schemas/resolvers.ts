@@ -64,21 +64,21 @@ const resolvers = {
       return posts;
     },
     events: async (parent: ResolversParentTypes['Query']) => {
-        const now = new Date();
-        const events = await EventModel.find({ date: { $gt: now } });
-        const eventsWithSignedURLs = await Promise.all(events.map(async (event) => {
-            let eventObject = event.toObject();
-            let eventWithOptionalFields: any = {
-                ...eventObject,
-                ...(event.fileName ? {signedURL: await generateDownloadURL(event.fileName)} : {}),
-            };
+        console.log('stuff')
+        const events = await EventModel.find();
+        // const eventsWithSignedURLs = await Promise.all(events.map(async (event) => {
+        //     let eventObject = event.toObject();
+        //     let eventWithOptionalFields: any = {
+        //         ...eventObject,
+        //         ...(event.fileName ? {signedURL: await generateDownloadURL(event.fileName)} : {}),
+        //     };
 
-            if (event.description) {
-                eventWithOptionalFields.description = event.description;
-            }
-            return eventWithOptionalFields;
-        }));
-        return eventsWithSignedURLs;
+        //     if (event.description) {
+        //         eventWithOptionalFields.description = event.description;
+        //     }
+        //     return eventWithOptionalFields;
+        // }));
+        return events;
     }
   },
   Mutation: {

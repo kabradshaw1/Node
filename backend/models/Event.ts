@@ -11,11 +11,8 @@ export class Event extends TimeStamps {
   @prop({ default: () => Date.now(), get: (timestamp: Date) => dateFormat(timestamp.getTime()) })
   public createdAt?: Date;
 
-  @prop({ required: true,
-    get: (date: string) => dateFormat(new Date(date).getTime()),
-    set: (date: Date) => date.toISOString() })
-  public date: string;
-
+  @prop({ required: true })
+  public date!: string;
 
   @prop({ required: true })
   public username!: string;
