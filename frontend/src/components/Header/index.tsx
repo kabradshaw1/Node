@@ -23,11 +23,15 @@ export default function Header() {
 
   return (
         <Container fluid className='sticky-top header' as='header'>
-        <Col>
           <Navbar bg="light" expand="lg" >
             <Container>
               <LinkContainer to=''>
                 <Navbar.Brand>TRICYPAA</Navbar.Brand>
+              </LinkContainer>
+              <LinkContainer to='/forums'>
+                <Nav.Link>
+                  Suggestion Forum
+                </Nav.Link>
               </LinkContainer>
               <NavDropdown title={isLoggedIn ? `${isLoggedIn.username}`: 'Welcome'} id="basic-nav-dropdown">
                 {isLoggedIn
@@ -54,18 +58,9 @@ export default function Header() {
                   : null
                 }
               </NavDropdown>
-
-
-              <LinkContainer to='/forums'>
-                <Nav.Link>
-                  Suggestion Forum
-                </Nav.Link>
-              </LinkContainer>
-
-
             </Container>
           </Navbar>
-        </Col>
+
     </Container>
   )
 };

@@ -35,7 +35,7 @@ const Home: React.FC = () => {
             </Card.Body>
           </Card>
         </Col>
-        <Col  sm={12} md={6}>
+        <Col sm={12} md={6} lg={3}>
           <Card>
             <Card.Header>
               <h3>This Site</h3>
