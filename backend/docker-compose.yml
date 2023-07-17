@@ -19,9 +19,8 @@ services:
       - mongo
 
   mongo:
-    build:
-      context: .
-      dockerfile: Dockerfile.mongo
+    image: mongo:6.0.7
+    user: root
     restart: always
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
@@ -31,7 +30,10 @@ services:
       - /etc/letsencrypt:/etc/letsencrypt
     ports:
       - "27017:27017"
-    command: --tlsMode requireTLS --tlsCertificateKeyFile /etc/letsencrypt/live/tricypaa.org/privkey.pem --tlsCAFile /etc/letsencrypt/live/tricypaa.org/fullchain.pem
+    command: bash -c "
+      chown root:root /etc/letsencrypt/live/tricypaa.org/* && \
+      chmod 600 /etc/letsencrypt/live/tricypaa.org/* && \
+      mongod --tlsMode requireTLS --tlsCertificateKeyFile /etc/letsencrypt/live/tricypaa.org/privkey.pem --tlsCAFile /etc/letsencrypt/live/tricypaa.org/fullchain.pem"
 
 volumes:
   mongo-data:
