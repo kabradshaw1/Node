@@ -1,0 +1,4 @@
+FROM mongo:6.0.7
+COPY --from=root /etc/letsencrypt/live/tricypaa.org/privkey.pem /etc/letsencrypt/live/tricypaa.org/
+COPY --from=root /etc/letsencrypt/live/tricypaa.org/fullchain.pem /etc/letsencrypt/live/tricypaa.org/
+RUN chown -R mongodb:mongodb /etc/letsencrypt/

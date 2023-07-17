@@ -19,15 +19,15 @@ services:
       - mongo
 
   mongo:
-    image: mongo:6.0.7
-    user: root
+    build:
+      context: .
+      dockerfile: Dockerfile.mongo
     restart: always
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
     volumes:
       - mongo-data:/data/db
-      - /etc/letsencrypt:/etc/letsencrypt
     ports:
       - "27017:27017"
     command: --tlsMode requireTLS --tlsCertificateKeyFile /etc/letsencrypt/live/tricypaa.org/privkey.pem --tlsCAFile /etc/letsencrypt/live/tricypaa.org/fullchain.pem
