@@ -19,7 +19,9 @@ services:
       - mongo
 
   mongo:
-    build: ./path/to/Dockerfile
+    build:
+      context: .
+      dockerfile: Dockerfile.mongo
     restart: always
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
