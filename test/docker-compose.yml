@@ -4,5 +4,6 @@ services:
   db:
     image: mongo:6.0.7
     user: root
+    
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt
