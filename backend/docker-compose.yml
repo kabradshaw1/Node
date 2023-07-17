@@ -21,12 +21,15 @@ services:
   mongo:
     image: mongo:6.0.7
     restart: always
+    user: root
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
     volumes:
       - mongo-data:/data/db
       - /etc/letsencrypt:/etc/letsencrypt
+    ports:
+      - 27017:27017
 
 volumes:
   mongo-data:
