@@ -4,6 +4,5 @@ services:
   db:
     image: mongo:6.0.7
     user: root
-    command: mongod --tlsMode requireTLS --tlsCertificateKeyFile /etc/letsencrypt/live/tricypaa.org/privkey.pem --tlsCAFile /etc/letsencrypt/live/tricypaa.org/fullchain.pem
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt
