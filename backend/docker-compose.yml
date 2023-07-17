@@ -26,6 +26,7 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
     volumes:
       - mongo-data:/data/db
+      - /etc/letsencrypt:/etc/letsencrypt
 
 volumes:
   mongo-data:
