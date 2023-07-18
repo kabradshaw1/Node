@@ -19,8 +19,7 @@ services:
       - mongo
   mongo:
     build:
-      context: .
-      dockerfile: Dockerfile.mongo
+      image: mongo:6.0.7
     restart: always
     user: root
     environment:
@@ -28,7 +27,7 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
     volumes:
       - mongo-data:/data/db
-      - /etc/letsencrypt:/etc/letsencrypt_copy
+      - /etc/letsencrypt:/etc/letsencrypt
     ports:
       - "27017:27017"
 
