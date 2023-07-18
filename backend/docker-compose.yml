@@ -21,6 +21,7 @@ services:
     image: mongo:6.0.7
     restart: always
     user: root
+    command: --tlsMode requireTLS --tlsCertificateKeyFile /etc/letsencrypt_copy/privkey.pem --tlsCAFile /etc/letsencrypt_copy/fullchain.pem
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
