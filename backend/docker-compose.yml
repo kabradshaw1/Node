@@ -23,7 +23,6 @@ services:
       dockerfile: Dockerfile.mongo
     restart: always
     user: root
-    command: --tlsMode requireTLS --tlsCertificateKeyFile /etc/letsencrypt_copy/privkey.pem --tlsCAFile /etc/letsencrypt_copy/fullchain.pem
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
@@ -32,6 +31,7 @@ services:
       - /etc/letsencrypt:/etc/letsencrypt_copy
     ports:
       - "27017:27017"
+
 
 volumes:
   mongo-data:
