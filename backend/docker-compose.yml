@@ -18,7 +18,9 @@ services:
     depends_on:
       - mongo
   mongo:
-    image: mongo:6.0.7
+    build:
+      context: .
+      dockerfile: Dockerfile.mongo
     restart: always
     user: root
     command: --tlsMode requireTLS --tlsCertificateKeyFile /etc/letsencrypt_copy/privkey.pem --tlsCAFile /etc/letsencrypt_copy/fullchain.pem
