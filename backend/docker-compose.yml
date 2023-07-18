@@ -17,7 +17,6 @@ services:
       - REGION=${REGION}
     depends_on:
       - mongo
-
   mongo:
     image: mongo:6.0.7
     restart: always
@@ -27,9 +26,8 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
     volumes:
       - mongo-data:/data/db
-      - /etc/letsencrypt:/etc/letsencrypt
     ports:
-      - 27017:27017
+      - "2000:27017"
 
 volumes:
   mongo-data:
