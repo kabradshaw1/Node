@@ -12,7 +12,7 @@ if(mongoUsernameAndPassword){
 
 const connectionOptions = process.env.USE_SSL === 'true' ? {
   tls: true,
-  tlsCAFile: '/etc/certs/mongodb.pem', // Path to the CA certificate
+  tlsCAFile: '/etc/certs/chain.pem', // Path to the CA certificate
   tlsCertificateKeyFile: '/etc/certs/mongodb.pem' // Path to the MongoDB server/client certificate
 } : {};
 
