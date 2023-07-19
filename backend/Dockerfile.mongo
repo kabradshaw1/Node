@@ -1,6 +1,0 @@
-FROM mongo:6.0.7
-
-# Change the owner of the certificate files to root
-RUN chown -R root:root /etc/letsencrypt_copy
-
-CMD ["--tlsMode", "requireTLS", "--tlsCertificateKeyFile", "/etc/letsencrypt_copy/privkey.pem", "--tlsCAFile", "/etc/letsencrypt_copy/fullchain.pem"]

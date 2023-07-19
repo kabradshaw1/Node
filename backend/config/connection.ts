@@ -10,7 +10,12 @@ if(mongoUsernameAndPassword){
     connectionString += '?authSource=admin';
 }
 
-mongoose.connect(connectionString);
+const connectionOptions = process.env.USE_SSL === 'true' ? {
+  tls: true,
+  tlsCAFile: process.env.SSL_CA_PATH
+} : {};
+
+mongoose.connect(connectionString, connectionOptions);
 
 const db = mongoose.connection;
 
