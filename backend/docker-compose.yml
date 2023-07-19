@@ -5,6 +5,7 @@ services:
     build:
       context: .
     restart: always
+    user: root
     ports:
       - "4000:4000"
     environment:
