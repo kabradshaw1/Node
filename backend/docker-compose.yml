@@ -16,7 +16,8 @@ services:
       - BUCKET_NAME=${BUCKET_NAME}
       - REGION=${REGION}
       - USE_SSL=true
-      - SSL_CA_PATH=${SSL_CA_PATH}
+    volumes:
+      - /etc/letsencrypt/live/tricypaa.org:/etc/certs
     depends_on:
       - mongo
   mongo:

@@ -12,7 +12,7 @@ if(mongoUsernameAndPassword){
 
 const connectionOptions = process.env.USE_SSL === 'true' ? {
   tls: true,
-  tlsCAFile: process.env.SSL_CA_PATH
+  tlsCAFile: '/etc/certs/mongodb.pem'
 } : {};
 
 mongoose.connect(connectionString, connectionOptions);
