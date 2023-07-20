@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  test_server:
+    build:
+      context: .
+    user: root
+    environment:
+      - MONGO_USERNAME=user
+      - MONGO_PASSWORD=password
+      - MONGO_DB_NAME=db
+      - MONGO_HOST=test_server
+    volumes:
+      - /etc/letsencrypt/live/tricypaa.org:/etc/certs
+    depends_on:
+      - test_db
+  test_db:
+    image: mongo:6.0.7
+    restart: always
+    user: root
+    command: --tlsMode requireTLS --tlsCertificateKeyFile /etc/certs/mongodb.pem
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+    volumes:
+      - mongo-data:/data/db
+      - /etc/letsencrypt/live/tricypaa.org:/etc/certs
+    ports:
+      - "2000:27017"
