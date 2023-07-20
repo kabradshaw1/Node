@@ -16,9 +16,7 @@ const connectionOptions = process.env.USE_SSL === 'true' ? {
   tlsCertificateKeyFile: '/etc/certs/mongodb.pem' // Path to the MongoDB server/client certificate
 } : {};
 
-
 mongoose.connect(connectionString, connectionOptions);
-
 const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));

@@ -18,6 +18,3 @@ COPY . .
 
 # Build the application
 RUN npm run start
-
-# The command to start the application
-CMD [ "npm", "run", "start:prod" ]
