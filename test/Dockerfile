@@ -17,4 +17,10 @@ RUN npm install -g typescript
 COPY . .
 
 # Build the application
-RUN npm run start
+RUN npm run build
+
+# Remove development dependencies
+RUN npm prune --production
+
+# The command to start the application
+CMD [ "npm", "run", "start" ]
