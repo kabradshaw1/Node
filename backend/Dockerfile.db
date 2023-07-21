@@ -2,7 +2,7 @@
 FROM mongo:6.0.7
 
 # Create a new user and group 'dbuser'
-RUN adduser --uid 1000 dbuser
+RUN adduser --uid 1000 --disabled-password --gecos "" dbuser
 
 # Change the ownership of the directory to 'dbuser' and set permissions
 RUN mkdir -p /etc/certs && chown -R dbuser:dbuser /etc/certs && chmod 400 /etc/certs

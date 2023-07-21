@@ -2,7 +2,7 @@
 FROM node:18.16-alpine3.17
 
 # Create a new user and group 'dbuser'
-RUN addgroup -g 100 expressuser && adduser -u 100 -G expressuser -s /bin/bash -D expressuser
+RUN addgroup -g 10000 expressuser && adduser -u 10000 -G expressuser -s /bin/sh -D expressuser
 
 # Set the working directory in the Docker image
 WORKDIR /app
