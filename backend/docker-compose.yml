@@ -23,7 +23,7 @@ services:
   mongo:
     image: mongo:6.0.7
     restart: always
-    command: --tlsMode requireTLS --tlsCertificateKeyFile /etc/certs/mongodb.pem
+    # command: --tlsMode requireTLS --tlsCertificateKeyFile /etc/certs/mongodb.pem
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
