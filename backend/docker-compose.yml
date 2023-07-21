@@ -5,6 +5,7 @@ services:
     build:
       context: .
     restart: always
+    user: expressuser
     ports:
       - "4000:4000"
     environment:
@@ -24,6 +25,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.db
+      user: dbuser
     restart: always
     command: --tlsMode requireTLS --tlsCertificateKeyFile /etc/certs/mongodb.pem
     environment:
