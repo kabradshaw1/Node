@@ -2,7 +2,7 @@
 FROM node:18.16-alpine3.17
 
 # Create a new user and group 'dbuser'
-RUN useradd -ms /bin/bash expressuser && id expressuser
+RUN adduser -ms /bin/bash expressuser && id expressuser
 
 # Set the working directory in the Docker image
 WORKDIR /app

@@ -2,7 +2,7 @@
 FROM mongo:6.0.7
 
 # Create a new user and group 'dbuser'
-RUN useradd -ms /bin/bash dbuser && id dbuser
+RUN adduser -ms /bin/bash dbuser && id dbuser
 
 # Change the ownership of the directory to 'dbuser' and set permissions
 RUN mkdir -p /etc/certs && chown -R dbuser:dbuser /etc/certs && chmod 400 /etc/certs
