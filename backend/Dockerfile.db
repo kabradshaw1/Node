@@ -4,8 +4,8 @@ FROM mongo:6.0.7
 # Create a new user and group 'dbuser'
 RUN groupadd -r dbuser && useradd --no-log-init -r -g dbuser dbuser
 
-# Change the ownership of the directory to 'dbuser'
-RUN mkdir -p /etc/certs && chown -R dbuser:dbuser /etc/certs
+# Change the ownership of the directory to 'dbuser' and set permissions
+RUN mkdir -p /etc/certs && chown -R dbuser:dbuser /etc/certs && chmod 400 /etc/certs
 
 # Change the ownership of the directory to 'dbuser'
 RUN chown -R dbuser:dbuser /etc/certs

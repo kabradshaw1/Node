@@ -28,8 +28,8 @@ RUN npm run build
 USER root
 RUN npm prune --production
 
-# Change the ownership of the directory to 'expressuser'
-RUN mkdir -p /etc/certs && chown -R expressuser:expressuser /etc/certs
+# Change the ownership of the directory to 'expressuser' and set permissions
+RUN mkdir -p /etc/certs && chown -R expressuser:expressuser /etc/certs && chmod 400 /etc/certs
 
 # Switch back to 'expressuser'
 USER expressuser
