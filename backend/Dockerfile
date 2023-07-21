@@ -1,9 +1,6 @@
 # Define the base image
 FROM node:18.16-alpine3.17
 
-# Create a new user and group 'dbuser'
-RUN addgroup -g 10000 expressuser && adduser -u 10000 -G expressuser -s /bin/sh -D expressuser
-
 # Set the working directory in the Docker image
 WORKDIR /app
 
@@ -20,19 +17,10 @@ RUN npm install -g typescript
 COPY . .
 
 # Build the application
-RUN chown -R expressuser:expressuser /app
-USER expressuser
 RUN npm run build
 
-# Switch back to root to prune development dependencies
-USER root
+# Remove development dependencies
 RUN npm prune --production
-
-# Change the ownership of the directory to 'expressuser' and set permissions
-RUN mkdir -p /etc/certs && chown -R expressuser:expressuser /etc/certs && chmod 400 /etc/certs
-
-# Switch back to 'expressuser'
-USER expressuser
 
 # The command to start the application
 CMD [ "npm", "run", "start:prod" ]
