@@ -10,14 +10,14 @@ if(mongoUsernameAndPassword){
     connectionString += '?authSource=admin';
 }
 
-// const connectionOptions = process.env.USE_SSL === 'true' ? {
-//   tls: true,
-//   tlsCAFile: '/etc/certs/chain.pem', // Path to the CA certificate
-//   tlsCertificateKeyFile: '/etc/certs/mongodb.pem' // Path to the MongoDB server/client certificate
-// } : {};
+const connectionOptions = process.env.USE_SSL === 'true' ? {
+  tls: true,
+  tlsCAFile: '/etc/certs/chain.pem', // Path to the CA certificate
+  tlsCertificateKeyFile: '/etc/certs/mongodb.pem' // Path to the MongoDB server/client certificate
+} : {};
 
 
-mongoose.connect(connectionString, /*connectionOptions*/);
+mongoose.connect(connectionString, connectionOptions);
 
 const db = mongoose.connection;
 
