@@ -21,7 +21,9 @@ services:
     depends_on:
       - mongo
   mongo:
-    image: mongo:6.0.7
+    build:
+      context: .
+      dockerfile: Dockerfile.db
     restart: always
     # command: --tlsMode requireTLS --tlsCertificateKeyFile /etc/certs/mongodb.pem
     environment:
