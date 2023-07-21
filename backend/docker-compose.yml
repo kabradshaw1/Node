@@ -25,7 +25,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.db
-      user: dbuser
+    user: dbuser
     restart: always
     command: --tlsMode requireTLS --tlsCertificateKeyFile /etc/certs/mongodb.pem
     environment:
