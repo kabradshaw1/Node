@@ -5,7 +5,7 @@ services:
     build:
       context: .
     restart: always
-    user: root
+    user: expressuser
     ports:
       - "4000:4000"
     environment:
@@ -18,20 +18,20 @@ services:
       - REGION=${REGION}
       - USE_SSL=true
     volumes:
-      - /etc/letsencrypt/live/tricypaa.org:/etc/certs
+      - /etc/expresscerts:/etc/certs
     depends_on:
       - mongo
   mongo:
     image: mongo:6.0.7
     restart: always
-    user: root
-    # command: --tlsMode requireTLS --tlsCertificateKeyFile /etc/certs/mongodb.pem
+    user: dbuser
+    command: --tlsMode requireTLS --tlsCertificateKeyFile /etc/certs/mongodb.pem
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
     volumes:
       - mongo-data:/data/db
-      - /etc/letsencrypt/live/tricypaa.org:/etc/certs
+      - /etc/dbcerts:/etc/certs
     ports:
       - "27017:27017"
 
