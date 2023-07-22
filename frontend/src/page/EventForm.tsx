@@ -87,7 +87,9 @@ const EventForm: React.FC = () => {
       }
     } catch (e) {
       console.log(e)
-      setMessage('An error has occured.');
+      if (error?.message) {
+        setMessage(error.message);
+      }
       setLoading(false);
     }
   };

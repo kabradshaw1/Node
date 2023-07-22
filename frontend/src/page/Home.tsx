@@ -11,11 +11,14 @@ const Home: React.FC = () => {
   return (
     <Container>
       <Row>
-        <Col sm={12} md={6}>
+        <Col sm={12} lg={6}>
           <Card>
             <Card.Header><h2>Welcome to TRICYPYAA's homepage!</h2></Card.Header>
             <Logo/>
           </Card>
+        </Col>
+        <Col sm={12} lg={6}>
+          <EventList/>
         </Col>
         <Col  sm={12} md={6}  lg={3}>
           <Card>
@@ -47,9 +50,7 @@ const Home: React.FC = () => {
             </Card.Body>
           </Card>
         </Col>
-        <Col sm={12} md={6}>
-          <EventList/>
-        </Col>
+
       </Row>
     </Container>
   )
