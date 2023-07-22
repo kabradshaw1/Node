@@ -13,7 +13,7 @@ const EventList: React.FC = () => {
   return (
     <>
     <Card>
-      <Card.Header>Upcoming Events</Card.Header>
+      <Card.Header><h3>Upcoming Events</h3></Card.Header>
       <Card.Body>
       {events && events.map((event) => {
         return(

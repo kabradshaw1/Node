@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from '../../store';
 import { useNavigate } from 'react-router-dom';
@@ -7,10 +8,38 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import authSlice from '../../store/slices/authSlice';
+import decode from 'jwt-decode';
+
+interface DecodedToken {
+  exp: number;
+  data: {
+    username: string;
+    email: string;
+    _id: string;
+    isAdmin: boolean;
+  };
+}
 
 export default function Header() {
 
-  const isLoggedIn = useSelector((state: RootState) => state.auth.user);
+  const isLoggedIn = useSelector((state: RootState) => state.auth);
+
+  const logoutTimerRef = useRef<NodeJS.Timeout | null>(null); // create a ref to hold the timer
+
+  useEffect(() => {
+    const token = isLoggedIn.token;
+    if (token) {
+      const decoded = decode(token) as DecodedToken;
+      const timeout = (decoded.exp * 1000) - Date.now();
+
+      logoutTimerRef.current = setTimeout(handleLogout, timeout); // set the timer
+    }
+
+    return () => {
+      // clear the timer when the component unmounts or the user logs out
+      if (logoutTimerRef.current) clearTimeout(logoutTimerRef.current);
+    };
+  }, [isLoggedIn.token]);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -32,7 +61,7 @@ export default function Header() {
                   Suggestion Forum
                 </Nav.Link>
               </LinkContainer>
-              <NavDropdown title={isLoggedIn ? `${isLoggedIn.username}`: 'Welcome'} id="basic-nav-dropdown">
+              <NavDropdown title={isLoggedIn ? `${isLoggedIn?.user?.username}`: 'Welcome'} id="basic-nav-dropdown">
                 {isLoggedIn
                   ? <LinkContainer to='/'>
                       <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
@@ -50,7 +79,7 @@ export default function Header() {
                   <NavDropdown.Item>Profile</NavDropdown.Item>
                 </LinkContainer>
                 <NavDropdown.Divider />
-                {isLoggedIn?.isAdmin
+                {isLoggedIn?.user?.isAdmin
                   ? <LinkContainer to='/event_form'>
                       <NavDropdown.Item>Event Form</NavDropdown.Item>
                     </LinkContainer>
