@@ -87,8 +87,8 @@ export default function Register() {
               <Form.Control type='password' {...register('confirmPassword')} className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''}`}/>
               <Form.Control.Feedback className="invalid-feedback">{errors.confirmPassword?.message}</Form.Control.Feedback>
             </Form.Group>
-            <Form.Label>{message}</Form.Label>
             <Button className='mt-3' type="submit" disabled={loading}>Submit Form</Button>
+            <Form.Label>{message}</Form.Label>
           </Col>
         </Form>
       </Col>

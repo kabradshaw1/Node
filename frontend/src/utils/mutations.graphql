@@ -20,6 +20,8 @@ mutation addUser($username: String!, $email: String!, $password: String!) {
   }
 }
 
+
+
 mutation addPost($postText: String!) {
   addPost(postText: $postText) {
     _id

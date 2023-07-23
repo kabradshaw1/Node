@@ -75,7 +75,7 @@ export default function Header() {
                       </LinkContainer>
                     </>
                 }
-                <LinkContainer to='/profile'>
+                <LinkContainer to='/account'>
                   <NavDropdown.Item>Account Details</NavDropdown.Item>
                 </LinkContainer>
                 <NavDropdown.Divider />

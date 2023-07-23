@@ -18,7 +18,7 @@ function App() {
           <Route path='/register' element={<Register/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/forums' element={<Forums/>}/>
-          <Route path='/profile' element={<Account/>}/>
+          <Route path='/account' element={<Account/>}/>
           <Route path='event_form' element={<EventForm/>}/>
         </Routes>
       </Container>
