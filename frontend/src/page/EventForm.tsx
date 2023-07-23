@@ -68,24 +68,8 @@ const EventForm: React.FC = () => {
     }
   };
 
-  const checkAddress = async (address: string) => {
-    const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=YOUR_API_KEY`);
-    const data = await response.json();
-    return data.status === 'OK';
-  };
-
   const formSubmit: SubmitHandler<FormSubmit> = async (data) => {
     setLoading(true);
-
-    // Check the address before continuing
-    const isAddressValid = await checkAddress(data.address);
-    if (!isAddressValid) {
-      const confirmContinue = window.confirm('This address cannot be found on Google Maps. Continue anyway?');
-      if (!confirmContinue) {
-        setLoading(false);
-        return;
-      }
-    }
 
     try {
       const response = await addEvent({

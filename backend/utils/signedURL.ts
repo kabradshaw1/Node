@@ -11,7 +11,7 @@ export const generateUploadURL = async (fileName: string, fileType: string): Pro
   });
 
   try {
-    const signedUrl = await getSignedUrl(s3, command, { expiresIn: 60 });
+    const signedUrl = await getSignedUrl(s3, command, { expiresIn: 3600 });
     console.log('The URL is', signedUrl);
     return signedUrl;
   } catch(err) {
@@ -29,7 +29,7 @@ export const generateDownloadURL = async (fileName: string): Promise<string> => 
 
   try {
     // Generate the signed URL
-    const signedUrl = await getSignedUrl(s3, command, { expiresIn: 120 });
+    const signedUrl = await getSignedUrl(s3, command, { expiresIn: 3600 });
     console.log('The URL is', signedUrl);
     return signedUrl;
   } catch (err) {
