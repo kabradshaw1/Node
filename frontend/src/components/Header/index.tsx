@@ -61,7 +61,7 @@ export default function Header() {
                   Suggestion Forum
                 </Nav.Link>
               </LinkContainer>
-              <NavDropdown title={isLoggedIn ? `${isLoggedIn?.user?.username}`: 'Welcome'} id="basic-nav-dropdown">
+              <NavDropdown title={isLoggedIn ? `${isLoggedIn?.user?.username}`: 'Welcome'} id="basic-nav-dropdown" className='align-end'>
                 {isLoggedIn
                   ? <LinkContainer to='/'>
                       <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>

@@ -2,3 +2,8 @@ textarea {
   max-height: calc(1.5em * 10); /* Adjust as needed */
   overflow-y: auto; /* Add a scrollbar if necessary */
 }
+
+.align-end .dropdown-menu {
+  right: 0;
+  left: auto;
+}
