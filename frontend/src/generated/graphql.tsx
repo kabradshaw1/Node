@@ -50,6 +50,8 @@ export type Mutation = {
   addPost?: Maybe<Post>;
   addUser?: Maybe<Auth>;
   login?: Maybe<Auth>;
+  updateEvent?: Maybe<Url>;
+  updateUser?: Maybe<User>;
 };
 
 
@@ -84,6 +86,23 @@ export type MutationAddUserArgs = {
 export type MutationLoginArgs = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
+};
+
+
+export type MutationUpdateEventArgs = {
+  address?: InputMaybe<Scalars['String']['input']>;
+  date?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  fileName?: InputMaybe<Scalars['String']['input']>;
+  fileType?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type MutationUpdateUserArgs = {
+  email?: InputMaybe<Scalars['String']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Post = {
@@ -150,7 +169,7 @@ export type AddUserMutationVariables = Exact<{
 }>;
 
 
-export type AddUserMutation = { __typename?: 'Mutation', addUser?: { __typename?: 'Auth', token?: string | null } | null };
+export type AddUserMutation = { __typename?: 'Mutation', addUser?: { __typename?: 'Auth', token?: string | null, user?: { __typename?: 'User', _id?: string | null, username?: string | null, isAdmin?: boolean | null } | null } | null };
 
 export type AddPostMutationVariables = Exact<{
   postText: Scalars['String']['input'];
@@ -254,6 +273,11 @@ export const AddUserDocument = gql`
     mutation addUser($username: String!, $email: String!, $password: String!) {
   addUser(username: $username, email: $email, password: $password) {
     token
+    user {
+      _id
+      username
+      isAdmin
+    }
   }
 }
     `;

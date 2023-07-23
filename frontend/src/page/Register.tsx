@@ -9,6 +9,8 @@ import Logo from '../components/Logo';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import authSlice from '../store/slices/authSlice';
 import { useAddUserMutation, AddUserMutationVariables } from '../generated/graphql';
 
 type FormFields = AddUserMutationVariables & {
@@ -16,6 +18,7 @@ type FormFields = AddUserMutationVariables & {
 };
 
 export default function Register() {
+  const dispatch = useDispatch();
   const navigate = useNavigate()
   const [message, setMessage] = useState("");
   const [AddUserMutation, { error }] = useAddUserMutation();
@@ -33,14 +36,19 @@ export default function Register() {
 
   const formSubmit: SubmitHandler<FormFields> = async data => {
     try {
-      await AddUserMutation({
+      const mutationResponse = await AddUserMutation({
         variables: {email: data.email, password: data.password, username: data.username}
       });
       if(error) {
         console.log(error);
         setMessage("Registration failed, please try again.")
-      } else {
-        navigate('/login')
+      }
+      if(mutationResponse && mutationResponse.data?.addUser?.token && mutationResponse.data?.addUser.user) {
+        const { token, user } = mutationResponse.data.addUser;
+        if(user._id && user.username) {
+          dispatch(authSlice.actions.setAuth({ token: token, user: { _id: user._id, username: user.username, isAdmin: user.isAdmin } }));
+          navigate('/')
+        }
       };
     } catch (e) {
       console.log(e)
