@@ -9,33 +9,9 @@ services:
       - "4000:4000"
     environment:
       - JWT_SECRET=${JWT_SECRET}
-      - MONGO_USERNAME=${MONGO_USERNAME}
-      - MONGO_PASSWORD=${MONGO_PASSWORD}
-      - MONGO_DB_NAME=${MONGO_DB_NAME}
-      - MONGO_HOST=${MONGO_HOST}
+      - MONGO=${MONGO}
       - BUCKET_NAME=${BUCKET_NAME}
       - REGION=${REGION}
-      - USE_SSL=true
-    volumes:
-      - /etc/expresscerts:/etc/certs
-    depends_on:
-      - mongo
-  mongo:
-    image: mongo:6.0.7
-    restart: always
-    # command: --tlsMode requireTLS --tlsCertificateKeyFile /etc/certs/mongodb.pem
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
-    volumes:
-      - mongo-data:/data/db
-      - /etc/dbcerts:/etc/certs
-    ports:
-      - "27017:27017"
-
-
-volumes:
-  mongo-data:
 
 networks:
   default:
