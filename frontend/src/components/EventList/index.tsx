@@ -6,7 +6,7 @@ const EventList: React.FC = () => {
   const { loading, error, data } = useEventsQuery()
   if (loading) return <h4>Loading...</h4>
   if(error) return <h4>Error...</h4>
-  console.log(data?.events)
+
   const events = data?.events
   if (!events || events.length === 0) return <h4>No events are currently scheduled.</h4>;
 

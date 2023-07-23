@@ -74,7 +74,7 @@ const resolvers = {
           if (fileName) {
               signedURL = await generateDownloadURL(fileName);
           }
-      
+
           return {
               ...rest,
               fileName,
@@ -96,7 +96,7 @@ const resolvers = {
         if(args.fileName && args.fileType) {
           UploadURL = await generateUploadURL(args.fileName, args.fileType);
         };
-        await EventModel.create({date: new Date(args.date), description: args.description, title: args.title, fileName: args.fileName ,username: context.user.username});
+        await EventModel.create({date: new Date(args.date), description: args.description, title: args.title, fileName: args.fileName ,username: context.user.username, address: args.address});
         return {signedURL: UploadURL};
       }
       throw new GraphQLError('You need to be logged in!');

@@ -32,6 +32,7 @@ export type Comment = {
 
 export type Event = {
   __typename?: 'Event';
+  address?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['String']['output']>;
   date?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
@@ -58,6 +59,7 @@ export type MutationAddCommentArgs = {
 
 
 export type MutationAddEventArgs = {
+  address: Scalars['String']['input'];
   date: Scalars['String']['input'];
   description?: InputMaybe<Scalars['String']['input']>;
   fileName?: InputMaybe<Scalars['String']['input']>;
@@ -248,6 +250,7 @@ export type CommentResolvers<ContextType = any, ParentType extends ResolversPare
 };
 
 export type EventResolvers<ContextType = any, ParentType extends ResolversParentTypes['Event'] = ResolversParentTypes['Event']> = {
+  address?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   date?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -260,7 +263,7 @@ export type EventResolvers<ContextType = any, ParentType extends ResolversParent
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   addComment?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationAddCommentArgs, 'PostId' | 'commentBody'>>;
-  addEvent?: Resolver<Maybe<ResolversTypes['Url']>, ParentType, ContextType, RequireFields<MutationAddEventArgs, 'date' | 'title'>>;
+  addEvent?: Resolver<Maybe<ResolversTypes['Url']>, ParentType, ContextType, RequireFields<MutationAddEventArgs, 'address' | 'date' | 'title'>>;
   addPost?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationAddPostArgs, 'postText'>>;
   addUser?: Resolver<Maybe<ResolversTypes['Auth']>, ParentType, ContextType, RequireFields<MutationAddUserArgs, 'email' | 'password' | 'username'>>;
   login?: Resolver<Maybe<ResolversTypes['Auth']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'email' | 'password'>>;

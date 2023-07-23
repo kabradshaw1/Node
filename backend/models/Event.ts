@@ -5,7 +5,7 @@ import dateFormat from '../utils/dateFormat';
 
 export class Event extends TimeStamps {
   _id!: mongoose.Types.ObjectId;
-  @prop({ required: true, minlength: 1, maxlength:30 })
+  @prop({ required: true, minlength: 1, maxlength:80 })
   public title!: string;
 
   @prop({ default: () => Date.now(), get: (timestamp: Date) => dateFormat(timestamp.getTime()) })
