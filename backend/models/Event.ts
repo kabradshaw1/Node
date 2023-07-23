@@ -15,6 +15,9 @@ export class Event extends TimeStamps {
   public date!: Date;
 
   @prop({ required: true })
+  public address!: string;
+
+  @prop({ required: true })
   public username!: string;
 
   @prop({ maxlength: 100 })
