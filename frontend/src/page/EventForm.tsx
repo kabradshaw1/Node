@@ -19,7 +19,8 @@ interface FormSubmit {
   date: Date,
   file?: any,
   title: string,
-  description?: string
+  description?: string,
+  address: string,
 }
 
 const EventForm: React.FC = () => {
@@ -42,6 +43,7 @@ const EventForm: React.FC = () => {
         return !file || ['image/jpeg', 'image/png', 'image/gif', 'image/webp'].includes(file.type);
       }),
     description: Yup.string(),
+    address: Yup.string().required('You must put an address')
   });
 
   const { control, register, handleSubmit, formState:{errors}, setValue } = useForm(
@@ -76,7 +78,8 @@ const EventForm: React.FC = () => {
           description: data.description,
           date: data.date.toISOString(),
           fileName: data.file?.name,
-          fileType: data.file?.type
+          fileType: data.file?.type,
+          address: data.address
         },
       });
 
@@ -135,6 +138,11 @@ const EventForm: React.FC = () => {
                 </Col>
               </Form.Group>
               <Form.Group>
+                <Form.Label>Event Adress (Required)</Form.Label>
+                <Form.Control type='string' {...register('address')} className={`form-control ${errors.address ? 'is-invalid' : ''}`}/>
+                <Form.Control.Feedback className='invalid-feedback'>{errors.address?.message}</Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group>
                 <Form.Label>Image Upload (Optional)</Form.Label>
                 <Controller
                   control={control}
@@ -156,7 +164,7 @@ const EventForm: React.FC = () => {
                 <Form.Control.Feedback className='invalid-feedback'>{errors.file?.message}</Form.Control.Feedback>
               </Form.Group>
               <Form.Group className='mb-1'>
-                <Form.Label>Event description (Optional)</Form.Label>
+                <Form.Label>Event Description (Optional)</Form.Label>
                 <Form.Control type='string' {...register('description')} className={`form-control ${errors.description ? 'is-invalid' : ''}`}/>
                 <Form.Control.Feedback className='invalid-feedback'>{errors.description?.message}</Form.Control.Feedback>
               </Form.Group>
