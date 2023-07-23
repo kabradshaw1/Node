@@ -50,7 +50,7 @@ export type Mutation = {
   addUser?: Maybe<Auth>;
   login?: Maybe<Auth>;
   updateEvent?: Maybe<Url>;
-  updateUser?: Maybe<User>;
+  updateUser?: Maybe<Auth>;
 };
 
 
@@ -287,7 +287,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   addUser?: Resolver<Maybe<ResolversTypes['Auth']>, ParentType, ContextType, RequireFields<MutationAddUserArgs, 'email' | 'password' | 'username'>>;
   login?: Resolver<Maybe<ResolversTypes['Auth']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'email' | 'password'>>;
   updateEvent?: Resolver<Maybe<ResolversTypes['Url']>, ParentType, ContextType, Partial<MutationUpdateEventArgs>>;
-  updateUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<MutationUpdateUserArgs>>;
+  updateUser?: Resolver<Maybe<ResolversTypes['Auth']>, ParentType, ContextType, Partial<MutationUpdateUserArgs>>;
 };
 
 export type PostResolvers<ContextType = any, ParentType extends ResolversParentTypes['Post'] = ResolversParentTypes['Post']> = {

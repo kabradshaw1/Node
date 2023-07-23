@@ -112,7 +112,9 @@ const resolvers = {
     },
     updateUser: async (parent: ResolversParentTypes['Mutation'], args: MutationUpdateUserArgs, context: Context) => {
       if (context.user) {
-        return await UserModel.findByIdAndUpdate(context.user._id, args, { new: true });
+        const user = await UserModel.findByIdAndUpdate(context.user._id, args, { new: true });
+        const token = signToken(user);
+        return { token, user };
       }
       throw new GraphQLError('You are not logged in!')
     },
