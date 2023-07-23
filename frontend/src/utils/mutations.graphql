@@ -20,6 +20,16 @@ mutation addUser($username: String!, $email: String!, $password: String!) {
   }
 }
 
+mutation updateUser($username: String, $email: String, $password: String) {
+  updateUser(username: $username, email: $email, password: $password) {
+    token
+    user {
+      _id
+      username
+      isAdmin
+    }
+  }
+}
 
 
 mutation addPost($postText: String!) {
