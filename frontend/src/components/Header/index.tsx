@@ -46,7 +46,7 @@ export default function Header() {
 
   const handleLogout = () => {
     dispatch(authSlice.actions.logout());
-    navigate('/login');
+    navigate('/');
   };
 
   return (
@@ -76,7 +76,7 @@ export default function Header() {
                     </>
                 }
                 <LinkContainer to='/profile'>
-                  <NavDropdown.Item>Profile</NavDropdown.Item>
+                  <NavDropdown.Item>Account Details</NavDropdown.Item>
                 </LinkContainer>
                 <NavDropdown.Divider />
                 {isLoggedIn?.user?.isAdmin

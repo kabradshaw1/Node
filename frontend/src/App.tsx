@@ -2,7 +2,7 @@ import Header from "./components/Header";
 import Home from './page/Home';
 import Login from './page/Login';
 import Forums from './page/Forums';
-import Profile from './page/Profile';
+import Account from './page/Account';
 import Register from './page/Register';
 import EventForm from "./page/EventForm";
 import { Routes, Route } from 'react-router-dom';
@@ -18,7 +18,7 @@ function App() {
           <Route path='/register' element={<Register/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/forums' element={<Forums/>}/>
-          <Route path='/profile' element={<Profile/>}/>
+          <Route path='/profile' element={<Account/>}/>
           <Route path='event_form' element={<EventForm/>}/>
         </Routes>
       </Container>

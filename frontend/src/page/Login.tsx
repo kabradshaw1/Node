@@ -49,7 +49,9 @@ function Login() {
       };
     } catch (e) {
       console.log(e);
-      // setMessage(e.response.data.detail.toString())
+      if (error?.message) {
+        setMessage(error.message);
+      };
       setLoading(false);
     };
 

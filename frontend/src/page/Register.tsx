@@ -21,6 +21,7 @@ export default function Register() {
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const [AddUserMutation, { error }] = useAddUserMutation();
 
   const validationSchema = Yup.object().shape({
@@ -41,7 +42,8 @@ export default function Register() {
       });
       if(error) {
         console.log(error);
-        setMessage("Registration failed, please try again.")
+        setMessage("Registration failed, please try again.");
+        setLoading(false);
       }
       if(mutationResponse && mutationResponse.data?.addUser?.token && mutationResponse.data?.addUser.user) {
         const { token, user } = mutationResponse.data.addUser;
@@ -52,6 +54,10 @@ export default function Register() {
       };
     } catch (e) {
       console.log(e)
+      if (error?.message) {
+        setMessage(error.message);
+      };
+      setLoading(false);
     };
   }
 
@@ -82,7 +88,7 @@ export default function Register() {
               <Form.Control.Feedback className="invalid-feedback">{errors.confirmPassword?.message}</Form.Control.Feedback>
             </Form.Group>
             <Form.Label>{message}</Form.Label>
-            <Button className='mt-3' type="submit">Submit Form</Button>
+            <Button className='mt-3' type="submit" disabled={loading}>Submit Form</Button>
           </Col>
         </Form>
       </Col>
