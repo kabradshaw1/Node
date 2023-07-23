@@ -16,6 +16,7 @@ import {
 
   ResolversParentTypes,
   Maybe,
+  MutationUpdateUserArgs,
 } from '../generated/graphql';
 import { isAdmin } from '../utils/admin'
 import {generateUploadURL, generateDownloadURL} from '../utils/signedURL';
@@ -108,6 +109,12 @@ const resolvers = {
       const token = signToken(user);
 
       return { token, user };
+    },
+    updateUser: async (parent: ResolversParentTypes['Mutation'], args: MutationUpdateUserArgs, context: Context) => {
+      if (context.user) {
+        return await UserModel.findByIdAndUpdate(context.user._id, args, { new: true });
+      }
+      throw new GraphQLError('You are not logged in!')
     },
     login: async (parent: ResolversParentTypes['Mutation'], { email, password }: MutationLoginArgs) => {
       const user = await UserModel.findOne({ email });

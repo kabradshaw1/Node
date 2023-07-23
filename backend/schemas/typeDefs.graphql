@@ -57,4 +57,6 @@ type Mutation {
   addPost(postText: String!): Post
   addComment(commentBody: String!, PostId: ID!): Post
   addEvent(fileName: String, fileType: String, title: String!, description: String, date: String!, address: String!): Url
+  updateUser(username: String, email: String, password: String): User
+  updateEvent(fileName: String, fileType: String, title: String, description: String, date: String, address: String): Url
 }
