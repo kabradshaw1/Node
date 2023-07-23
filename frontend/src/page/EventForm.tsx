@@ -76,7 +76,7 @@ const EventForm: React.FC = () => {
         variables: {
           title: data.title,
           description: data.description,
-          date: data.date.toISOString(),
+          date: new Date(data.date.getTime() - (data.date.getTimezoneOffset() * 60000)).toISOString(),
           fileName: data.file?.name,
           fileType: data.file?.type,
           address: data.address
@@ -165,7 +165,7 @@ const EventForm: React.FC = () => {
               </Form.Group>
               <Form.Group className='mb-1'>
                 <Form.Label>Event Description (Optional)</Form.Label>
-                <Form.Control type='string' {...register('description')} className={`form-control ${errors.description ? 'is-invalid' : ''}`}/>
+                <Form.Control as="textarea" {...register('description')} className={`form-control ${errors.description ? 'is-invalid' : ''}`}/>
                 <Form.Control.Feedback className='invalid-feedback'>{errors.description?.message}</Form.Control.Feedback>
               </Form.Group>
               <Button type='submit' disabled={loading || mutationLoading}>Submit Event</Button>
