@@ -73,5 +73,6 @@ query events {
     createdAt
     username
     fileName
+    address
   }
 }
