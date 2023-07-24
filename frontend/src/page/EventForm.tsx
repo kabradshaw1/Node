@@ -76,7 +76,7 @@ const EventForm: React.FC = () => {
         variables: {
           title: data.title,
           description: data.description,
-          date: new Date(data.date.getTime() - (data.date.getTimezoneOffset() * 60000)).toISOString(),
+          date: new Date(data.date.getTime()).toISOString(),
           fileName: data.file?.name,
           fileType: data.file?.type,
           address: data.address
