@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import { Comment } from './Comment';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 import dateFormat from '../utils/dateFormat';
+import timeZone from '../utils/timeZone';
 
 @modelOptions({ options: { allowMixed: Severity.ALLOW } }) // allow mixed types for subdocuments
 export class Post extends TimeStamps {
@@ -10,7 +11,7 @@ export class Post extends TimeStamps {
   @prop({ required: true, minlength: 1, maxlength: 280 })
   public postText!: string;
 
-  @prop({ default: () => Date.now(), get: (timestamp: Date) => dateFormat(timestamp.getTime()) })
+  @prop({ default: () => timeZone(new Date, 'EST'), get: (timestamp: Date) => dateFormat(timestamp.getTime()) })
   public createdAt?: Date;
 
   @prop({ required: true })

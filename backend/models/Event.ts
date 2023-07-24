@@ -2,13 +2,14 @@ import { getModelForClass, prop } from '@typegoose/typegoose';
 import mongoose from 'mongoose';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 import dateFormat from '../utils/dateFormat';
+import timeZone from '../utils/timeZone';
 
 export class Event extends TimeStamps {
   _id!: mongoose.Types.ObjectId;
   @prop({ required: true, minlength: 1, maxlength:80 })
   public title!: string;
 
-  @prop({ default: () => Date.now(), get: (timestamp: Date) => dateFormat(timestamp.getTime()) })
+  @prop({ default: () => timeZone(new Date, 'EST'), get: (timestamp: Date) => dateFormat(timestamp.getTime()) })
   public createdAt?: Date;
 
   @prop({ required: true })

@@ -21,6 +21,7 @@ import {
 import { isAdmin } from '../utils/admin'
 import {generateUploadURL, generateDownloadURL} from '../utils/signedURL';
 import fotmatTimestamp from '../utils/dateFormat';
+import timeZone from '../utils/timeZone';
 
 interface Context {
   user?: Maybe<User>;
@@ -66,7 +67,7 @@ const resolvers = {
       return posts;
     },
     events: async (parent: ResolversParentTypes['Query']) => {
-      const now = new Date();
+      const now = timeZone(new Date());
       const events = await EventModel.find({ date: { $gt: now } });
       const eventsWithSignedURLs = await Promise.all(events.map(async (event) => {
           const { fileName, date, ...rest } = event.toObject();
@@ -99,7 +100,7 @@ const resolvers = {
           fileNameWithDate = `${args.fileName}_${new Date().toString}`
           UploadURL = await generateUploadURL(fileNameWithDate, args.fileType);
         };
-        await EventModel.create({date: new Date(args.date), description: args.description, title: args.title, fileName: fileNameWithDate ,username: context.user.username, address: args.address});
+        await EventModel.create({date: timeZone(new Date(args.date), 'EST'), description: args.description, title: args.title, fileName: fileNameWithDate ,username: context.user.username, address: args.address});
         return {signedURL: UploadURL};
       }
       throw new GraphQLError('You need to be logged in!');
