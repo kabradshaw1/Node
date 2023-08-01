@@ -8,9 +8,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { useUpdateUserMutation } from '../generated/graphql';
-import { CardGroup } from 'react-bootstrap';
-
-
 
 const Account: React.FC = () => {
   const dispatch = useDispatch();
@@ -18,6 +15,7 @@ const Account: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [updateUserMutation, { error }] = useUpdateUserMutation();
   const user = useSelector((state: RootState) => state.auth);
+  console.log(user)
 
   const validationSchema = Yup.object().shape({
     username: Yup.string().required('Username is required.').min(1, 'Username must have at least 1 character.').max(15, 'Username must not exceed 40 characters.'),
@@ -37,6 +35,17 @@ const Account: React.FC = () => {
         <Card>
           <Card.Header>
             User Name
+          </Card.Header>
+          <Card.Body>
+            <Card.Text>{user.user?.username}</Card.Text>
+            <Button>Update Name</Button>
+          </Card.Body>
+        </Card>
+      </Card.Body>
+      <Card.Body>
+        <Card>
+          <Card.Header>
+            Email
           </Card.Header>
           <Card.Body>
             <Card.Text>{user.user?.username}</Card.Text>

@@ -6,6 +6,7 @@ export type State = {
     _id: string | null,
     username: string | null,
     isAdmin: boolean | null | undefined,
+    email: string | null | undefined
   } | null
 }
 
