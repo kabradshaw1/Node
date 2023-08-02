@@ -65,12 +65,12 @@ function Login() {
           <Col className="mb-3">
             <Form.Group as={Row} md="3">
               <Form.Label>Email</Form.Label>
-              <Form.Control type='email' {...register('email')} className={`form-control ${errors.email ? 'is-invalid' : ''}`}/>
+              <Form.Control type='email' placeholder='Enter email' {...register('email')} className={`form-control ${errors.email ? 'is-invalid' : ''}`}/>
               <Form.Control.Feedback className="invalid-feedback">{errors.email?.message}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Row} md="3">
               <Form.Label>Password</Form.Label>
-              <Form.Control type='password' {...register('password')} className={`form-control ${errors.password ? 'is-invalid' : ''}`}/>
+              <Form.Control type='password' placeholder='Enter password' {...register('password')} className={`form-control ${errors.password ? 'is-invalid' : ''}`}/>
               <Form.Control.Feedback className="invalid-feedback">{errors.password?.message}</Form.Control.Feedback>
             </Form.Group>
             <Form.Label>{message}</Form.Label>

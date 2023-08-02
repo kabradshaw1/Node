@@ -8,14 +8,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-import { useUpdateUserMutation } from '../generated/graphql';
-
-interface Update {
-  username?: string;
-  email?: string;
-  password?: string;
-  confirmPassword?: string;
-}
+import { useUpdateUserMutation, MutationUpdateUserArgs } from '../generated/graphql';
 
 const Account: React.FC = () => {
   const dispatch = useDispatch();
@@ -62,10 +55,11 @@ const Account: React.FC = () => {
     defaultValues: { password: '', confirmPassword: '' }
   });
 
-  const onUsernameSubmit: SubmitHandler<Update> = async data => {
+  const onUsernameSubmit: SubmitHandler<MutationUpdateUserArgs> = async data => {
     setLoading(true);
     try {
-      await updateUserMutation({variables: {username: data.username}});
+      const resp = await updateUserMutation({variables: {username: data.username}});
+
     } catch (error) {
       setMessage("Update failed");
     } finally {
@@ -73,7 +67,7 @@ const Account: React.FC = () => {
     }
   }
 
-  const onEmailSubmit: SubmitHandler<Update> = async data => {
+  const onEmailSubmit: SubmitHandler<MutationUpdateUserArgs> = async data => {
     setLoading(true);
     try {
       await updateUserMutation({variables: {email: data.email}});
@@ -84,7 +78,7 @@ const Account: React.FC = () => {
     }
   }
 
-  const onPasswordSubmit: SubmitHandler<Update> = async data => {
+  const onPasswordSubmit: SubmitHandler<MutationUpdateUserArgs> = async data => {
     setLoading(true);
     try {
       await updateUserMutation({variables: {password: data.password}});
