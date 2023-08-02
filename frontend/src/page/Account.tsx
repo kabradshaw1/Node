@@ -11,10 +11,10 @@ import { useDispatch } from 'react-redux';
 import { useUpdateUserMutation } from '../generated/graphql';
 
 interface Update {
-  username?: string,
-  email?: string,
-  password?: string,
-  confirmPassword?: string,
+  username?: string;
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
 }
 
 const Account: React.FC = () => {
@@ -23,8 +23,6 @@ const Account: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [updateUserMutation, { error }] = useUpdateUserMutation();
   const user = useSelector((state: RootState) => state.auth);
-
-  const [editMode, setEditMode] = useState({username: false, email: false, password: false})
 
   const usernameSchema = Yup.object().shape({
     username: Yup.string()
@@ -49,35 +47,47 @@ const Account: React.FC = () => {
       .oneOf([Yup.ref('password')], 'Confirm Password does not match'),
   });
 
-  // get the current validation schema
-  const getValidationSchema = () => {
-    if (editMode.username) {
-      return usernameSchema;
-    } else if (editMode.email) {
-      return emailSchema;
-    } else if (editMode.password) {
-      return passwordSchema;
-    }
-    return undefined;
-  };
+  const usernameForm = useForm<{username: string}>({
+    resolver: yupResolver(usernameSchema),
+    defaultValues: { username: user.user?.username || ''}
+  });
 
-  const { register, handleSubmit, formState:{errors}, reset } = useForm<Update>(
-    {resolver: yupResolver(getValidationSchema())}
-  );
+  const emailForm = useForm<{email: string}>({
+    resolver: yupResolver(emailSchema),
+    defaultValues: { email: user.user?.email || ''}
+  });
 
-  const onSubmit: SubmitHandler<Update> = async data => {
+  const passwordForm = useForm<{password: string, confirmPassword: string}>({
+    resolver: yupResolver(passwordSchema),
+    defaultValues: { password: '', confirmPassword: '' }
+  });
+
+  const onUsernameSubmit: SubmitHandler<Update> = async data => {
     setLoading(true);
     try {
-      if (editMode.username) {
-        await updateUserMutation({variables: {username: data.username}});
-      } else if (editMode.email) {
-        await updateUserMutation({variables: {email: data.email}});
-      } else if (editMode.password) {
-        await updateUserMutation({variables: {password: data.password}});
-      }
+      await updateUserMutation({variables: {username: data.username}});
+    } catch (error) {
+      setMessage("Update failed");
+    } finally {
+      setLoading(false);
+    }
+  }
 
-      setEditMode({ username: false, email: false, password: false });
-      reset();
+  const onEmailSubmit: SubmitHandler<Update> = async data => {
+    setLoading(true);
+    try {
+      await updateUserMutation({variables: {email: data.email}});
+    } catch (error) {
+      setMessage("Update failed");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const onPasswordSubmit: SubmitHandler<Update> = async data => {
+    setLoading(true);
+    try {
+      await updateUserMutation({variables: {password: data.password}});
     } catch (error) {
       setMessage("Update failed");
     } finally {
@@ -90,42 +100,38 @@ const Account: React.FC = () => {
       <Card.Header>Account Information</Card.Header>
       <Card.Body>
         <Card>
-          <Card.Header>
-            User Name
-          </Card.Header>
+          <Card.Header>User Name</Card.Header>
           <Card.Body>
-            {editMode.username ?
-              <Form onSubmit={handleSubmit(onSubmit)}>
-                <Form.Control type="text" placeholder="Enter username" {...register("username")}/>
-                <Form.Control.Feedback className="invalid-feedback">{errors.username?.message}</Form.Control.Feedback>
-                <Button type="submit">{loading ? "Updating..." : "Submit Update Name"}</Button>
-              </Form>
-              :
-              <>
-                <Card.Text>{user.user?.username}</Card.Text>
-                <Button onClick={() => setEditMode({...editMode, username: true})}>Update Name</Button>
-              </>
-            }
-
+            <Form onSubmit={usernameForm.handleSubmit(onUsernameSubmit)}>
+              <Form.Control type="text" placeholder="Enter username" {...usernameForm.register("username")}/>
+              <Form.Control.Feedback className="invalid-feedback">{usernameForm.formState.errors.username?.message}</Form.Control.Feedback>
+              <Button type="submit">{loading ? "Updating..." : "Submit Update Name"}</Button>
+            </Form>
           </Card.Body>
         </Card>
         <Card>
-          <Card.Header>
-            Email
-          </Card.Header>
+          <Card.Header>Email</Card.Header>
           <Card.Body>
-            <Card.Text>{user.user?.email}</Card.Text>
-            <Button>Update Email</Button>
+            <Form onSubmit={emailForm.handleSubmit(onEmailSubmit)}>
+              <Form.Control type="text" placeholder="Enter email" {...emailForm.register("email")}/>
+              <Form.Control.Feedback className="invalid-feedback">{emailForm.formState.errors.email?.message}</Form.Control.Feedback>
+              <Button type="submit">{loading ? "Updating..." : "Submit Update Email"}</Button>
+            </Form>
           </Card.Body>
         </Card>
         <Card>
           <Card.Header>Password</Card.Header>
           <Card.Body>
-            <Button>Update Password</Button>
+            <Form onSubmit={passwordForm.handleSubmit(onPasswordSubmit)}>
+              <Form.Control type="password" placeholder="Enter password" {...passwordForm.register("password")}/>
+              <Form.Control.Feedback className="invalid-feedback">{passwordForm.formState.errors.password?.message}</Form.Control.Feedback>
+              <Form.Control type="password" placeholder="Confirm password" {...passwordForm.register("confirmPassword")}/>
+              <Form.Control.Feedback className="invalid-feedback">{passwordForm.formState.errors.confirmPassword?.message}</Form.Control.Feedback>
+              <Button type="submit">{loading ? "Updating..." : "Submit Update Password"}</Button>
+            </Form>
           </Card.Body>
         </Card>
       </Card.Body>
-
     </Card>
   )
 }

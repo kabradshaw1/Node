@@ -69,22 +69,22 @@ export default function Register() {
           <Col className="mb-3">
             <Form.Group as={Row} md="3">
               <Form.Label>Email</Form.Label>
-              <Form.Control type='email' {...register('email')} className={`form-control ${errors.email ? 'is-invalid' : ''}`}/>
+              <Form.Control type='email' placeholder="Enter email" {...register('email')} className={`form-control ${errors.email ? 'is-invalid' : ''}`}/>
               <Form.Control.Feedback className="invalid-feedback">{errors.email?.message}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Row} md="3">
               <Form.Label>username</Form.Label>
-              <Form.Control type='username' {...register('username')} className={`form-control ${errors.username ? 'is-invalid' : ''}`}/>
+              <Form.Control type='username' placeholder="Enter username" {...register('username')} className={`form-control ${errors.username ? 'is-invalid' : ''}`}/>
               <Form.Control.Feedback className="invalid-feedback">{errors.username?.message}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Row} md="3">
               <Form.Label>Password</Form.Label>
-              <Form.Control type='password' {...register('password')} className={`form-control ${errors.password ? 'is-invalid' : ''}`}/>
+              <Form.Control type='password' placeholder="Enter password" {...register('password')} className={`form-control ${errors.password ? 'is-invalid' : ''}`}/>
               <Form.Control.Feedback className="invalid-feedback">{errors.password?.message}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Row} md="3">
               <Form.Label>Confirm Password</Form.Label>
-              <Form.Control type='password' {...register('confirmPassword')} className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''}`}/>
+              <Form.Control type='password' placeholder="Confirm password" {...register('confirmPassword')} className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''}`}/>
               <Form.Control.Feedback className="invalid-feedback">{errors.confirmPassword?.message}</Form.Control.Feedback>
             </Form.Group>
             <Button className='mt-3' type="submit" disabled={loading}>Submit Form</Button>
