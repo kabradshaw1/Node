@@ -48,7 +48,7 @@ export default function Register() {
       if(mutationResponse && mutationResponse.data?.addUser?.token && mutationResponse.data?.addUser.user) {
         const { token, user } = mutationResponse.data.addUser;
         if(user._id && user.username) {
-          dispatch(authSlice.actions.setAuth({ token: token, user: { _id: user._id, username: user.username, isAdmin: user.isAdmin } }));
+          dispatch(authSlice.actions.setAuth({ token: token, user: { _id: user._id, username: user.username, isAdmin: user.isAdmin, email: user.email } }));
           navigate('/')
         }
       };
