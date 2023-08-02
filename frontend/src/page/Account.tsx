@@ -1,5 +1,6 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 import { RootState } from '../store';
 import { useSelector } from 'react-redux';
@@ -15,7 +16,8 @@ const Account: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [updateUserMutation, { error }] = useUpdateUserMutation();
   const user = useSelector((state: RootState) => state.auth);
-  console.log(user)
+
+  const [editMode, setEditMode] = useState({username: false, email: false, password: false})
 
   const validationSchema = Yup.object().shape({
     username: Yup.string().required('Username is required.').min(1, 'Username must have at least 1 character.').max(15, 'Username must not exceed 40 characters.'),
@@ -28,6 +30,10 @@ const Account: React.FC = () => {
     {resolver: yupResolver(validationSchema)}
   );
 
+  const onSubmit: SubmitHandler<{ username:string}> = async data => {
+
+  }
+
   return (
     <Card>
       <Card.Header>Account Information</Card.Header>
@@ -37,8 +43,19 @@ const Account: React.FC = () => {
             User Name
           </Card.Header>
           <Card.Body>
-            <Card.Text>{user.user?.username}</Card.Text>
-            <Button>Update Name</Button>
+            {editMode.username ?
+              <Form onSubmit={handleSubmit(onSubmit)}>
+                <Form.Control type="text" placeholder="Enter username" {...register("username")}/>
+                <Form.Control.Feedback className="invalid-feedback">{errors.username?.message}</Form.Control.Feedback>
+                <Button type="submit">{loading ? "Updating..." : "Submit Update Name"}</Button>
+              </Form>
+              :
+              <>
+                <Card.Text>{user.user?.username}</Card.Text>
+                <Button onClick={() => setEditMode({...editMode, username: true})}>Update Name</Button>
+              </>
+            }
+
           </Card.Body>
         </Card>
         <Card>
