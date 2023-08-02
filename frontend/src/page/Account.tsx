@@ -1,6 +1,9 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
 import { useState } from 'react';
 import { RootState } from '../store';
 import { useSelector } from 'react-redux';
@@ -11,6 +14,11 @@ import { useDispatch } from 'react-redux';
 import { useUpdateUserMutation, MutationUpdateUserArgs } from '../generated/graphql';
 import authSlice from '../store/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
+import Logo from '../components/Logo';
+
+type FormFields = MutationUpdateUserArgs & {
+  confirmPassword?: string
+}
 
 const Account: React.FC = () => {
   const dispatch = useDispatch();
@@ -60,7 +68,7 @@ const Account: React.FC = () => {
     defaultValues: { password: '', confirmPassword: '' }
   });
 
-  const onUsernameSubmit: SubmitHandler<MutationUpdateUserArgs> = async data => {
+  const onUsernameSubmit: SubmitHandler<FormFields> = async data => {
     setLoading(true);
     try {
       const mutationResponse = await updateUserMutation({variables: {username: data.username}});
@@ -82,7 +90,7 @@ const Account: React.FC = () => {
     }
   }
 
-  const onEmailSubmit: SubmitHandler<MutationUpdateUserArgs> = async data => {
+  const onEmailSubmit: SubmitHandler<FormFields> = async data => {
     setLoading(true);
     try {
       await updateUserMutation({variables: {email: data.email}});
@@ -93,7 +101,7 @@ const Account: React.FC = () => {
     }
   }
 
-  const onPasswordSubmit: SubmitHandler<MutationUpdateUserArgs> = async data => {
+  const onPasswordSubmit: SubmitHandler<FormFields> = async data => {
     setLoading(true);
     try {
       await updateUserMutation({variables: {password: data.password}});
@@ -105,66 +113,80 @@ const Account: React.FC = () => {
   }
 
   return (
-    <Card>
-      <Card.Header>Account Information</Card.Header>
-      <Card.Body>
-        <Card>
-          <Card.Header>User Name</Card.Header>
-          <Card.Body>
-            {editMode.username ?
-              <Form onSubmit={usernameForm.handleSubmit(onUsernameSubmit)}>
-                <Form.Control type="text" placeholder="Enter username" {...usernameForm.register("username")}/>
-                <Form.Control.Feedback className="invalid-feedback">{usernameForm.formState.errors.username?.message}</Form.Control.Feedback>
-                <Button type="submit">{loading ? "Updating..." : "Submit Update Name"}</Button>
-                <Form.Label>{message}</Form.Label>
-              </Form>
-              :
-              <>
-                <Card.Text>{user.user?.username}</Card.Text>
-                <Button onClick={() => setEditMode({...editMode, username: true})}>Update Name</Button>
-              </>
-            }
-          </Card.Body>
-        </Card>
-        <Card>
-          <Card.Header>Email</Card.Header>
-          <Card.Body>
-            {editMode.email ?
-              <Form onSubmit={emailForm.handleSubmit(onEmailSubmit)}>
-                <Form.Control type="text" placeholder="Enter email" {...emailForm.register("email")}/>
-                <Form.Control.Feedback className="invalid-feedback">{emailForm.formState.errors.email?.message}</Form.Control.Feedback>
-                <Button type="submit">{loading ? "Updating..." : "Submit Update Email"}</Button>
-                <Form.Label>{message}</Form.Label>
-              </Form>
-              :
-              <>
-                <Card.Text>{user.user?.email}</Card.Text>
-                <Button onClick={() => setEditMode({...editMode, email: true})}>Update Email</Button>
-              </>
-            }
-              <Form onSubmit={emailForm.handleSubmit(onEmailSubmit)}>
-                <Form.Control type="text" placeholder="Enter email" {...emailForm.register("email")}/>
-                <Form.Control.Feedback className="invalid-feedback">{emailForm.formState.errors.email?.message}</Form.Control.Feedback>
-                <Button type="submit">{loading ? "Updating..." : "Submit Update Email"}</Button>
-                <Form.Label>{message}</Form.Label>
-              </Form>
-          </Card.Body>
-        </Card>
-        <Card>
-          <Card.Header>Password</Card.Header>
-          <Card.Body>
-            <Form onSubmit={passwordForm.handleSubmit(onPasswordSubmit)}>
-              <Form.Control type="password" placeholder="Enter password" {...passwordForm.register("password")}/>
-              <Form.Control.Feedback className="invalid-feedback">{passwordForm.formState.errors.password?.message}</Form.Control.Feedback>
-              <Form.Control type="password" placeholder="Confirm password" {...passwordForm.register("confirmPassword")}/>
-              <Form.Control.Feedback className="invalid-feedback">{passwordForm.formState.errors.confirmPassword?.message}</Form.Control.Feedback>
-              <Button type="submit">{loading ? "Updating..." : "Submit Update Password"}</Button>
-              <Form.Label>{message}</Form.Label>
-            </Form>
-          </Card.Body>
-        </Card>
-      </Card.Body>
-    </Card>
+    <Container>
+      <Row>
+        <Col>
+          <Card>
+            <Card.Header>Account Information</Card.Header>
+            <Card.Body>
+              <Card>
+                <Card.Header>User Name</Card.Header>
+                <Card.Body>
+                  {editMode.username ?
+                    <Form onSubmit={usernameForm.handleSubmit(onUsernameSubmit)}>
+                      <Form.Control type="text" placeholder="Enter username" {...usernameForm.register("username")}/>
+                      <Form.Control.Feedback className="invalid-feedback">{usernameForm.formState.errors.username?.message}</Form.Control.Feedback>
+                      <Button type="submit">{loading ? "Updating..." : "Submit Update Name"}</Button>
+                      <Button onClick={() => setEditMode({...editMode, username: false})}>Cancel</Button>
+                      <Form.Label>{message}</Form.Label>
+                    </Form>
+                    :
+                    <>
+                      <Card.Text>{user.user?.username}</Card.Text>
+                      <Button onClick={() => setEditMode({...editMode, username: true})}>Update Name</Button>
+                    </>
+                  }
+                </Card.Body>
+              </Card>
+              <Card>
+                <Card.Header>Email</Card.Header>
+                <Card.Body>
+                  {editMode.email ?
+                    <Form onSubmit={emailForm.handleSubmit(onEmailSubmit)}>
+                      <Form.Control type="text" placeholder="Enter email" {...emailForm.register("email")}/>
+                      <Form.Control.Feedback className="invalid-feedback">{emailForm.formState.errors.email?.message}</Form.Control.Feedback>
+                      <Button type="submit">{loading ? "Updating..." : "Submit Update Email"}</Button>
+                      <Button onClick={() => setEditMode({...editMode, email: false})}>Cancel</Button>
+                      <Form.Label>{message}</Form.Label>
+                    </Form>
+                    :
+                    <>
+                      <Card.Text>{user.user?.email}</Card.Text>
+                      <Button onClick={() => setEditMode({...editMode, email: true})}>Update Email</Button>
+                    </>
+                  }
+                </Card.Body>
+              </Card>
+              <Card>
+                <Card.Header>Password</Card.Header>
+                <Card.Body>
+                  {editMode.password ?
+                    <Form onSubmit={passwordForm.handleSubmit(onPasswordSubmit)}>
+                      <Form.Control type="password" placeholder="Enter password" {...passwordForm.register("password")}/>
+                      <Form.Control.Feedback className="invalid-feedback">{passwordForm.formState.errors.password?.message}</Form.Control.Feedback>
+                      <Form.Control type="password" placeholder="Confirm password" {...passwordForm.register("confirmPassword")}/>
+                      <Form.Control.Feedback className="invalid-feedback">{passwordForm.formState.errors.confirmPassword?.message}</Form.Control.Feedback>
+                      <Button type="submit">{loading ? "Updating..." : "Submit Update Password"}</Button>
+                      <Button onClick={() => setEditMode({...editMode, password: false})}>Cancel</Button>
+                      <Form.Label>{message}</Form.Label>
+                    </Form>
+                    :
+                    <>
+                    <Button onClick={() => setEditMode({...editMode, password: true})}>Update Password</Button>
+                  </>
+                  }
+                </Card.Body>
+              </Card>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col>
+          <Card>
+            <Logo/>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   )
 }
 
