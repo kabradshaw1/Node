@@ -10,6 +10,13 @@ import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { useUpdateUserMutation } from '../generated/graphql';
 
+interface Update {
+  username?: string,
+  email?: string,
+  password?: string,
+  confirmPassword?: string,
+}
+
 const Account: React.FC = () => {
   const dispatch = useDispatch();
   const [message, setMessage] = useState("");
@@ -19,19 +26,63 @@ const Account: React.FC = () => {
 
   const [editMode, setEditMode] = useState({username: false, email: false, password: false})
 
-  const validationSchema = Yup.object().shape({
-    username: Yup.string().required('Username is required.').min(1, 'Username must have at least 1 character.').max(15, 'Username must not exceed 40 characters.'),
-    email: Yup.string().required('Email is required').email('Email is invalid'),
-    password: Yup.string().required('Password is required').min(6, 'Password must be at least 6 characters').max(40, 'Password must not exceed 40 characters'),
-    confirmPassword: Yup.string().required('Confirm Password is required').oneOf([Yup.ref('password')], 'Confirm Password does not match'),
+  const usernameSchema = Yup.object().shape({
+    username: Yup.string()
+      .required('Username is required.')
+      .min(1, 'Username must have at least 1 character.')
+      .max(15, 'Username must not exceed 40 characters.'),
   });
 
-  const { register, handleSubmit, formState:{errors} } = useForm(
-    {resolver: yupResolver(validationSchema)}
+  const emailSchema = Yup.object().shape({
+    email: Yup.string()
+      .required('Email is required')
+      .email('Email is invalid'),
+  });
+
+  const passwordSchema = Yup.object().shape({
+    password: Yup.string()
+      .required('Password is required')
+      .min(6, 'Password must be at least 6 characters')
+      .max(40, 'Password must not exceed 40 characters'),
+    confirmPassword: Yup.string()
+      .required('Confirm Password is required')
+      .oneOf([Yup.ref('password')], 'Confirm Password does not match'),
+  });
+
+  // get the current validation schema
+  const getValidationSchema = () => {
+    if (editMode.username) {
+      return usernameSchema;
+    } else if (editMode.email) {
+      return emailSchema;
+    } else if (editMode.password) {
+      return passwordSchema;
+    }
+    return undefined;
+  };
+
+  const { register, handleSubmit, formState:{errors}, reset } = useForm<Update>(
+    {resolver: yupResolver(getValidationSchema())}
   );
 
-  const onSubmit: SubmitHandler<{ username:string}> = async data => {
+  const onSubmit: SubmitHandler<Update> = async data => {
+    setLoading(true);
+    try {
+      if (editMode.username) {
+        await updateUserMutation({variables: {username: data.username}});
+      } else if (editMode.email) {
+        await updateUserMutation({variables: {email: data.email}});
+      } else if (editMode.password) {
+        await updateUserMutation({variables: {password: data.password}});
+      }
 
+      setEditMode({ username: false, email: false, password: false });
+      reset();
+    } catch (error) {
+      setMessage("Update failed");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
