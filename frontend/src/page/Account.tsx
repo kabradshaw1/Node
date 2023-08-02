@@ -41,18 +41,23 @@ const Account: React.FC = () => {
             <Button>Update Name</Button>
           </Card.Body>
         </Card>
-      </Card.Body>
-      <Card.Body>
         <Card>
           <Card.Header>
             Email
           </Card.Header>
           <Card.Body>
-            <Card.Text>{user.user?.username}</Card.Text>
-            <Button>Update Name</Button>
+            <Card.Text>{user.user?.email}</Card.Text>
+            <Button>Update Email</Button>
+          </Card.Body>
+        </Card>
+        <Card>
+          <Card.Header>Password</Card.Header>
+          <Card.Body>
+            <Button>Update Password</Button>
           </Card.Body>
         </Card>
       </Card.Body>
+
     </Card>
   )
 }
