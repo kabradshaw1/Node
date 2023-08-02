@@ -9,6 +9,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { useUpdateUserMutation, MutationUpdateUserArgs } from '../generated/graphql';
+import authSlice from '../store/slices/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 const Account: React.FC = () => {
   const dispatch = useDispatch();
@@ -16,6 +18,7 @@ const Account: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [updateUserMutation, { error }] = useUpdateUserMutation();
   const user = useSelector((state: RootState) => state.auth);
+  const navigate = useNavigate()
 
   const usernameSchema = Yup.object().shape({
     username: Yup.string()
@@ -58,8 +61,18 @@ const Account: React.FC = () => {
   const onUsernameSubmit: SubmitHandler<MutationUpdateUserArgs> = async data => {
     setLoading(true);
     try {
-      const resp = await updateUserMutation({variables: {username: data.username}});
-
+      const mutationResponse = await updateUserMutation({variables: {username: data.username}});
+      if(error) {
+        console.log(error);
+        setMessage("Update failed");
+      };
+      if(mutationResponse && mutationResponse.data?.updateUser?.token && mutationResponse.data?.updateUser.user) {
+        const { token, user } = mutationResponse.data.updateUser;
+        if(user._id && user.username) {
+          dispatch(authSlice.actions.setAuth({ token: token, user: { _id: user._id, username: user.username, isAdmin: user.isAdmin, email: user.email } }));
+          navigate('/')
+        }
+      };
     } catch (error) {
       setMessage("Update failed");
     } finally {
@@ -100,6 +113,7 @@ const Account: React.FC = () => {
               <Form.Control type="text" placeholder="Enter username" {...usernameForm.register("username")}/>
               <Form.Control.Feedback className="invalid-feedback">{usernameForm.formState.errors.username?.message}</Form.Control.Feedback>
               <Button type="submit">{loading ? "Updating..." : "Submit Update Name"}</Button>
+              <Form.Label>{message}</Form.Label>
             </Form>
           </Card.Body>
         </Card>
@@ -110,6 +124,7 @@ const Account: React.FC = () => {
               <Form.Control type="text" placeholder="Enter email" {...emailForm.register("email")}/>
               <Form.Control.Feedback className="invalid-feedback">{emailForm.formState.errors.email?.message}</Form.Control.Feedback>
               <Button type="submit">{loading ? "Updating..." : "Submit Update Email"}</Button>
+              <Form.Label>{message}</Form.Label>
             </Form>
           </Card.Body>
         </Card>
@@ -122,6 +137,7 @@ const Account: React.FC = () => {
               <Form.Control type="password" placeholder="Confirm password" {...passwordForm.register("confirmPassword")}/>
               <Form.Control.Feedback className="invalid-feedback">{passwordForm.formState.errors.confirmPassword?.message}</Form.Control.Feedback>
               <Button type="submit">{loading ? "Updating..." : "Submit Update Password"}</Button>
+              <Form.Label>{message}</Form.Label>
             </Form>
           </Card.Body>
         </Card>

@@ -44,7 +44,7 @@ export default function Register() {
         console.log(error);
         setMessage("Registration failed, please try again.");
         setLoading(false);
-      }
+      };
       if(mutationResponse && mutationResponse.data?.addUser?.token && mutationResponse.data?.addUser.user) {
         const { token, user } = mutationResponse.data.addUser;
         if(user._id && user.username) {

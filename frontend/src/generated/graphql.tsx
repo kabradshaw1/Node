@@ -178,7 +178,7 @@ export type UpdateUserMutationVariables = Exact<{
 }>;
 
 
-export type UpdateUserMutation = { __typename?: 'Mutation', updateUser?: { __typename?: 'Auth', token?: string | null, user?: { __typename?: 'User', _id?: string | null, username?: string | null, isAdmin?: boolean | null } | null } | null };
+export type UpdateUserMutation = { __typename?: 'Mutation', updateUser?: { __typename?: 'Auth', token?: string | null, user?: { __typename?: 'User', _id?: string | null, username?: string | null, isAdmin?: boolean | null, email?: string | null } | null } | null };
 
 export type AddPostMutationVariables = Exact<{
   postText: Scalars['String']['input'];
@@ -328,6 +328,7 @@ export const UpdateUserDocument = gql`
       _id
       username
       isAdmin
+      email
     }
   }
 }

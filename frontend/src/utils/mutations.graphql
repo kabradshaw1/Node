@@ -29,6 +29,7 @@ mutation updateUser($username: String, $email: String, $password: String) {
       _id
       username
       isAdmin
+      email
     }
   }
 }
