@@ -18,7 +18,9 @@ const Account: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [updateUserMutation, { error }] = useUpdateUserMutation();
   const user = useSelector((state: RootState) => state.auth);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  const [editMode, setEditMode] = useState({username: false, email: false, password: false})
 
   const usernameSchema = Yup.object().shape({
     username: Yup.string()
@@ -109,23 +111,43 @@ const Account: React.FC = () => {
         <Card>
           <Card.Header>User Name</Card.Header>
           <Card.Body>
-            <Form onSubmit={usernameForm.handleSubmit(onUsernameSubmit)}>
-              <Form.Control type="text" placeholder="Enter username" {...usernameForm.register("username")}/>
-              <Form.Control.Feedback className="invalid-feedback">{usernameForm.formState.errors.username?.message}</Form.Control.Feedback>
-              <Button type="submit">{loading ? "Updating..." : "Submit Update Name"}</Button>
-              <Form.Label>{message}</Form.Label>
-            </Form>
+            {editMode.username ?
+              <Form onSubmit={usernameForm.handleSubmit(onUsernameSubmit)}>
+                <Form.Control type="text" placeholder="Enter username" {...usernameForm.register("username")}/>
+                <Form.Control.Feedback className="invalid-feedback">{usernameForm.formState.errors.username?.message}</Form.Control.Feedback>
+                <Button type="submit">{loading ? "Updating..." : "Submit Update Name"}</Button>
+                <Form.Label>{message}</Form.Label>
+              </Form>
+              :
+              <>
+                <Card.Text>{user.user?.username}</Card.Text>
+                <Button onClick={() => setEditMode({...editMode, username: true})}>Update Name</Button>
+              </>
+            }
           </Card.Body>
         </Card>
         <Card>
           <Card.Header>Email</Card.Header>
           <Card.Body>
-            <Form onSubmit={emailForm.handleSubmit(onEmailSubmit)}>
-              <Form.Control type="text" placeholder="Enter email" {...emailForm.register("email")}/>
-              <Form.Control.Feedback className="invalid-feedback">{emailForm.formState.errors.email?.message}</Form.Control.Feedback>
-              <Button type="submit">{loading ? "Updating..." : "Submit Update Email"}</Button>
-              <Form.Label>{message}</Form.Label>
-            </Form>
+            {editMode.email ?
+              <Form onSubmit={emailForm.handleSubmit(onEmailSubmit)}>
+                <Form.Control type="text" placeholder="Enter email" {...emailForm.register("email")}/>
+                <Form.Control.Feedback className="invalid-feedback">{emailForm.formState.errors.email?.message}</Form.Control.Feedback>
+                <Button type="submit">{loading ? "Updating..." : "Submit Update Email"}</Button>
+                <Form.Label>{message}</Form.Label>
+              </Form>
+              :
+              <>
+                <Card.Text>{user.user?.email}</Card.Text>
+                <Button onClick={() => setEditMode({...editMode, email: true})}>Update Email</Button>
+              </>
+            }
+              <Form onSubmit={emailForm.handleSubmit(onEmailSubmit)}>
+                <Form.Control type="text" placeholder="Enter email" {...emailForm.register("email")}/>
+                <Form.Control.Feedback className="invalid-feedback">{emailForm.formState.errors.email?.message}</Form.Control.Feedback>
+                <Button type="submit">{loading ? "Updating..." : "Submit Update Email"}</Button>
+                <Form.Label>{message}</Form.Label>
+              </Form>
           </Card.Body>
         </Card>
         <Card>
