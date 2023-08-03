@@ -17,6 +17,7 @@ import {
   ResolversParentTypes,
   Maybe,
   MutationUpdateUserArgs,
+  MutationUpdateEventArgs,
 } from '../generated/graphql';
 import { isAdmin } from '../utils/admin'
 import {generateUploadURL, generateDownloadURL} from '../utils/signedURL';
@@ -118,6 +119,38 @@ const resolvers = {
         return { token, user };
       }
       throw new GraphQLError('You are not logged in!')
+    },
+    updateEvent: async (parent: ResolversParentTypes['Mutation'], args: MutationUpdateEventArgs, context: Context) => {
+      if (context.user) {
+        isAdmin(context.user);
+        let UploadURL;
+        let fileNameWithDate;
+        if(args.fileName && args.fileType) {
+          fileNameWithDate = `${args.fileName}_${new Date().toString()}`;
+          UploadURL = await generateUploadURL(fileNameWithDate, args.fileType);
+        };
+
+        let updateObj: {
+          description: string | undefined | null,
+          title: string | undefined | null,
+          fileName: string | undefined,
+          username: string,
+          address: string | undefined | null,
+          date?: Date,
+        } = {
+          description: args.description,
+          title: args.title,
+          fileName: fileNameWithDate,
+          username: context.user.username,
+          address: args.address,
+        };
+
+        if (args.date !== undefined && args.date !== null) {
+          updateObj.date = timeZone(new Date(args.date), 'EST');
+        }
+
+        await EventModel.findByIdAndUpdate(updateObj);
+      }
     },
     login: async (parent: ResolversParentTypes['Mutation'], { email, password }: MutationLoginArgs) => {
       const user = await UserModel.findOne({ email });
