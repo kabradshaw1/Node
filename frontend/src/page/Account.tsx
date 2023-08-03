@@ -80,10 +80,12 @@ const Account: React.FC = () => {
         const { token, user } = mutationResponse.data.updateUser;
         if(user._id && user.username) {
           dispatch(authSlice.actions.setAuth({ token: token, user: { _id: user._id, username: user.username, isAdmin: user.isAdmin, email: user.email } }));
-          navigate('/')
+          setMessage("Update Complete");
+          setEditMode({...editMode, username: false})
         }
       };
     } catch (error) {
+      console.log(error);
       setMessage("Update failed");
     } finally {
       setLoading(false);
@@ -93,8 +95,17 @@ const Account: React.FC = () => {
   const onEmailSubmit: SubmitHandler<FormFields> = async data => {
     setLoading(true);
     try {
-      await updateUserMutation({variables: {email: data.email}});
+      const mutationResponse = await updateUserMutation({variables: {email: data.email}});
+      if(mutationResponse && mutationResponse.data?.updateUser?.token && mutationResponse.data?.updateUser.user) {
+        const { token, user } = mutationResponse.data.updateUser;
+        if(user._id && user.username) {
+          dispatch(authSlice.actions.setAuth({ token: token, user: { _id: user._id, username: user.username, isAdmin: user.isAdmin, email: user.email } }));
+          setMessage("Update Complete");
+          setEditMode({...editMode, email: false})
+        }
+      };
     } catch (error) {
+      console.log(error);
       setMessage("Update failed");
     } finally {
       setLoading(false);
@@ -104,8 +115,17 @@ const Account: React.FC = () => {
   const onPasswordSubmit: SubmitHandler<FormFields> = async data => {
     setLoading(true);
     try {
-      await updateUserMutation({variables: {password: data.password}});
+      const mutationResponse = await updateUserMutation({variables: {password: data.password}});
+      if(mutationResponse && mutationResponse.data?.updateUser?.token && mutationResponse.data?.updateUser.user) {
+        const { token, user } = mutationResponse.data.updateUser;
+        if(user._id && user.username) {
+          dispatch(authSlice.actions.setAuth({ token: token, user: { _id: user._id, username: user.username, isAdmin: user.isAdmin, email: user.email } }));
+          setMessage("Update Complete");
+          setEditMode({...editMode, password: false})
+        }
+      };
     } catch (error) {
+      console.log(error);
       setMessage("Update failed");
     } finally {
       setLoading(false);
