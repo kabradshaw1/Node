@@ -74,5 +74,6 @@ query events {
     username
     fileName
     address
+    _id
   }
 }

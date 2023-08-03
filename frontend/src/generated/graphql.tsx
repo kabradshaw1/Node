@@ -33,6 +33,7 @@ export type Comment = {
 
 export type Event = {
   __typename?: 'Event';
+  _id?: Maybe<Scalars['ID']['output']>;
   address?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['String']['output']>;
   date?: Maybe<Scalars['String']['output']>;
@@ -236,7 +237,7 @@ export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', _id?: 
 export type EventsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type EventsQuery = { __typename?: 'Query', events?: Array<{ __typename?: 'Event', title?: string | null, date?: string | null, signedURL?: string | null, description?: string | null, createdAt?: string | null, username?: string | null, fileName?: string | null, address?: string | null } | null> | null };
+export type EventsQuery = { __typename?: 'Query', events?: Array<{ __typename?: 'Event', title?: string | null, date?: string | null, signedURL?: string | null, description?: string | null, createdAt?: string | null, username?: string | null, fileName?: string | null, address?: string | null, _id?: string | null } | null> | null };
 
 
 export const LoginDocument = gql`
@@ -679,6 +680,7 @@ export const EventsDocument = gql`
     username
     fileName
     address
+    _id
   }
 }
     `;
