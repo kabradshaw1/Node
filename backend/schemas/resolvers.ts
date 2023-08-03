@@ -131,10 +131,10 @@ const resolvers = {
         };
 
         let updateObj: {
-          description: string | undefined | null,
-          title: string | undefined | null,
-          fileName: string | undefined,
-          username: string,
+          description?: string | undefined | null,
+          title?: string | undefined | null,
+          fileName?: string | undefined,
+          username?: string,
           address: string | undefined | null,
           date?: Date,
         } = {
