@@ -8,7 +8,7 @@ import Form from 'react-bootstrap/Form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useUpdateEventMutation, MutationUpdateEventArgs, Event,  } from '../../../generated/graphql';
+import { useUpdateEventMutation, MutationUpdateEventArgs, Event } from '../../../generated/graphql';
 
 
 interface SingleEventProp {
@@ -75,7 +75,7 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
       <Card.Header>
         {editMode.title ?
           <Form onSubmit={titleForm.handleSubmit(onTitleSubmit)}>
-
+            
           </Form>
           :
           <>{event?.title}</>
