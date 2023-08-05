@@ -67,3 +67,9 @@ mutation addEvent($fileName: String, $fileType: String, $title: String!, $descri
   }
 }
 
+mutation updateEvent($fileName: String, $fileType: String, $title: String, $description: String, $date: String, $address: String) {
+  updateEvent(fileName: $fileName, fileType: $fileType, title: $title, description: $description, date: $date, address: $address) {
+    signedURL
+  }
+}
+

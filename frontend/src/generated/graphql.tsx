@@ -208,6 +208,18 @@ export type AddEventMutationVariables = Exact<{
 
 export type AddEventMutation = { __typename?: 'Mutation', addEvent?: { __typename?: 'Url', signedURL?: string | null } | null };
 
+export type UpdateEventMutationVariables = Exact<{
+  fileName?: InputMaybe<Scalars['String']['input']>;
+  fileType?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  date?: InputMaybe<Scalars['String']['input']>;
+  address?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type UpdateEventMutation = { __typename?: 'Mutation', updateEvent?: { __typename?: 'Url', signedURL?: string | null } | null };
+
 export type PostQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
@@ -488,6 +500,51 @@ export function useAddEventMutation(baseOptions?: Apollo.MutationHookOptions<Add
 export type AddEventMutationHookResult = ReturnType<typeof useAddEventMutation>;
 export type AddEventMutationResult = Apollo.MutationResult<AddEventMutation>;
 export type AddEventMutationOptions = Apollo.BaseMutationOptions<AddEventMutation, AddEventMutationVariables>;
+export const UpdateEventDocument = gql`
+    mutation updateEvent($fileName: String, $fileType: String, $title: String, $description: String, $date: String, $address: String) {
+  updateEvent(
+    fileName: $fileName
+    fileType: $fileType
+    title: $title
+    description: $description
+    date: $date
+    address: $address
+  ) {
+    signedURL
+  }
+}
+    `;
+export type UpdateEventMutationFn = Apollo.MutationFunction<UpdateEventMutation, UpdateEventMutationVariables>;
+
+/**
+ * __useUpdateEventMutation__
+ *
+ * To run a mutation, you first call `useUpdateEventMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateEventMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateEventMutation, { data, loading, error }] = useUpdateEventMutation({
+ *   variables: {
+ *      fileName: // value for 'fileName'
+ *      fileType: // value for 'fileType'
+ *      title: // value for 'title'
+ *      description: // value for 'description'
+ *      date: // value for 'date'
+ *      address: // value for 'address'
+ *   },
+ * });
+ */
+export function useUpdateEventMutation(baseOptions?: Apollo.MutationHookOptions<UpdateEventMutation, UpdateEventMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateEventMutation, UpdateEventMutationVariables>(UpdateEventDocument, options);
+      }
+export type UpdateEventMutationHookResult = ReturnType<typeof useUpdateEventMutation>;
+export type UpdateEventMutationResult = Apollo.MutationResult<UpdateEventMutation>;
+export type UpdateEventMutationOptions = Apollo.BaseMutationOptions<UpdateEventMutation, UpdateEventMutationVariables>;
 export const PostDocument = gql`
     query post($id: ID!) {
   post(_id: $id) {

@@ -26,7 +26,6 @@ const Account: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [updateUserMutation, { error }] = useUpdateUserMutation();
   const user = useSelector((state: RootState) => state.auth);
-  const navigate = useNavigate();
 
   const [editMode, setEditMode] = useState({username: false, email: false, password: false})
 
