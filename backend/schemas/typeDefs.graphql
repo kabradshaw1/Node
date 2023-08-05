@@ -50,6 +50,7 @@ type Query {
   posts(username: String): [Post]
   post(_id: ID!): Post
   events: [Event]
+  event: Event
 }
 
 type Mutation {

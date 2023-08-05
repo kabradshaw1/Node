@@ -8,7 +8,7 @@ import Form from 'react-bootstrap/Form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useUpdateEventMutation, MutationUpdateEventArgs, Event } from '../../../generated/graphql';
+import { useUpdateEventMutation, MutationUpdateEventArgs, Event,  } from '../../../generated/graphql';
 
 
 interface SingleEventProp {
@@ -16,6 +16,10 @@ interface SingleEventProp {
 }
 
 const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
+
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [updateEventMutation, { error }] = useUpdateEventMutation();
 
   const isAdmin = useSelector((state: RootState) => state.auth.user?.isAdmin);
 
@@ -30,8 +34,16 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
   });
 
   const onTitleSubmit: SubmitHandler<MutationUpdateEventArgs> = async data => {
-
-  }
+    setLoading(true);
+    try {
+      const mutationRespose = await updateEventMutation({
+        variables: {title: data.title}
+      });
+    } catch (error) {
+      console.log(error);
+      setMessage("Update failed");
+    }
+  };
 
   const descriptionSchema = Yup.object().shape({
     description: Yup.string().required('You must fill in new description')
@@ -63,7 +75,7 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
       <Card.Header>
         {editMode.title ?
           <Form onSubmit={titleForm.handleSubmit(onTitleSubmit)}>
-            
+
           </Form>
           :
           <>{event?.title}</>
