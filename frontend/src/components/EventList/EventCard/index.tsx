@@ -6,6 +6,11 @@ import { RootState } from '../../../store';
 import { useSelector, useDispatch } from "react-redux";
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form';
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm, SubmitHandler } from 'react-hook-form';
+
+
 
 interface SingleEventProp {
   data: Event | null
@@ -16,6 +21,10 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
   const isAdmin = useSelector((state: RootState) => state.auth.user?.isAdmin);
 
   const addressLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event?.address || '')}`;
+
+  const titleSchema = Yup.object().shape({
+
+  })
 
   const [editMode, setEditMode] = useState({title: false, description: false, address: false, image: false, date: false})
   return (
