@@ -1,4 +1,3 @@
-import { Event } from "../../../generated/graphql";
 import { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import authSlice from '../../../store/slices/authSlice';
@@ -9,7 +8,7 @@ import Form from 'react-bootstrap/Form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useUpdateEventMutation, MutationAddEventArgs } from '../../../generated/graphql';
+import { useUpdateEventMutation, MutationUpdateEventArgs, Event } from '../../../generated/graphql';
 
 
 interface SingleEventProp {
@@ -30,7 +29,7 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
     resolver: yupResolver(titleSchema)
   });
 
-  const onTitleSubmit: SubmitHandler<MutationAddEventArgs> = async data => {
+  const onTitleSubmit: SubmitHandler<MutationUpdateEventArgs> = async data => {
 
   }
 
@@ -64,10 +63,11 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
       <Card.Header>
         {editMode.title ?
           <Form onSubmit={titleForm.handleSubmit(onTitleSubmit)}>
-
+            
           </Form>
+          :
+          <>{event?.title}</>
         }
-        {event?.title}
         {isAdmin
           ? <Button>Edit Title</Button>
           : null
