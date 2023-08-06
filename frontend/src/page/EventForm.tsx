@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import * as Yup from 'yup';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
@@ -8,7 +7,6 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useAddEventMutation } from '../generated/graphql';
 import { useNavigate } from 'react-router-dom';
-import { BsFillCalendarEventFill } from 'react-icons/bs';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
@@ -107,33 +105,7 @@ const EventForm: React.FC = () => {
               <Card.Header><h3>Event Form</h3></Card.Header>
               <Card.Body>
                 <Title register={register} error={errors.title?.message}/>
-              <Form.Group>
-                <Col>
-                  <Row>
-                  <Form.Label>Event Date (Required)</Form.Label>
-                  </Row>
-                  <BsFillCalendarEventFill className=''/>
-                  <Controller
-                    control={control}
-                    name="date"
-                    render={({ field: { onChange, value } }) => (
-                      <ReactDatePicker
-                        selected={value}
-                        onChange={(date: Date) => {
-                          onChange(date);  // You should pass Date or null to onChange
-                        }}
-                        dateFormat="MM/dd/yyyy h:mm aa" // maintains the AM/PM format for time
-                        showTimeSelect
-                        timeFormat="h:mm aa" // updated to 12-hour time format
-                        timeIntervals={15}
-                        timeCaption="time"
-                        className={`form-control ${errors.date ? 'is-invalid' : ''}`}
-                      />
-                    )}
-                  />
-                  <Form.Control.Feedback className='invalid-feedback'>{errors.date?.message}</Form.Control.Feedback>
-                </Col>
-              </Form.Group>
+                <EventDate control={control} register={register} error={errors.date?.message}/>
               <Form.Group>
                 <Form.Label>Event Adress (Required)</Form.Label>
                 <Form.Control type='string' {...register('address')} className={`form-control ${errors.address ? 'is-invalid' : ''}`}/>
