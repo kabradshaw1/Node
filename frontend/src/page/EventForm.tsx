@@ -105,11 +105,7 @@ const EventForm: React.FC = () => {
             <Form noValidate onSubmit={handleSubmit(formSubmit)}>
               <Card.Header><h3>Event Form</h3></Card.Header>
               <Card.Body>
-              <Form.Group>
-                <Form.Label>Event Title (Required)</Form.Label>
-                <Form.Control type='string' {...register('title')} className={`form-control ${errors.title ? 'is-invalid' : ''}`}/>
-                <Form.Control.Feedback className='invalid-feedback'>{errors.title?.message}</Form.Control.Feedback>
-              </Form.Group>
+
               <Form.Group>
                 <Col>
                   <Row>

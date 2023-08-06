@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import Card from 'react-bootstrap/Card';
-import authSlice from '../../../store/slices/authSlice';
 import { RootState } from '../../../store';
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form';
 import * as Yup from 'yup';

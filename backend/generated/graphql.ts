@@ -117,6 +117,7 @@ export type Post = {
 
 export type Query = {
   __typename?: 'Query';
+  event?: Maybe<Event>;
   events?: Maybe<Array<Maybe<Event>>>;
   me?: Maybe<User>;
   post?: Maybe<Post>;
@@ -303,6 +304,7 @@ export type PostResolvers<ContextType = any, ParentType extends ResolversParentT
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  event?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType>;
   events?: Resolver<Maybe<Array<Maybe<ResolversTypes['Event']>>>, ParentType, ContextType>;
   me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   post?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<QueryPostArgs, '_id'>>;
