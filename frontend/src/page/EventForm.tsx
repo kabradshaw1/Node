@@ -8,12 +8,13 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useAddEventMutation } from '../generated/graphql';
 import { useNavigate } from 'react-router-dom';
-import { BsFillCalendarEventFill } from "react-icons/bs";
+import { BsFillCalendarEventFill } from 'react-icons/bs';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
 import Logo from '../components/Logo';
 import Container from 'react-bootstrap/Container';
+import { Description, Title, Image, Address, Date } from '../components/EventForm';
 
 interface FormSubmit {
   date: Date,
