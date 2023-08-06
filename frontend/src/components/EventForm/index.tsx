@@ -2,6 +2,6 @@ import Description from "./Description";
 import Title from "./Title";
 import Image from "./Image";
 import Address from "./Address";
-import Date from "./Date";
+import EventDate from "./EventDate";
 
-export { Description, Title, Image, Address, Date };
+export { Description, Title, Image, Address, EventDate };

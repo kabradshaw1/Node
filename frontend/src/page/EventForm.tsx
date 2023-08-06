@@ -14,7 +14,7 @@ import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
 import Logo from '../components/Logo';
 import Container from 'react-bootstrap/Container';
-import { Description, Title, Image, Address, Date } from '../components/EventForm';
+import { Description, Title, Image, Address, EventDate } from '../components/EventForm';
 
 interface FormSubmit {
   date: Date,
@@ -106,7 +106,7 @@ const EventForm: React.FC = () => {
             <Form noValidate onSubmit={handleSubmit(formSubmit)}>
               <Card.Header><h3>Event Form</h3></Card.Header>
               <Card.Body>
-
+                <Title register={register} error={errors.title?.message}/>
               <Form.Group>
                 <Col>
                   <Row>
