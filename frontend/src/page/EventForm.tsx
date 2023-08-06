@@ -107,27 +107,7 @@ const EventForm: React.FC = () => {
                 <Title register={register} error={errors.title?.message}/>
                 <EventDate control={control} register={register} error={errors.date?.message}/>
                 <Address register={register} error={errors.address?.message}/>
-              <Form.Group>
-                <Form.Label>Image Upload (Optional)</Form.Label>
-                <Controller
-                  control={control}
-                  name="file"
-                  render={({ field: { onChange, ref } }) => (
-                    <Form.Control
-                      type='file'
-                      ref={ref}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        onChange(e.target.files?.[0]); // update the form value
-                        if (e.target.files) {
-                          setValue('file', e.target.files[0], { shouldValidate: true }); // set the file value for validation
-                        }
-                      }}
-                      isInvalid={!!errors.file} // add this line to mark the input as invalid if there are errors
-                    />
-                  )}
-                />
-                <Form.Control.Feedback className='invalid-feedback'>{errors.file?.message}</Form.Control.Feedback>
-              </Form.Group>
+                <Image setValue={setValue} error={errors.file?.message} control={control}/>
               <Form.Group className='mb-1'>
                 <Form.Label>Event Description (Optional)</Form.Label>
                 <Form.Control as="textarea" {...register('description')} className={`form-control ${errors.description ? 'is-invalid' : ''}`}/>
