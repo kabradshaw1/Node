@@ -106,11 +106,7 @@ const EventForm: React.FC = () => {
               <Card.Body>
                 <Title register={register} error={errors.title?.message}/>
                 <EventDate control={control} register={register} error={errors.date?.message}/>
-              <Form.Group>
-                <Form.Label>Event Adress (Required)</Form.Label>
-                <Form.Control type='string' {...register('address')} className={`form-control ${errors.address ? 'is-invalid' : ''}`}/>
-                <Form.Control.Feedback className='invalid-feedback'>{errors.address?.message}</Form.Control.Feedback>
-              </Form.Group>
+                <Address register={register} error={errors.address?.message}/>
               <Form.Group>
                 <Form.Label>Image Upload (Optional)</Form.Label>
                 <Controller
