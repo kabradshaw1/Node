@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import { RootState } from '../../../store';
 import { useSelector } from "react-redux";
-import Button from 'react-bootstrap/Button'
+import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -18,7 +18,7 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
 
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const [updateEventMutation, { error }] = useUpdateEventMutation();
+  const [updateEventMutation, { error, loading: mutationLoading }] = useUpdateEventMutation();
 
   const isAdmin = useSelector((state: RootState) => state.auth.user?.isAdmin);
 
@@ -73,7 +73,11 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
     <Card>
       <Card.Header>
         {editMode.title ?
-          <Title register={titleForm.register} error={titleForm.formState.errors.title?.message}/>
+          <Form>
+            <Title register={titleForm.register} error={titleForm.formState.errors.title?.message}/>
+            <Button type='submit' disabled={loading || mutationLoading}>Submit New Title</Button>
+            <Form.Label>{message}</Form.Label>
+          </Form>
           :
           <>{event?.title}</>
         }
