@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useUpdateEventMutation, MutationUpdateEventArgs, Event } from '../../../generated/graphql';
-
+import { Description, Title, Image, Address, EventDate } from '../../../components/EventForm';
 
 interface SingleEventProp {
   data: Event | null
@@ -28,7 +28,7 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
     title: Yup.string().required('You must fill in new title')
   });
 
-  const titleForm = useForm<{title: string}>({
+  const titleForm = useForm({
     resolver: yupResolver(titleSchema)
   });
 
@@ -73,9 +73,7 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
     <Card>
       <Card.Header>
         {editMode.title ?
-          <Form onSubmit={titleForm.handleSubmit(onTitleSubmit)}>
-            
-          </Form>
+          <Title register={titleForm.register} error={titleForm.formState.errors.title?.message}/>
           :
           <>{event?.title}</>
         }

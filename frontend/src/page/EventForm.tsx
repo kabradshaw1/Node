@@ -109,7 +109,7 @@ const EventForm: React.FC = () => {
                 <EventDate control={control} register={register} error={errors.date?.message}/>
                 <Address register={register} error={errors.address?.message}/>
                 <Image setValue={setValue} error={errors.file?.message} control={control}/>
-                <Address register={register} error={errors.description?.message}/>
+                <Description register={register} error={errors.description?.message}/>
               <Button type='submit' disabled={loading || mutationLoading}>Submit Event</Button>
               <Form.Label>{message}</Form.Label>
               </Card.Body>
