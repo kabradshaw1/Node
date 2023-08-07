@@ -14,6 +14,7 @@ import Logo from '../components/Logo';
 import Container from 'react-bootstrap/Container';
 import { Description, Title, Image, Address, EventDate } from '../components/EventForm';
 
+
 interface FormSubmit {
   date: Date,
   file?: any,
@@ -108,11 +109,7 @@ const EventForm: React.FC = () => {
                 <EventDate control={control} register={register} error={errors.date?.message}/>
                 <Address register={register} error={errors.address?.message}/>
                 <Image setValue={setValue} error={errors.file?.message} control={control}/>
-              <Form.Group className='mb-1'>
-                <Form.Label>Event Description (Optional)</Form.Label>
-                <Form.Control as="textarea" {...register('description')} className={`form-control ${errors.description ? 'is-invalid' : ''}`}/>
-                <Form.Control.Feedback className='invalid-feedback'>{errors.description?.message}</Form.Control.Feedback>
-              </Form.Group>
+                <Address register={register} error={errors.description?.message}/>
               <Button type='submit' disabled={loading || mutationLoading}>Submit Event</Button>
               <Form.Label>{message}</Form.Label>
               </Card.Body>
