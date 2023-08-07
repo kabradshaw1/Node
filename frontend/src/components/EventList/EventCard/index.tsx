@@ -44,6 +44,22 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
     }
   };
 
+  const imageScehma = Yup.object().shape({
+    file: Yup.mixed()
+      .test('fileSize', 'The file is too large', value => {
+        const file = value as File;
+        return !file || file.size <= 5000000;
+      })
+      .test('fileType', 'Unsupported File Format. Supported formats are .jpg, .jpeg, .png, .gif, .webp', value => {
+        const file = value as File;
+        return !file || ['image/jpeg', 'image/png', 'image/gif', 'image/webp'].includes(file.type);
+      }),
+  });
+
+  const imageForm = useForm({
+    resolver: yupResolver(imageScehma)
+  });
+
   const descriptionSchema = Yup.object().shape({
     description: Yup.string().required('You must fill in new description')
   });
@@ -73,9 +89,10 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
     <Card>
       <Card.Header>
         {editMode.title ?
-          <Form>
+          <Form onSubmit={titleForm.handleSubmit(onTitleSubmit)}>
             <Title register={titleForm.register} error={titleForm.formState.errors.title?.message}/>
             <Button type='submit' disabled={loading || mutationLoading}>Submit New Title</Button>
+            <Button onClick={() => setEditMode({...editMode, title: false})}>Cancel</Button>
             <Form.Label>{message}</Form.Label>
           </Form>
           :
@@ -87,6 +104,13 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
         }
       </Card.Header>
       <Card.Body>
+        {editMode.image ?
+          <Form>
+            <Image setValue={imageForm.setValue} error={imageForm.formState.errors.file?.message} control={imageForm.control}/>
+          </Form>
+          :
+          <></>
+        }
         {event?.signedURL ? <Card.Img src={event.signedURL}/> : null}
         {isAdmin
           ? <Button onClick={() => {setEditMode({...editMode, image: true})}}>Edit Picture</Button>
