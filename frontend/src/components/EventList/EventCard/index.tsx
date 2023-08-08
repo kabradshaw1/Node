@@ -74,12 +74,19 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
 
   const onDescriptionSubmit = () => {
 
-  }
-
+  };
 
   const dateSchema = Yup.object().shape({
     date: Yup.date().nullable().transform((curr, orig) => orig === '' ? null : curr).required('You must choose a date'),
   });
+
+  const dateForm = useForm({
+    resolver: yupResolver(dateSchema)
+  });
+
+  const onDateSubmit = () => {
+
+  };
 
   const addressSchema = Yup.object().shape({
     address: Yup.string().required('You must fill in a new address')
@@ -130,7 +137,6 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
           :
           <>{event?.description ? <Card.Text>{event.description}</Card.Text> : null}</>
         }
-
         {isAdmin
           ? <Button onClick={() => {setEditMode({...editMode, description: true})}}>Edit Description</Button>
           : null
