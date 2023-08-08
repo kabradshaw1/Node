@@ -60,21 +60,22 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
     resolver: yupResolver(imageScehma)
   });
 
+  const onImageSubmit = () => {
+    setLoading(true);
+  };
+
   const descriptionSchema = Yup.object().shape({
     description: Yup.string().required('You must fill in new description')
   });
 
-  const imageSchema = Yup.object().shape({
-    file: Yup.mixed()
-    .test('fileSize', 'The file is too large', value => {
-      const file = value as File;
-      return !file || file.size <= 5000000;
-    })
-    .test('fileType', 'Unsupported File Format. Supported formats are .jpg, .jpeg, .png, .gif, .webp', value => {
-      const file = value as File;
-      return !file || ['image/jpeg', 'image/png', 'image/gif', 'image/webp'].includes(file.type);
-    }),
+  const descriptionForm = useForm({
+    resolver: yupResolver(descriptionSchema)
   });
+
+  const onDescriptionSubmit = () => {
+
+  }
+
 
   const dateSchema = Yup.object().shape({
     date: Yup.date().nullable().transform((curr, orig) => orig === '' ? null : curr).required('You must choose a date'),
@@ -85,6 +86,7 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
   })
 
   const [editMode, setEditMode] = useState({title: false, description: false, address: false, image: false, date: false})
+
   return (
     <Card>
       <Card.Header>
@@ -105,20 +107,32 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
       </Card.Header>
       <Card.Body>
         {editMode.image ?
-          <Form>
+          <Form onSubmit={imageForm.handleSubmit(onImageSubmit)}>
             <Image setValue={imageForm.setValue} error={imageForm.formState.errors.file?.message} control={imageForm.control}/>
+            <Button type='submit' disabled={loading || mutationLoading}>Submit New Image</Button>
+            <Button onClick={() => setEditMode({...editMode, image: false})}>Cancel</Button>
+            <Form.Label>{message}</Form.Label>
           </Form>
           :
-          <></>
+          <>{event?.signedURL ? <Card.Img src={event.signedURL}/> : null}</>
         }
-        {event?.signedURL ? <Card.Img src={event.signedURL}/> : null}
         {isAdmin
           ? <Button onClick={() => {setEditMode({...editMode, image: true})}}>Edit Picture</Button>
           : null
         }
-        {event?.description ? <Card.Text>{event.description}</Card.Text> : null}
+        {editMode.description ?
+          <Form onSubmit={descriptionForm.handleSubmit(onDescriptionSubmit)}>
+            <Description register={descriptionForm.register} error={descriptionForm.formState.errors.description?.message}/>
+            <Button type='submit' disabled={loading || mutationLoading}>Submit New Description</Button>
+            <Button onClick={() => setEditMode({...editMode, description: false})}>Cancel</Button>
+            <Form.Label>{message}</Form.Label>
+          </Form>
+          :
+          <>{event?.description ? <Card.Text>{event.description}</Card.Text> : null}</>
+        }
+
         {isAdmin
-          ? <Button>Edit Description</Button>
+          ? <Button onClick={() => {setEditMode({...editMode, description: true})}}>Edit Description</Button>
           : null
         }
         {event?.address ? <Card.Text>This event will be held at <a href={addressLink} target="_blank" rel="noopener noreferrer">{event.address}</a> on {event?.date}</Card.Text> : null}
