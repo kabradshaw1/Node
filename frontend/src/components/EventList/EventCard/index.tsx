@@ -90,7 +90,15 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
 
   const addressSchema = Yup.object().shape({
     address: Yup.string().required('You must fill in a new address')
-  })
+  });
+
+  const addressForm = useForm({
+    resolver: yupResolver(addressSchema)
+  });
+
+  const onAddressSubmit = () => {
+
+  }
 
   const [editMode, setEditMode] = useState({title: false, description: false, address: false, image: false, date: false})
 
@@ -143,15 +151,18 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
         }
         {
           editMode.date ?
-            <Form>
+            <Form onSubmit={dateForm.handleSubmit(onDateSubmit)}>
               <EventDate control={dateForm.control} register={dateForm.register} error={dateForm.formState.errors.date?.message}/>
               <Button type='submit' disabled={loading || mutationLoading}>Submit New Date</Button>
               <Button onClick={() => setEditMode({...editMode, date: false})}>Cancel</Button>
               <Form.Label>{message}</Form.Label>
             </Form>
           : editMode.address ?
-            <Form>
-
+            <Form onSubmit={addressForm.handleSubmit(onAddressSubmit)}>
+              <Address register={addressForm.register} error={addressForm.formState.errors.address?.message}/>
+              <Button type='submit' disabled={loading || mutationLoading}>Submit New Address</Button>
+              <Button onClick={() => setEditMode({...editMode, address: false})}>Cancel</Button>
+              <Form.Label>{message}</Form.Label>
             </Form>
           : <>{event?.address ? <Card.Text>This event will be held at <a href={addressLink} target="_blank" rel="noopener noreferrer">{event.address}</a> on {event?.date}</Card.Text> : null}</>
         }
