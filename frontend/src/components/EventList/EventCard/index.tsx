@@ -143,10 +143,12 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
         }
         {editMode.date ?
           <Form>
-            <EventDate control={imageForm.control} register={imageForm.register} error={imageForm.formState.errors.date?.message}/>
+            <EventDate control={imageForm.control} register={imageForm.register} error={imageForm.formState.errors.file?.message}/>
           </Form>
+          :
+          <>{event?.address ? <Card.Text>This event will be held at <a href={addressLink} target="_blank" rel="noopener noreferrer">{event.address}</a> on {event?.date}</Card.Text> : null}</>
         }
-        {event?.address ? <Card.Text>This event will be held at <a href={addressLink} target="_blank" rel="noopener noreferrer">{event.address}</a> on {event?.date}</Card.Text> : null}
+
         {isAdmin
           ? <>
               <Button onClick={() => {setEditMode({...editMode, address: true})}}>Edit Address</Button>
