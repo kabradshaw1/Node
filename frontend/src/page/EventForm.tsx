@@ -21,7 +21,7 @@ interface FormSubmit {
   title: string,
   description?: string,
   address: string,
-}
+};
 
 const EventForm: React.FC = () => {
   const [ addEvent, { data, loading: mutationLoading, error } ] = useAddEventMutation();
@@ -85,8 +85,8 @@ const EventForm: React.FC = () => {
 
       if (response.data?.addEvent?.signedURL) {
         uploadFile(response.data?.addEvent?.signedURL, data.file)
-      } else {
-        navigate('/');
+      } else if (response.errors){
+        setMessage(`The server returned: ${response.errors}`);
       }
     } catch (e) {
       console.log(e)

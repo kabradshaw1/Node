@@ -12,7 +12,15 @@ import { Description, Title, Image, Address, EventDate } from '../../../componen
 
 interface SingleEventProp {
   data: Event | null
-}
+};
+
+interface FormSubmit {
+  date?: Date,
+  file?: any,
+  title?: string,
+  description?: string,
+  address?: string,
+};
 
 const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
 
@@ -38,6 +46,13 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
       const mutationRespose = await updateEventMutation({
         variables: {title: data.title}
       });
+      if (mutationRespose) {
+
+      } else {
+        setMessage('An error has occured.');
+        setLoading(false);
+        throw new Error('Failed ')
+      }
     } catch (error) {
       console.log(error);
       setMessage("Update failed");
@@ -60,8 +75,16 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
     resolver: yupResolver(imageScehma)
   });
 
-  const onImageSubmit = () => {
+  const onImageSubmit: SubmitHandler<FormSubmit> = async (data) => {
     setLoading(true);
+    try {
+      const response = await updateEventMutation({
+        variables: {
+          fileName: data.file?.name,
+          fileType: data.file?.type
+        }
+      })
+    }
   };
 
   const descriptionSchema = Yup.object().shape({
@@ -113,7 +136,7 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
             <Form.Label>{message}</Form.Label>
           </Form>
           :
-          <>{event?.title}</>
+          <Card.Text>{event?.title}</Card.Text>
         }
         {isAdmin
           ? <Button>Edit Title</Button>
@@ -129,7 +152,7 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
             <Form.Label>{message}</Form.Label>
           </Form>
           :
-          <>{event?.signedURL ? <Card.Img src={event.signedURL}/> : null}</>
+          <Card.Text>{event?.signedURL ? <Card.Img src={event.signedURL}/> : null}</Card.Text>
         }
         {isAdmin
           ? <Button onClick={() => {setEditMode({...editMode, image: true})}}>Edit Picture</Button>
@@ -143,7 +166,7 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
             <Form.Label>{message}</Form.Label>
           </Form>
           :
-          <>{event?.description ? <Card.Text>{event.description}</Card.Text> : null}</>
+          <Card.Text>{event?.description ? <Card.Text>{event.description}</Card.Text> : null}</Card.Text>
         }
         {isAdmin
           ? <Button onClick={() => {setEditMode({...editMode, description: true})}}>Edit Description</Button>
@@ -164,7 +187,7 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
               <Button onClick={() => setEditMode({...editMode, address: false})}>Cancel</Button>
               <Form.Label>{message}</Form.Label>
             </Form>
-          : <>{event?.address ? <Card.Text>This event will be held at <a href={addressLink} target="_blank" rel="noopener noreferrer">{event.address}</a> on {event?.date}</Card.Text> : null}</>
+          : <Card.Text>{event?.address ? <Card.Text>This event will be held at <a href={addressLink} target="_blank" rel="noopener noreferrer">{event.address}</a> on {event?.date}</Card.Text> : null}</Card.Text>
         }
         {isAdmin
           ? <>
