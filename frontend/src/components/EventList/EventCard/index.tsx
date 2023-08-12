@@ -7,7 +7,7 @@ import Form from 'react-bootstrap/Form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useUpdateEventMutation, MutationUpdateEventArgs, Event } from '../../../generated/graphql';
+import { useUpdateEventMutation, MutationUpdateEventArgs, Event, useEventsQuery } from '../../../generated/graphql';
 import { Description, Title, Image, Address, EventDate } from '../../../components/EventForm';
 
 interface SingleEventProp {
@@ -27,6 +27,7 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [updateEventMutation, { error, loading: mutationLoading }] = useUpdateEventMutation();
+  const Events = useEventsQuery()
 
   const isAdmin = useSelector((state: RootState) => state.auth.user?.isAdmin);
 
@@ -84,6 +85,8 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
           fileType: data.file?.type
         }
       })
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -96,6 +99,9 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
   });
 
   const onDescriptionSubmit = () => {
+    setLoading(true);
+
+
 
   };
 
