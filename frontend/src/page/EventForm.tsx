@@ -70,7 +70,6 @@ const EventForm: React.FC = () => {
 
   const formSubmit: SubmitHandler<FormSubmit> = async (data) => {
     setLoading(true);
-
     try {
       const response = await addEvent({
         variables: {

@@ -98,13 +98,16 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
     resolver: yupResolver(descriptionSchema)
   });
 
-  const onDescriptionSubmit = () => {
+  const onDescriptionSubmit: SubmitHandler<FormSubmit> = async (data) => {
     setLoading(true);
-
-
+    try {
+      const responce = await updateEventMutation({
+        variables: {description: data.description}
+      })
+      
+    }
 
   };
-
   const dateSchema = Yup.object().shape({
     date: Yup.date().nullable().transform((curr, orig) => orig === '' ? null : curr).required('You must choose a date'),
   });
