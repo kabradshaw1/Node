@@ -18,7 +18,6 @@ function Login() {
   const navigate = useNavigate();
   const [loginMutation, { data, loading: mutationLoading, error }] = useLoginMutation();
   const dispatch = useDispatch();
-
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -73,8 +72,8 @@ function Login() {
               <Form.Control type='password' placeholder='Enter password' {...register('password')} className={`form-control ${errors.password ? 'is-invalid' : ''}`}/>
               <Form.Control.Feedback className="invalid-feedback">{errors.password?.message}</Form.Control.Feedback>
             </Form.Group>
-            <Form.Label>{message}</Form.Label>
             <Button className='mt-3' type="submit" disabled={loading || mutationLoading}>Submit Form</Button>
+            <Form.Label className='mr-3'>{message}</Form.Label>
           </Col>
         </Form>
       </Col>

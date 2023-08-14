@@ -7,7 +7,7 @@ import Form from 'react-bootstrap/Form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useUpdateEventMutation, MutationUpdateEventArgs, Event, useEventsQuery } from '../../../generated/graphql';
+import { useUpdateEventMutation, Event, useEventsQuery } from '../../../generated/graphql';
 import { Description, Title, Image, Address, EventDate } from '../../../components/EventForm';
 
 interface SingleEventProp {
@@ -33,15 +33,61 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
 
   const addressLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event?.address || '')}`;
 
+  const [editMode, setEditMode] = useState({title: false, description: false, address: false, image: false, date: false})
+
   const titleSchema = Yup.object().shape({
     title: Yup.string().required('You must fill in new title')
+  });
+
+  const imageScehma = Yup.object().shape({
+    file: Yup.mixed()
+      .test('fileSize', 'The file is too large', value => {
+        const file = value as File;
+        return !file || file.size <= 5000000;
+      })
+      .test('fileType', 'Unsupported File Format. Supported formats are .jpg, .jpeg, .png, .gif, .webp', value => {
+        const file = value as File;
+        return !file || ['image/jpeg', 'image/png', 'image/gif', 'image/webp'].includes(file.type);
+      }),
+  });
+
+  const descriptionSchema = Yup.object().shape({
+    description: Yup.string().required('You must fill in new description')
+  });
+
+
+  const dateSchema = Yup.object().shape({
+    date: Yup.date().nullable().transform((curr, orig) => orig === '' ? null : curr).required('You must choose a date'),
+  });
+
+  const addressSchema = Yup.object().shape({
+    address: Yup.string().required('You must fill in a new address')
   });
 
   const titleForm = useForm({
     resolver: yupResolver(titleSchema)
   });
 
-  const onTitleSubmit: SubmitHandler<MutationUpdateEventArgs> = async data => {
+
+  const imageForm = useForm({
+    resolver: yupResolver(imageScehma)
+  });
+
+
+  const descriptionForm = useForm({
+    resolver: yupResolver(descriptionSchema)
+  });
+
+
+  const dateForm = useForm({
+    resolver: yupResolver(dateSchema)
+  });
+
+  const addressForm = useForm({
+    resolver: yupResolver(addressSchema)
+  });
+
+  const onTitleSubmit: SubmitHandler<FormSubmit> = async data => {
     setLoading(true);
     try {
       const mutationRespose = await updateEventMutation({
@@ -60,22 +106,6 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
     }
   };
 
-  const imageScehma = Yup.object().shape({
-    file: Yup.mixed()
-      .test('fileSize', 'The file is too large', value => {
-        const file = value as File;
-        return !file || file.size <= 5000000;
-      })
-      .test('fileType', 'Unsupported File Format. Supported formats are .jpg, .jpeg, .png, .gif, .webp', value => {
-        const file = value as File;
-        return !file || ['image/jpeg', 'image/png', 'image/gif', 'image/webp'].includes(file.type);
-      }),
-  });
-
-  const imageForm = useForm({
-    resolver: yupResolver(imageScehma)
-  });
-
   const onImageSubmit: SubmitHandler<FormSubmit> = async (data) => {
     setLoading(true);
     try {
@@ -90,13 +120,13 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
     }
   };
 
-  const descriptionSchema = Yup.object().shape({
-    description: Yup.string().required('You must fill in new description')
-  });
+  const onDateSubmit: SubmitHandler<FormSubmit> = (data) => {
 
-  const descriptionForm = useForm({
-    resolver: yupResolver(descriptionSchema)
-  });
+  };
+
+  const onAddressSubmit: SubmitHandler<FormSubmit> = (data) => {
+
+  };
 
   const onDescriptionSubmit: SubmitHandler<FormSubmit> = async (data) => {
     setLoading(true);
@@ -104,35 +134,14 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
       const responce = await updateEventMutation({
         variables: {description: data.description}
       })
-      
+    } catch (e) {
+      console.log(e)
+      if (error?.message) {
+        setMessage(error.message);
+      }
+      setLoading(false);
     }
-
   };
-  const dateSchema = Yup.object().shape({
-    date: Yup.date().nullable().transform((curr, orig) => orig === '' ? null : curr).required('You must choose a date'),
-  });
-
-  const dateForm = useForm({
-    resolver: yupResolver(dateSchema)
-  });
-
-  const onDateSubmit = () => {
-
-  };
-
-  const addressSchema = Yup.object().shape({
-    address: Yup.string().required('You must fill in a new address')
-  });
-
-  const addressForm = useForm({
-    resolver: yupResolver(addressSchema)
-  });
-
-  const onAddressSubmit = () => {
-
-  }
-
-  const [editMode, setEditMode] = useState({title: false, description: false, address: false, image: false, date: false})
 
   return (
     <Card>
