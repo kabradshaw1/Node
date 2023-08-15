@@ -106,6 +106,24 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
     }
   };
 
+  const uploadFile = async (signedURL: string, file: any) => {
+
+    const results = await fetch(signedURL, {
+      method: 'PUT',
+      body: file,
+      headers: {
+        'Content-Type': file.type
+      }
+    });
+    if (results.ok) {
+      setMessage('Image upload successful');
+    } else {
+      setMessage('An error has occured.');
+      setLoading(false);
+      throw new Error(`Failed to upload file: ${results.statusText}`);
+    }
+  };
+
   const onImageSubmit: SubmitHandler<FormSubmit> = async (data) => {
     setLoading(true);
     try {
@@ -114,7 +132,12 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
           fileName: data.file?.name,
           fileType: data.file?.type
         }
-      })
+      });
+      if (response.data?.updateEvent?.signedURL) {
+        uploadFile(response.data?.updateEvent?.signedURL, data.file)
+      } else if (response.errors){
+        setMessage(`The server returned: ${response.errors}`);
+      }
     } finally {
       setLoading(false);
     }
@@ -136,8 +159,20 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
     }
   };
 
-  const onAddressSubmit: SubmitHandler<FormSubmit> = (data) => {
-
+  const onAddressSubmit: SubmitHandler<FormSubmit> = async (data) => {
+    setLoading(true);
+    try {
+      const responce = await updateEventMutation({
+        variables: {address: data.address}
+      });
+    } catch (e) {
+      console.log(e)
+      if (error?.message) {
+        setMessage(error.message);
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   const onDescriptionSubmit: SubmitHandler<FormSubmit> = async (data) => {
