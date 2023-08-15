@@ -120,8 +120,20 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
     }
   };
 
-  const onDateSubmit: SubmitHandler<FormSubmit> = (data) => {
-
+  const onDateSubmit: SubmitHandler<FormSubmit> = async (data) => {
+    setLoading(true);
+    try {
+      const responce = await updateEventMutation({
+        variables: {date: new Date((data.date as Date).getTime()).toISOString()}
+      });
+    } catch (e) {
+      console.log(e)
+      if (error?.message) {
+        setMessage(error.message);
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   const onAddressSubmit: SubmitHandler<FormSubmit> = (data) => {
@@ -133,12 +145,13 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
     try {
       const responce = await updateEventMutation({
         variables: {description: data.description}
-      })
+      });
     } catch (e) {
       console.log(e)
       if (error?.message) {
         setMessage(error.message);
       }
+    } finally {
       setLoading(false);
     }
   };
