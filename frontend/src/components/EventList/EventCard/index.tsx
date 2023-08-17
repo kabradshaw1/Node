@@ -253,7 +253,7 @@ const EventCard: React.FC<SingleEventProp> = ({ data: event }) => {
               <Button onClick={() => setEditMode({...editMode, address: false})}>Cancel</Button>
               <Form.Label>{message}</Form.Label>
             </Form>
-          : <Card.Text>{event?.address ? <Card.Text>This event will be held at <a href={addressLink} target="_blank" rel="noopener noreferrer">{event.address}</a> on {event?.date}</Card.Text> : null}</Card.Text>
+          : <Card.Text>{event?.address ? <Card.Text>This event will be held at <a href={addressLink} target="_blank" rel="noopener noreferrer">{event.address}</a> on {event?.date}</Card.Text> : null}.</Card.Text>
         }
         {isAdmin
           ? <>
