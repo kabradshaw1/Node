@@ -88,8 +88,6 @@ const resolvers = {
 
       return eventsWithSignedURLs;
   }
-
-
   },
   Mutation: {
     addEvent: async (parent: ResolversParentTypes['Mutation'], args:MutationAddEventArgs, context: Context) => {
