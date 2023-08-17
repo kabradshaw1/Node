@@ -98,7 +98,7 @@ const resolvers = {
         let UploadURL;
         let fileNameWithDate
         if(args.fileName && args.fileType) {
-          fileNameWithDate = `${args.fileName}_${new Date().toString}`
+          fileNameWithDate = `${args.fileName}_${new Date().toISOString}`
           UploadURL = await generateUploadURL(fileNameWithDate, args.fileType);
         };
         await EventModel.create({date: timeZone(new Date(args.date), 'EST'), description: args.description, title: args.title, fileName: fileNameWithDate ,username: context.user.username, address: args.address});
